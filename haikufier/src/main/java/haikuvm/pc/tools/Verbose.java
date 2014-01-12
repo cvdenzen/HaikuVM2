@@ -4,7 +4,7 @@ import haikuvm.pc.tools.haikuc.HaikuDefs;
 
 import java.util.Formatter;
 import java.util.Vector;
-
+@Deprecated
 public class Verbose {
     private static Vector<String> warnings = new Vector<String>();
     private static Vector<String> errors = new Vector<String>();

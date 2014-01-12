@@ -4,7 +4,7 @@ import haikuvm.pc.tools.haikuc.PrintOnChange;
 import java.io.PrintStream;
 import java.util.Vector;
 
-
+@Deprecated
 public class CollectedIncludes {
 	private static Vector<String> includes=new  Vector<String> ();
 

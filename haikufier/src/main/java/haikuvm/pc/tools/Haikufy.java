@@ -76,6 +76,9 @@ public class Haikufy {
 
 	protected static String mainclass;
 
+	/**
+	 * This is not a thread, but the name of a class.
+	 */
 	static String mainOsThread;
 
 	public static String source;

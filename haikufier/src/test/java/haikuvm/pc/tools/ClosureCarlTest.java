@@ -4,8 +4,6 @@
 package haikuvm.pc.tools;
 
 import static org.junit.Assert.*;
-import haikuvm.pc.tools.ClosureCarl.Member;
-
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -15,11 +13,6 @@ import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-
-
-
-
 
 
 import org.junit.After;
@@ -143,12 +136,18 @@ public class ClosureCarlTest {
 				ch.setLevel(level);
 			}
 		}
-		// output to file
+		// output to file, settings are in run configuration, something like this:
+		// -Djava.util.logging.config.file=D:\\Users\\cdn\\workspace\\haikufier\\src\\test\\java\\logging.properties
+		// -classpath D:\\Users\\cdn\\workspace\\lib\\pc\\*
 		logger=Logger.getLogger("haikuvm.pc.tools");
 		instance.scan(new Member(classname.replace(".","/"), "", ""));
+		String a=System.getProperty("java.util.logging.config.file");
+		if (a.equals("hoi")) {
+			a="bla";
+		}
 		// Outputdirectory
 		File outputdirectory=new File("D:\\tmp\\haikuoutputcarl");
-		outputdirectory.mkdirs();
+		if (!a.equals("hoi")) outputdirectory.mkdirs();
 		instance.createClassFiles(outputdirectory);
 	}
 

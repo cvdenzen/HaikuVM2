@@ -35,6 +35,8 @@ import org.apache.bcel.classfile.Method;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -175,7 +177,7 @@ public class ClosureCarl {
 			//private DefaultMutableTreeNode treeNode;
 
 			public ClassScanner(DefaultMutableTreeNode treeNode) {
-				super(ASM4);
+				super(Opcodes.ASM5);
 				//this.treeNode=treeNode;
 			}
 			public void visit(int version, int access, String name,
@@ -373,11 +375,10 @@ public class ClosureCarl {
 
 		// Skip array types
 		if (member.getOwner().startsWith("[")) {
-			logger.fine("Arraytype="+member);
+			logger.fine("Skip arraytype="+member);
 			return;
 		}
 		// Create a ClassVisitor (subclass that collects used methods and fields)
-		//DefaultMutableTreeNode rootNode=new DefaultMutableTreeNode("rootNode for scanning of classes");
 		ClassScanner classScanner = new ClassScanner(parentTreeNode);
 		ClassReader cr = null;
 		try {
@@ -449,6 +450,7 @@ public class ClosureCarl {
 	 * i.e. empty Class definitions
 	 */
 	private void cleanUpToBeIncludedMembers() {
+		logger.info("Start cleanUpToBeIncludedMembers()");
 		for (Iterator<Member> ite=toBeIncludedMembers.iterator();ite.hasNext();) {
 			// find all empty members, i.e. no field/method present
 			Member m=ite.next();
@@ -468,7 +470,7 @@ public class ClosureCarl {
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
-		
+
 		/**
 		 * Make the add method do some logging
 		 */
@@ -518,7 +520,7 @@ public class ClosureCarl {
 				}
 			}
 		}
-		
+
 	}
 	public void createClassFiles(final File outputdirectory) {
 		//
@@ -569,10 +571,14 @@ public class ClosureCarl {
 	private int numberOfFields;
 	private int numberOfMethods;
 	private Set<Integer> distinctBCs=new HashSet<Integer>(); // track unique BC
+	
+	public Set<Integer> getDistinctBCs() {
+		return distinctBCs;
+	}
 	/**
-	 * Create the class file
+	 * Create the stripped class file
 	 */
-	private void createClassFile(final String internalClassname,File outputdirectory) {
+	public void createClassFile(final String internalClassname,File outputdirectory) {
 		outputdirectory.mkdirs();
 		if (!outputdirectory.isDirectory()) {
 			String message="parameter outputdirectory is not a directory (";
@@ -670,7 +676,7 @@ public class ClosureCarl {
 						};
 					};
 				} else {
-					//logger.fine("Create method excludes ----"+newMember);
+					logger.fine("Create method excludes ----"+newMember);
 					return null; // do not include this method
 				}
 			}
@@ -707,172 +713,35 @@ public class ClosureCarl {
 	} // method createclassfile
 
 	/**
-	 * A Member identifies a method, field uniquely
-	 * @author CDN
-	 *
+	 * No clue as what this method should do
+	 * (Closure.isMarked(jc.getClassName()+"."+method.getName()+method.getSignature())
+	 * Cannot be implemented, is static method !!!
+	 * 
+	 * nl.vandenzen.hallo(IIIJ)Z
 	 */
-	static class Member implements Comparable {
-		/**
-		 * @param owner The internal class name of the class in which this member is declared.
-		 * Internal class name is the class name with dots replaced by slashes.
-		 * @param descriptor
-		 * The descriptor for this member (its parameters and/or (return) type)
-		 * For fields e.g.:
-		 * I (for integer type)
-		 * C (for character type)
-		 * For methods e.g.:
-		 * (Llejos/addon/keyboard/Keyboard;IJIICI)V
-		 * @param name The name of the member
-		 * @param url The URL from which this member has been loaded
-		 */
-		private String owner;
-		private String name;
-		private String descriptor;
-		private URL url;
-		public Member(String owner, String name, String descriptor, URL url) {
-			super();
-			this.owner=owner;
-			this.name=name;
-			this.descriptor = descriptor;
-			this.url=url;
-			if (owner.contains(".")) {
-				String message="owner class name should not contain . character:"+this;
-				logger.severe(message);
-				throw new IllegalArgumentException(message);
-			}
-		}
+	@Deprecated
+	public static boolean isMarked(String memberAsString) {
+		// Maybe this is meant? Is it included in this set
+		// Difficult parse
+		// Class is everything before the last dot.
+		// Method/field name is the part between the class and the signature
+		// Everything after the opening ( is signature
+		Pattern pattern=Pattern.compile("(.*)\\.(.*)(\\(.*\\))");
+		Matcher matcher=pattern.matcher(memberAsString);
+		String className = null;
+		String methodName = null; // or field?
+		String signature = null;
 
-		/**
-		 * Create a new member with a null url
-		 * @param owner
-		 * @param descriptor
-		 * @param name
-		 */
-		public Member(String owner, String name, String descriptor) {
-			this(owner, name, descriptor, null);
+		if (matcher.matches()) {
+			// OK, the string matches, find the three parts of it
+			className=matcher.group(1);
+			methodName=matcher.group(2);
+			signature=matcher.group(3);
 		}
-
-		public String getDescriptor() {
-			return descriptor;
-		}
-
-		public void setDescriptor(String descriptor) {
-			this.descriptor = descriptor;
-		}
-
-		public String getName() {
-			return name;
-		}
-
-		public void setName(String name) {
-			this.name = name;
-		}
-
-		public String getOwner() {
-			return owner;
-		}
-
-		public void setOwner(String owner) {
-			this.owner = owner;
-		}
-		/**
-		 * @return true if the member is a field (and not a method)
-		 */
-		public boolean isField() {
-			return !descriptor.startsWith("(");
-		}
-
-		/**
-		 * @return the url
-		 */
-		public URL getUrl() {
-			return url;
-		}
-
-		/**
-		 * @param url the url to set
-		 */
-		public void setUrl(URL url) {
-			this.url = url;
-		}
-
-		@Override
-		public int hashCode() {
-			final int prime = 31;
-			int result = 1;
-			result = prime * result
-					+ ((descriptor == null) ? 0 : descriptor.hashCode());
-			result = prime * result + ((name == null) ? 0 : name.hashCode());
-			result = prime * result + ((owner == null) ? 0 : owner.hashCode());
-			return result;
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-				return true;
-			if (obj == null)
-				return false;
-			if (!(obj instanceof Member))
-				return false;
-			Member other = (Member) obj;
-			if (descriptor == null) {
-				if (other.descriptor != null)
-					return false;
-			} else if (!descriptor.equals(other.descriptor))
-				return false;
-			if (name == null) {
-				if (other.name != null)
-					return false;
-			} else if (!name.equals(other.name))
-				return false;
-			if (owner == null) {
-				if (other.owner != null)
-					return false;
-			} else if (!owner.equals(other.owner))
-				return false;
-			return true;
-		}
-
-		public String toString() {
-			StringBuilder sb=new StringBuilder();
-			sb.append("[Member owner=").append(owner)
-			.append(",name=").append(name)
-			.append(",descriptor=").append(descriptor);
-			// Print the url, but not including the fully qualified class name, because we already
-			// have that (owner).
-			if (url!=null) {
-				sb.append(",url=").append(url.getPath().replaceAll(owner+"$",""));
-			}
-			sb.append("]");
-			return sb.toString();
-		}
-
-		@Override
-		public int compareTo(Object other) {
-			Member otherMember;
-			if (other instanceof Member) {
-				otherMember=(Member) other;
-			} else {
-				return 1; // other was other type, other is smaller....
-			}
-			if ((owner!=null) && (owner.compareTo(otherMember.owner)==0)) {
-				// same class
-				if ((descriptor!=null) && (descriptor.compareTo(otherMember.descriptor)==0)) {
-					return name==null?0:name.compareTo(otherMember.name);
-				} else {
-					// descriptors are different.
-					// fields are smaller then methods in sorting them
-					return isField()?
-							(otherMember.isField()?0:-1)
-							:name.compareTo(otherMember.name);
-				}
-			} else {
-				// other class, order by name of class
-				return owner.compareTo(otherMember.owner);
-			}
-		}
-	} // end of Member inner class
+		Member member=new Member(className, methodName, signature);
+		// Cannot be implemented, I give up, return true
+		return true;
+	}
 	static private Logger logger=Logger.getLogger("haikuvm.pc.tools");
 	// Not used, but could be useful:
 	// http://stackoverflow.com/questions/5445511/how-do-i-create-a-parent-last-child-first-classloader-in-java-or-how-to-overr

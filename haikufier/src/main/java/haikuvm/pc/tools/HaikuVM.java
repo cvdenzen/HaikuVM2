@@ -342,7 +342,8 @@ Use the -h or --help flag to print out the options.
 			     throw new Exception("Missing target system or missing MicroKernel for '"+HaikuDefs.getProperty("Config")+"'. See Option --Config <config>");
 		    }
 		}
-        classnames= Closure.root(mainOsThread);     
+        //classnames= Closure.root(mainOsThread);
+		Closure closure=new Closure(mainOsThread);
 
 		if (classnames.size()>0) {
 			//deleteAllFiles(new File(directory+"/"+Haikufy.choice("haikuC")+""));
@@ -370,11 +371,13 @@ Use the -h or --help flag to print out the options.
 			haikuConfigc.printf("\n");
 			
 
-            classnames= Closure.root("java.lang.Thread");
-            classnames= Closure.root("java.lang.String");
+			// Add these two classes, they are always needed
+            closure.scan(new Member("java.lang.Thread","",""));
+            closure.scan(new Member("java.lang.String","",""));
             
-            int distinctBCs = Closure.getDistinctBCs();
-            FunctionTable.setInvokeShortMax(Math.max(256-distinctBCs-35, 0));
+            Set<Integer> distinctBCs = closure.getDistinctBCs();
+            int numberOfDistinctBCs=distinctBCs.size();
+            FunctionTable.setInvokeShortMax(Math.max(256-numberOfDistinctBCs-35, 0));
             
 			/*
 			 * Order is important to keep exceptionCode at position 0 in case of exception usage.

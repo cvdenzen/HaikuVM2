@@ -1,6 +1,6 @@
 package haikuvm.pc.tools;
 
-public class Closure extends ClosureGenom2 {
+public class Closure extends ClosureCarl {
 
 	public Closure(String classname) {
 		super(classname);

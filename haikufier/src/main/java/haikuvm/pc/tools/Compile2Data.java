@@ -35,6 +35,11 @@ import org.apache.bcel.classfile.Method;
 import org.apache.bcel.classfile.Unknown;
 import org.apache.bcel.generic.Type;
 
+/**
+ * Compile the class that is provided in the contructor.
+ * @author genom2
+ *
+ */
 public class Compile2Data extends HaikuVM {
 	private static HashSet<String> closure=new HashSet<String>();
 
@@ -46,15 +51,21 @@ public class Compile2Data extends HaikuVM {
 		super(classname);
 	}
 
+	/**
+	 * Compile the class given in the constructor
+	 * @throws IOException
+	 */
 	void link() throws IOException {
 		if (classname==null || classname.startsWith("[") || closure.contains(classname) || !classnames.contains(classname.replace('\\', '.').replace('/', '.'))) return;		
 		if (classname.endsWith("HaikuMagic")) {
 			System.out.printf("link ! %s from %s will be not generated because it ends with 'HaikuMagic' which means it's template only!\n", classname, source);
 			return;
 		}
-				
+		
+		// Get the class file for this class
 		jc =getClassFile(classname);
 		
+		// Preprocess this class:
 		Preprocess p=new Preprocess(jc);
 		jc=p.preprocess();
 		
@@ -192,6 +203,7 @@ public class Compile2Data extends HaikuVM {
 		msg2meth =new Msg2Meth();
 		
 		Method[] methods=jc.getMethods();
+		// Haikufy.choice is the String "HaikuVM/utility", independent of the parameter
 		outc=new HaikuJava2C(new File(HaikuDefs.getProperty("APP_BASE")+"/"+Haikufy.choice("haikuJava")+"/"+filename(classname)+".c"));
 		outh=new HaikuJava2H(new File(HaikuDefs.getProperty("APP_BASE")+"/"+Haikufy.choice("haikuJava")+"/"+filename(classname)+".h"));
 
