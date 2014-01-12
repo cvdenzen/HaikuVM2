@@ -1,0 +1,1907 @@
+Archive member included because of file (symbol)
+
+D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring.c.o)
+                              ./HaikuVM/utility/NativeCFunctions.o (millis)
+D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring_digital.c.o)
+                              ./HaikuVM/utility/NativeCFunctions.o (pinMode)
+D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+                              ./HaikuVM/examples/HaikuVM/HaikuVMUsingArduinoLIB.o (Serial_::begin(unsigned int))
+D:\Users\cdn\workspace/lib/clibs\libleonardo.a(new.cpp.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o) (__cxa_pure_virtual)
+D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o) (Print::write(unsigned char const*, unsigned int))
+D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o) (USB_Recv(unsigned char))
+D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o) (String::operator[](unsigned int) const)
+D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o) (HID_Setup(Setup&))
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(malloc.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(new.cpp.o) (malloc)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(realloc.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o) (realloc)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(atol.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o) (atol)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(exit.o)
+                              d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32u4.o (exit)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(isspace.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o) (isspace)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(tolower.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o) (tolower)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(toupper.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o) (toupper)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(memcpy_P.o)
+                              ./HaikuVM/haikuJ2C.o (memcpy_P)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(memcpy.o)
+                              ./HaikuVM/haikuJavaNatives.o (memcpy)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(memmove.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o) (memmove)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(memset.o)
+                              ./HaikuVM/heap.o (memset)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strchr.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o) (strchr)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strcmp.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o) (strcmp)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strcpy.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o) (strcpy)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strncmp.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o) (strncmp)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strncpy.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o) (strncpy)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strrchr.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o) (strrchr)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strstr.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o) (strstr)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(itoa.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o) (itoa)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(ltoa.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o) (ltoa)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(mulsi10.o)
+                              d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(atol.o) (__mulsi_const_10)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(ultoa.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o) (ultoa)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(utoa.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o) (utoa)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(printf.o)
+                              ./tutorials/NativeCVariableClass.o (printf)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(addsf3.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o) (__subsf3)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(addsf3x.o)
+                              d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(addsf3.o) (__addsf3x)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(cmpsf2.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o) (__ltsf2)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(divsf3.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o) (__divsf3)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(divsf3x.o)
+                              d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(divsf3.o) (__divsf3x)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fixsfsi.o)
+                              ./tutorials/NativeCVariableEnhanced.o (__fixsfsi)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fixunssfsi.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o) (__fixunssfsi)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(floatsisf.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o) (__floatunsisf)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_cmp.o)
+                              d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(cmpsf2.o) (__fp_cmp)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_inf.o)
+                              d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(addsf3x.o) (__fp_inf)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_nan.o)
+                              d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(addsf3x.o) (__fp_nan)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_pscA.o)
+                              d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(addsf3x.o) (__fp_pscA)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_pscB.o)
+                              d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(addsf3x.o) (__fp_pscB)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_round.o)
+                              d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(addsf3.o) (__fp_round)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_split3.o)
+                              d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(addsf3x.o) (__fp_split3)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_zero.o)
+                              d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(addsf3x.o) (__fp_zero)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(gesf2.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o) (__gtsf2)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(mulsf3.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o) (__mulsf3)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(mulsf3x.o)
+                              d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(mulsf3.o) (__mulsf3x)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(sin.o)
+                              ./tutorials/JNINativeLIBC.o (sin)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(unordsf2.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o) (__unordsf2)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
+                              d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(printf.o) (vfprintf)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(cty_isfalse.o)
+                              d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(isspace.o) (__ctype_isfalse)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strnlen_P.o)
+                              d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(vfprintf_std.o) (strnlen_P)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strnlen.o)
+                              d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(vfprintf_std.o) (strnlen)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strrev.o)
+                              d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(itoa.o) (strrev)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fputc.o)
+                              d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(vfprintf_std.o) (fputc)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(iob.o)
+                              d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(printf.o) (__iob)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(ultoa_invert.o)
+                              d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(vfprintf_std.o) (__ultoa_invert)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_rempio2.o)
+                              d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(sin.o) (__fp_rempio2)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_sinus.o)
+                              d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(sin.o) (__fp_sinus)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_mpack.o)
+                              d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_rempio2.o) (__fp_mpack_finite)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_powsodd.o)
+                              d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_sinus.o) (__fp_powsodd)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_powser.o)
+                              d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_powsodd.o) (__fp_powser)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_mulsi3.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o) (__mulsi3)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodhi4.o)
+                              ./HaikuVM/haikuJavaNatives.o (__udivmodhi4)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodsi4.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o) (__udivmodsi4)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_divmodsi4.o)
+                              ./HaikuVM/JVM.o (__divmodsi4)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_prologue.o)
+                              d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(realloc.o) (__prologue_saves__)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_epilogue.o)
+                              d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(realloc.o) (__epilogue_restores__)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+                              d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(exit.o) (_exit)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
+                              ./tutorials/NativeCVariableClass.o (__do_copy_data)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
+                              ./HaikuVM/utility/haikuConfig.o (__do_clear_bss)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_ctors.o)
+                              D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o) (__do_global_ctors)
+d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_tablejump.o)
+                              d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_ctors.o) (__tablejump__)
+
+Allocating common symbols
+Common symbol       size              file
+
+t                   0x1               ./HaikuVM/JVM.o
+lsp                 0x2               ./HaikuVM/haikuJ2C.o
+heapmem             0x8cd             ./HaikuVM/JVM.o
+result3             0x2               ./tutorials/NativeCVariableSimple.o
+stack               0x2               ./HaikuVM/haikuJ2C.o
+__brkval            0x2               d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(malloc.o)
+result4a            0x4               ./tutorials/NativeCVariableEnhanced.o
+top                 0x4               ./HaikuVM/haikuJ2C.o
+dataSp              0x2               ./HaikuVM/haikuJ2C.o
+result4b            0x2               ./tutorials/NativeCVariableEnhanced.o
+bc                  0x1               ./HaikuVM/JVM.o
+pc                  0x2               ./HaikuVM/haikuJ2C.o
+__flp               0x2               d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(malloc.o)
+__iob               0x6               d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(iob.o)
+allStatics          0xc               ./HaikuVM/utility/haikuConfig.o
+
+Discarded input sections
+
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32u4.o
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32u4.o
+ .text          0x00000000        0x0 ./HaikuVM/examples/HaikuVM/HaikuVMUsingArduinoLIB.o
+ .data          0x00000000        0x0 ./HaikuVM/examples/HaikuVM/HaikuVMUsingArduinoLIB.o
+ .bss           0x00000000        0x0 ./HaikuVM/examples/HaikuVM/HaikuVMUsingArduinoLIB.o
+ .text.Java_processing_hardware_arduino_cores_arduino_HardwareSerialImpl_isOpen
+                0x00000000        0x0 ./HaikuVM/examples/HaikuVM/HaikuVMUsingArduinoLIB.o
+ .text.native_processing_hardware_arduino_cores_arduino_HardwareSerialImpl_isOpen_Z
+                0x00000000        0x0 ./HaikuVM/examples/HaikuVM/HaikuVMUsingArduinoLIB.o
+ .text.Java_processing_hardware_arduino_cores_arduino_HardwareSerialImpl_write
+                0x00000000        0x0 ./HaikuVM/examples/HaikuVM/HaikuVMUsingArduinoLIB.o
+ .text.Java_processing_hardware_arduino_cores_arduino_HardwareSerialImpl_begin
+                0x00000000        0x0 ./HaikuVM/examples/HaikuVM/HaikuVMUsingArduinoLIB.o
+ .text.native_processing_hardware_arduino_cores_arduino_HardwareSerialImpl_begin_JV
+                0x00000000        0x0 ./HaikuVM/examples/HaikuVM/HaikuVMUsingArduinoLIB.o
+ .text.Java_processing_hardware_arduino_cores_arduino_HardwareSerialImpl_available
+                0x00000000        0x0 ./HaikuVM/examples/HaikuVM/HaikuVMUsingArduinoLIB.o
+ .text.native_processing_hardware_arduino_cores_arduino_HardwareSerialImpl_available_I
+                0x00000000        0x0 ./HaikuVM/examples/HaikuVM/HaikuVMUsingArduinoLIB.o
+ .text.Java_processing_hardware_arduino_cores_arduino_HardwareSerialImpl_read
+                0x00000000        0x0 ./HaikuVM/examples/HaikuVM/HaikuVMUsingArduinoLIB.o
+ .text.native_processing_hardware_arduino_cores_arduino_HardwareSerialImpl_read_I
+                0x00000000        0x0 ./HaikuVM/examples/HaikuVM/HaikuVMUsingArduinoLIB.o
+ .text          0x00000000        0x0 ./HaikuVM/utility/haikuConfig.o
+ .data          0x00000000        0x0 ./HaikuVM/utility/haikuConfig.o
+ .bss           0x00000000        0x0 ./HaikuVM/utility/haikuConfig.o
+ .text          0x00000000        0x0 ./HaikuVM/utility/haikuJava.o
+ .data          0x00000000        0x0 ./HaikuVM/utility/haikuJava.o
+ .bss           0x00000000        0x0 ./HaikuVM/utility/haikuJava.o
+ .text          0x00000000        0x0 ./HaikuVM/utility/haikuJNI.o
+ .data          0x00000000        0x0 ./HaikuVM/utility/haikuJNI.o
+ .bss           0x00000000        0x0 ./HaikuVM/utility/haikuJNI.o
+ .text          0x00000000        0x0 ./HaikuVM/utility/NativeCFunctions.o
+ .data          0x00000000        0x0 ./HaikuVM/utility/NativeCFunctions.o
+ .bss           0x00000000        0x0 ./HaikuVM/utility/NativeCFunctions.o
+ .text.Java_processing_hardware_arduino_cores_arduino_ArduinoImpl_delayMicroseconds
+                0x00000000        0x0 ./HaikuVM/utility/NativeCFunctions.o
+ .text.Java_processing_hardware_arduino_cores_arduino_ArduinoImpl_millis
+                0x00000000        0x0 ./HaikuVM/utility/NativeCFunctions.o
+ .text.Java_processing_hardware_arduino_cores_arduino_ArduinoImpl_digitalWrite
+                0x00000000        0x0 ./HaikuVM/utility/NativeCFunctions.o
+ .text.Java_processing_hardware_arduino_cores_arduino_ArduinoImpl_pinMode
+                0x00000000        0x0 ./HaikuVM/utility/NativeCFunctions.o
+ .text          0x00000000        0x0 ./HaikuVM/HaikuAppMain.o
+ .data          0x00000000        0x0 ./HaikuVM/HaikuAppMain.o
+ .bss           0x00000000        0x0 ./HaikuVM/HaikuAppMain.o
+ .text          0x00000000        0x0 ./HaikuVM/haikuJ2C.o
+ .data          0x00000000        0x0 ./HaikuVM/haikuJ2C.o
+ .bss           0x00000000        0x0 ./HaikuVM/haikuJ2C.o
+ .text.isetLocal
+                0x00000000        0x0 ./HaikuVM/haikuJ2C.o
+ .text.vsetLocal
+                0x00000000        0x0 ./HaikuVM/haikuJ2C.o
+ .text.ipush    0x00000000        0x0 ./HaikuVM/haikuJ2C.o
+ .text.vpush    0x00000000        0x0 ./HaikuVM/haikuJ2C.o
+ .text.bpop     0x00000000        0x0 ./HaikuVM/haikuJ2C.o
+ .text.fpop     0x00000000        0x0 ./HaikuVM/haikuJ2C.o
+ .text.instanceOf
+                0x00000000        0x0 ./HaikuVM/haikuJ2C.o
+ .text.athrow   0x00000000        0x0 ./HaikuVM/haikuJ2C.o
+ .text.hasLock  0x00000000        0x0 ./HaikuVM/haikuJ2C.o
+ .text.monitorexit
+                0x00000000        0x0 ./HaikuVM/haikuJ2C.o
+ .text.monitorenter
+                0x00000000        0x0 ./HaikuVM/haikuJ2C.o
+ .text          0x00000000        0x0 ./HaikuVM/haikuJavaNatives.o
+ .data          0x00000000        0x0 ./HaikuVM/haikuJavaNatives.o
+ .bss           0x00000000        0x0 ./HaikuVM/haikuJavaNatives.o
+ .text.native_java_lang_Double_doubleToRawLongBits_DJ
+                0x00000000        0x0 ./HaikuVM/haikuJavaNatives.o
+ .text.native_java_lang_Double_longBitsToDouble_JD
+                0x00000000        0x0 ./HaikuVM/haikuJavaNatives.o
+ .text.native_java_lang_Float_floatToRawIntBits_FI
+                0x00000000        0x0 ./HaikuVM/haikuJavaNatives.o
+ .text.native_haiku_vm_MemoryAccess_getMemory8_II
+                0x00000000        0x0 ./HaikuVM/haikuJavaNatives.o
+ .text.native_haiku_vm_MemoryAccess_getMemory16_II
+                0x00000000        0x0 ./HaikuVM/haikuJavaNatives.o
+ .text.native_java_lang_System_getDataAddress_Ljava_lang_Object_I
+                0x00000000        0x0 ./HaikuVM/haikuJavaNatives.o
+ .text.native_java_lang_VM_getFirmwareRevision_Ljava_lang_String
+                0x00000000        0x0 ./HaikuVM/haikuJavaNatives.o
+ .text.native_java_lang_Thread_fork_I
+                0x00000000        0x0 ./HaikuVM/haikuJavaNatives.o
+ .text.native_haiku_vm_MemoryAccess_setMemory16_IIV
+                0x00000000        0x0 ./HaikuVM/haikuJavaNatives.o
+ .text.native_haiku_vm_MemoryAccess_setMemory8_IIV
+                0x00000000        0x0 ./HaikuVM/haikuJavaNatives.o
+ .text.getSize  0x00000000        0x0 ./HaikuVM/haikuJavaNatives.o
+ .text.native_java_lang_System_arraycopy_Ljava_lang_Object_ILjava_lang_Object_IIV
+                0x00000000        0x0 ./HaikuVM/haikuJavaNatives.o
+ .text.native_java_lang_System_currentTimeMillis_J
+                0x00000000        0x0 ./HaikuVM/haikuJavaNatives.o
+ .text.native_java_lang_Object_clone_Ljava_lang_Object
+                0x00000000        0x0 ./HaikuVM/haikuJavaNatives.o
+ .text          0x00000000        0x0 ./HaikuVM/halfprecision.o
+ .data          0x00000000        0x0 ./HaikuVM/halfprecision.o
+ .bss           0x00000000        0x0 ./HaikuVM/halfprecision.o
+ .text.floatToInt16
+                0x00000000        0x0 ./HaikuVM/halfprecision.o
+ .text.int16ToFloat
+                0x00000000        0x0 ./HaikuVM/halfprecision.o
+ .text          0x00000000        0x0 ./HaikuVM/heap.o
+ .data          0x00000000        0x0 ./HaikuVM/heap.o
+ .bss           0x00000000        0x0 ./HaikuVM/heap.o
+ .text.testHeap
+                0x00000000        0x0 ./HaikuVM/heap.o
+ .text.multiArray
+                0x00000000        0x0 ./HaikuVM/heap.o
+ .text          0x00000000        0x0 ./HaikuVM/JVM.o
+ .data          0x00000000        0x0 ./HaikuVM/JVM.o
+ .bss           0x00000000        0x0 ./HaikuVM/JVM.o
+ .text.GETCODEDWORD2
+                0x00000000        0x0 ./HaikuVM/JVM.o
+ .text.unused   0x00000000        0x0 ./HaikuVM/JVM.o
+ .text.unimplemented
+                0x00000000        0x0 ./HaikuVM/JVM.o
+ .text          0x00000000        0x0 ./HaikuVM/romspace.o
+ .data          0x00000000        0x0 ./HaikuVM/romspace.o
+ .bss           0x00000000        0x0 ./HaikuVM/romspace.o
+ .text.pgm_read_byteROM
+                0x00000000        0x0 ./HaikuVM/romspace.o
+ .text.pgm_read_wordROM
+                0x00000000        0x0 ./HaikuVM/romspace.o
+ .text.pgm_read_dwordROM
+                0x00000000        0x0 ./HaikuVM/romspace.o
+ .text          0x00000000        0x0 ./HaikuVM/simpleOS.o
+ .data          0x00000000        0x0 ./HaikuVM/simpleOS.o
+ .bss           0x00000000        0x0 ./HaikuVM/simpleOS.o
+ .text          0x00000000        0x0 ./tutorials/ArduinoUsingCLIB.o
+ .data          0x00000000        0x0 ./tutorials/ArduinoUsingCLIB.o
+ .bss           0x00000000        0x0 ./tutorials/ArduinoUsingCLIB.o
+ .text.Java_haiku_avr_lib_arduino_HaikuMicroKernel_init
+                0x00000000        0x0 ./tutorials/ArduinoUsingCLIB.o
+ .text.native_haiku_avr_lib_arduino_HaikuMicroKernel_init_V
+                0x00000000        0x0 ./tutorials/ArduinoUsingCLIB.o
+ .text.Java_haiku_avr_lib_arduino_HaikuMicroKernelLib_write
+                0x00000000        0x0 ./tutorials/ArduinoUsingCLIB.o
+ .text.native_haiku_avr_lib_arduino_HaikuMicroKernelLib_write_IV
+                0x00000000        0x0 ./tutorials/ArduinoUsingCLIB.o
+ .text.Java_haiku_avr_lib_arduino_HaikuMicroKernelLib_available
+                0x00000000        0x0 ./tutorials/ArduinoUsingCLIB.o
+ .text.native_haiku_avr_lib_arduino_HaikuMicroKernelLib_available_I
+                0x00000000        0x0 ./tutorials/ArduinoUsingCLIB.o
+ .text.Java_haiku_avr_lib_arduino_HaikuMicroKernelLib_read
+                0x00000000        0x0 ./tutorials/ArduinoUsingCLIB.o
+ .text.native_haiku_avr_lib_arduino_HaikuMicroKernelLib_read_I
+                0x00000000        0x0 ./tutorials/ArduinoUsingCLIB.o
+ .text.Java_haiku_avr_lib_arduino_HaikuMicroKernelLib_init
+                0x00000000        0x0 ./tutorials/ArduinoUsingCLIB.o
+ .text.native_haiku_avr_lib_arduino_HaikuMicroKernelLib_init_V
+                0x00000000        0x0 ./tutorials/ArduinoUsingCLIB.o
+ .text._Z5debugi
+                0x00000000        0x0 ./tutorials/ArduinoUsingCLIB.o
+ .text.Java_haiku_avr_lib_arduino_HaikuMicroKernelLib_debug
+                0x00000000        0x0 ./tutorials/ArduinoUsingCLIB.o
+ .text.native_haiku_avr_lib_arduino_HaikuMicroKernelLib_debug_IV
+                0x00000000        0x0 ./tutorials/ArduinoUsingCLIB.o
+ .text          0x00000000        0x0 ./tutorials/interruptTimer2.o
+ .data          0x00000000        0x0 ./tutorials/interruptTimer2.o
+ .bss           0x00000000        0x0 ./tutorials/interruptTimer2.o
+ .text.Java_arduino_tutorial_InterruptTimer2_getTimer2
+                0x00000000        0x0 ./tutorials/interruptTimer2.o
+ .text.native_arduino_tutorial_InterruptTimer2_getTimer2_J
+                0x00000000        0x0 ./tutorials/interruptTimer2.o
+ .bss.timer2_interrupts
+                0x00000000        0x0 ./tutorials/interruptTimer2.o
+ .text          0x00000000        0x0 ./tutorials/JNIenhanced.o
+ .data          0x00000000        0x0 ./tutorials/JNIenhanced.o
+ .bss           0x00000000        0x0 ./tutorials/JNIenhanced.o
+ .text.Java_arduino_tutorial_JNIenhanced_result
+                0x00000000        0x0 ./tutorials/JNIenhanced.o
+ .text.native_arduino_tutorial_JNIenhanced_result_D
+                0x00000000        0x0 ./tutorials/JNIenhanced.o
+ .text.Java_arduino_tutorial_JNIenhanced_add
+                0x00000000        0x0 ./tutorials/JNIenhanced.o
+ .text.native_arduino_tutorial_JNIenhanced_add_IFDV
+                0x00000000        0x0 ./tutorials/JNIenhanced.o
+ .bss.result    0x00000000        0x0 ./tutorials/JNIenhanced.o
+ .text          0x00000000        0x0 ./tutorials/JNINativeLIBC.o
+ .data          0x00000000        0x0 ./tutorials/JNINativeLIBC.o
+ .bss           0x00000000        0x0 ./tutorials/JNINativeLIBC.o
+ .text.Java_arduino_tutorial_JNINativeLIBC_sin
+                0x00000000        0x0 ./tutorials/JNINativeLIBC.o
+ .text.native_arduino_tutorial_JNINativeLIBC_sin_DD
+                0x00000000        0x0 ./tutorials/JNINativeLIBC.o
+ .text          0x00000000        0x0 ./tutorials/JNIsimple.o
+ .data          0x00000000        0x0 ./tutorials/JNIsimple.o
+ .bss           0x00000000        0x0 ./tutorials/JNIsimple.o
+ .text.Java_arduino_tutorial_JNIsimple_add
+                0x00000000        0x0 ./tutorials/JNIsimple.o
+ .text.native_arduino_tutorial_JNIsimple_add_III
+                0x00000000        0x0 ./tutorials/JNIsimple.o
+ .text          0x00000000        0x0 ./tutorials/JNI_FieldAccess.o
+ .data          0x00000000        0x0 ./tutorials/JNI_FieldAccess.o
+ .bss           0x00000000        0x0 ./tutorials/JNI_FieldAccess.o
+ .text          0x00000000        0x0 ./tutorials/NativeCVariableClass.o
+ .data          0x00000000        0x0 ./tutorials/NativeCVariableClass.o
+ .bss           0x00000000        0x0 ./tutorials/NativeCVariableClass.o
+ .text._ZN11ResultClass4getDEv
+                0x00000000        0x0 ./tutorials/NativeCVariableClass.o
+ .text._ZN11ResultClass4getCEv
+                0x00000000        0x0 ./tutorials/NativeCVariableClass.o
+ .text._ZN11ResultClass3setEi
+                0x00000000        0x0 ./tutorials/NativeCVariableClass.o
+ .text._Z4getBv
+                0x00000000        0x0 ./tutorials/NativeCVariableClass.o
+ .text.Java_processing_hardware_arduino_cores_arduino_ResultClass_getB
+                0x00000000        0x0 ./tutorials/NativeCVariableClass.o
+ .text.Java_processing_hardware_arduino_cores_arduino_ResultClass_getC
+                0x00000000        0x0 ./tutorials/NativeCVariableClass.o
+ .text.Java_processing_hardware_arduino_cores_arduino_ResultClass_getD
+                0x00000000        0x0 ./tutorials/NativeCVariableClass.o
+ .text._Z27NativeCVariableEnhanced_setv
+                0x00000000        0x0 ./tutorials/NativeCVariableClass.o
+ .bss.result4bCpp
+                0x00000000        0x0 ./tutorials/NativeCVariableClass.o
+ .bss.resultClass
+                0x00000000        0x0 ./tutorials/NativeCVariableClass.o
+ .text          0x00000000        0x0 ./tutorials/NativeCVariableEnhanced.o
+ .data          0x00000000        0x0 ./tutorials/NativeCVariableEnhanced.o
+ .bss           0x00000000        0x0 ./tutorials/NativeCVariableEnhanced.o
+ .text.NativeCVariableEnhanced_inc
+                0x00000000        0x0 ./tutorials/NativeCVariableEnhanced.o
+ .data.resultArray
+                0x00000000        0x0 ./tutorials/NativeCVariableEnhanced.o
+ .data.resultStruct
+                0x00000000        0x0 ./tutorials/NativeCVariableEnhanced.o
+ COMMON         0x00000000        0x0 ./tutorials/NativeCVariableEnhanced.o
+ .text          0x00000000        0x0 ./tutorials/NativeCVariableSimple.o
+ .data          0x00000000        0x0 ./tutorials/NativeCVariableSimple.o
+ .bss           0x00000000        0x0 ./tutorials/NativeCVariableSimple.o
+ .text.Java_arduino_tutorial_NativeCVariableSimple_inc
+                0x00000000        0x0 ./tutorials/NativeCVariableSimple.o
+ .text.native_arduino_tutorial_NativeCVariableSimple_inc_IV
+                0x00000000        0x0 ./tutorials/NativeCVariableSimple.o
+ COMMON         0x00000000        0x0 ./tutorials/NativeCVariableSimple.o
+ .text          0x00000000        0x0 ./tutorials/ProcessingCLIB.o
+ .data          0x00000000        0x0 ./tutorials/ProcessingCLIB.o
+ .bss           0x00000000        0x0 ./tutorials/ProcessingCLIB.o
+ .text          0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring.c.o)
+ .data          0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring.c.o)
+ .bss           0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring.c.o)
+ .text.micros   0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring.c.o)
+ .text          0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring_digital.c.o)
+ .data          0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring_digital.c.o)
+ .bss           0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring_digital.c.o)
+ .text.digitalRead
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring_digital.c.o)
+ .text          0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+ .data          0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+ .bss           0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+ .text._ZN7Serial_5beginEj
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+ .text._ZN7Serial_3endEv
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+ .text._ZN7Serial_cvbEv
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+ .data._serialPeek
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+ .rodata._ZTV6Stream
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+ .text          0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(new.cpp.o)
+ .data          0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(new.cpp.o)
+ .bss           0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(new.cpp.o)
+ .text.__cxa_guard_acquire
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(new.cpp.o)
+ .text.__cxa_guard_release
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(new.cpp.o)
+ .text.__cxa_guard_abort
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(new.cpp.o)
+ .text.__cxa_pure_virtual
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(new.cpp.o)
+ .text._ZdlPv   0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(new.cpp.o)
+ .text._Znwj    0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(new.cpp.o)
+ .text          0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .data          0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .bss           0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .text._ZN5Print5printEPK19__FlashStringHelper
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .text._ZN5Print5printEc
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .text._ZN5Print5printERK9Printable
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .text._ZN5Print7printlnEv
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .text._ZN5Print7printlnEPK19__FlashStringHelper
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .text._ZN5Print7printlnEc
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .text._ZN5Print7printlnERK9Printable
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .text._ZN5Print5writeEPKc
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .text._ZN5Print11printNumberEmh
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .text._ZN5Print5printEmi
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .text._ZN5Print7printlnEmi
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .text._ZN5Print5printEji
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .text._ZN5Print7printlnEji
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .text._ZN5Print5printEhi
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .text._ZN5Print7printlnEhi
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .text._ZN5Print5printEli
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .text._ZN5Print7printlnEli
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .text._ZN5Print5printEii
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .text._ZN5Print7printlnEii
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .text._ZN5Print5printEPKc
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .text._ZN5Print10printFloatEdh
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .text._ZN5Print5printEdi
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .text._ZN5Print7printlnEdi
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .text._ZN5Print7printlnEPKc
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .text._ZN5Print5printERK6String
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .text._ZN5Print7printlnERK6String
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .rodata._ZTV5Print
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .text          0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+ .data          0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+ .bss           0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+ .text._Z4RecvPVhh
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+ .text._Z19USBGetConfigurationv
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+ .text._Z13USB_Availableh
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+ .text._Z13USB_SendSpaceh
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+ .text._Z11InitControli
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+ .text._ZN10USBDevice_C2Ev
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+ .text._ZN10USBDevice_C1Ev
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+ .text._ZN10USBDevice_6detachEv
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+ .text._ZN10USBDevice_10configuredEv
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+ .text._ZN10USBDevice_4pollEv
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+ .text._Z12USBConnectedv
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+ .text          0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .data          0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .bss           0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZNK6String6charAtEj
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6String9setCharAtEjc
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6StringixEj
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZNK6StringixEj
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6String7replaceEcc
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZNK6String5toIntEv
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6String4trimEv
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6String11toUpperCaseEv
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6String11toLowerCaseEv
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZNK6String16equalsIgnoreCaseERKS_
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZNK6String11lastIndexOfERKS_j
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZNK6String11lastIndexOfERKS_
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZNK6String7indexOfERKS_j
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZNK6String7indexOfERKS_
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZNK6String11lastIndexOfEcj
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZNK6String11lastIndexOfEc
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZNK6String7indexOfEcj
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZNK6String7indexOfEc
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZNK6String8getBytesEPhjj
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZNK6String8endsWithERKS_
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZNK6String6equalsEPKc
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZNK6String9compareToERKS_
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZNK6StringgeERKS_
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZNK6StringleERKS_
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZNK6StringgtERKS_
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZNK6StringltERKS_
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZNK6String6equalsERKS_
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZNK6String10startsWithERKS_j
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZNK6String10startsWithERKS_
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6String12changeBufferEj
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6String7replaceERKS_S1_
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6String7reserveEj
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6String6concatEPKcj
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6String6concatEm
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6String6concatEl
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6String6concatEj
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6String6concatEi
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6String6concatEh
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6String6concatEc
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6String6concatEPKc
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6String6concatERKS_
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6String10invalidateEv
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZplRK15StringSumHelperm
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZplRK15StringSumHelperl
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZplRK15StringSumHelperj
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZplRK15StringSumHelperi
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZplRK15StringSumHelperh
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZplRK15StringSumHelperc
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZplRK15StringSumHelperPKc
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZplRK15StringSumHelperRK6String
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6String4copyEPKcj
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6StringC1EPKc
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6StringC2EPKc
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6StringaSEPKc
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6StringC1Emh
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6StringC2Emh
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6StringC1Elh
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6StringC2Elh
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6StringC1Ejh
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6StringC2Ejh
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6StringC1Eih
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6StringC2Eih
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6StringC1Ehh
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6StringC2Ehh
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6StringC1Ec
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6StringC2Ec
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZNK6String9substringEjj
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZNK6String9substringEj
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6StringaSERKS_
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6StringC1ERKS_
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6StringC2ERKS_
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6StringD1Ev
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text._ZN6StringD2Ev
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .bss._ZZN6StringixEjE19dummy_writable_char
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .text          0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+ .data          0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+ .bss           0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+ .text._ZN6Mouse_C2Ev
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+ .text._ZN6Mouse_C1Ev
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+ .text._ZN6Mouse_5beginEv
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+ .text._ZN6Mouse_3endEv
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+ .text._ZN6Mouse_9isPressedEh
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+ .text._ZN9Keyboard_C2Ev
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+ .text._ZN9Keyboard_C1Ev
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+ .text._ZN9Keyboard_5beginEv
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+ .text._ZN9Keyboard_3endEv
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+ .text._ZN6Mouse_4moveEaaa
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+ .text._ZN6Mouse_7buttonsEh
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+ .text._ZN6Mouse_7releaseEh
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+ .text._ZN6Mouse_5pressEh
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+ .text._ZN6Mouse_5clickEh
+                0x00000000        0x0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(malloc.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(malloc.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(malloc.o)
+ .text.avr-libc
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(malloc.o)
+ COMMON         0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(malloc.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(realloc.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(realloc.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(realloc.o)
+ .text.avr-libc
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(realloc.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(atol.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(atol.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(atol.o)
+ .text.avr-libc
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(atol.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(exit.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(exit.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(exit.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(isspace.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(isspace.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(isspace.o)
+ .text.avr-libc
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(isspace.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(tolower.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(tolower.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(tolower.o)
+ .text.avr-libc
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(tolower.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(toupper.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(toupper.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(toupper.o)
+ .text.avr-libc
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(toupper.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(memcpy_P.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(memcpy_P.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(memcpy_P.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(memcpy.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(memcpy.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(memcpy.o)
+ .text.avr-libc
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(memcpy.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(memmove.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(memmove.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(memmove.o)
+ .text.avr-libc
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(memmove.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(memset.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(memset.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(memset.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strchr.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strchr.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strchr.o)
+ .text.avr-libc
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strchr.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strcmp.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strcmp.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strcmp.o)
+ .text.avr-libc
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strcmp.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strcpy.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strcpy.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strcpy.o)
+ .text.avr-libc
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strcpy.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strncmp.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strncmp.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strncmp.o)
+ .text.avr-libc
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strncmp.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strncpy.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strncpy.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strncpy.o)
+ .text.avr-libc
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strncpy.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strrchr.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strrchr.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strrchr.o)
+ .text.avr-libc
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strrchr.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strstr.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strstr.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strstr.o)
+ .text.avr-libc
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strstr.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(itoa.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(itoa.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(itoa.o)
+ .text.avr-libc
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(itoa.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(ltoa.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(ltoa.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(ltoa.o)
+ .text.avr-libc
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(ltoa.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(mulsi10.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(mulsi10.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(mulsi10.o)
+ .text.avr-libc
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(mulsi10.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(ultoa.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(ultoa.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(ultoa.o)
+ .text.avr-libc
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(ultoa.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(utoa.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(utoa.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(utoa.o)
+ .text.avr-libc
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(utoa.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(printf.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(printf.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(printf.o)
+ .text.avr-libc
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(printf.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(addsf3.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(addsf3.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(addsf3.o)
+ .text.avr-libc.fplib
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(addsf3.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(addsf3x.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(addsf3x.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(addsf3x.o)
+ .text.avr-libc.fplib
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(addsf3x.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(cmpsf2.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(cmpsf2.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(cmpsf2.o)
+ .text.avr-libc.fplib
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(cmpsf2.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(divsf3.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(divsf3.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(divsf3.o)
+ .text.avr-libc.fplib
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(divsf3.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(divsf3x.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(divsf3x.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(divsf3x.o)
+ .text.avr-libc.fplib
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(divsf3x.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fixsfsi.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fixsfsi.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fixsfsi.o)
+ .text.avr-libc.fplib
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fixsfsi.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fixunssfsi.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fixunssfsi.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fixunssfsi.o)
+ .text.avr-libc.fplib
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fixunssfsi.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(floatsisf.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(floatsisf.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(floatsisf.o)
+ .text.avr-libc.fplib
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(floatsisf.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_cmp.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_cmp.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_cmp.o)
+ .text.avr-libc.fplib
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_cmp.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_inf.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_inf.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_inf.o)
+ .text.avr-libc.fplib
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_inf.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_nan.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_nan.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_nan.o)
+ .text.avr-libc.fplib
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_nan.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_pscA.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_pscA.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_pscA.o)
+ .text.avr-libc.fplib
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_pscA.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_pscB.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_pscB.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_pscB.o)
+ .text.avr-libc.fplib
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_pscB.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_round.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_round.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_round.o)
+ .text.avr-libc.fplib
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_round.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_split3.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_split3.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_split3.o)
+ .text.avr-libc.fplib
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_split3.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_zero.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_zero.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_zero.o)
+ .text.avr-libc.fplib
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_zero.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(gesf2.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(gesf2.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(gesf2.o)
+ .text.avr-libc.fplib
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(gesf2.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(mulsf3.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(mulsf3.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(mulsf3.o)
+ .text.avr-libc.fplib
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(mulsf3.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(mulsf3x.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(mulsf3x.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(mulsf3x.o)
+ .text.avr-libc.fplib
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(mulsf3x.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(sin.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(sin.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(sin.o)
+ .text.avr-libc.fplib
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(sin.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(unordsf2.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(unordsf2.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(unordsf2.o)
+ .text.avr-libc.fplib
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(unordsf2.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
+ .text.avr-libc
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(vfprintf_std.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(cty_isfalse.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(cty_isfalse.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(cty_isfalse.o)
+ .text.avr-libc
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(cty_isfalse.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strnlen_P.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strnlen_P.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strnlen_P.o)
+ .text.avr-libc
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strnlen_P.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strnlen.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strnlen.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strnlen.o)
+ .text.avr-libc
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strnlen.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strrev.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strrev.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strrev.o)
+ .text.avr-libc
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(strrev.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fputc.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fputc.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fputc.o)
+ .text.avr-libc
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fputc.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(iob.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(iob.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(iob.o)
+ COMMON         0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(iob.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(ultoa_invert.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(ultoa_invert.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(ultoa_invert.o)
+ .text.avr-libc
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(ultoa_invert.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_rempio2.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_rempio2.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_rempio2.o)
+ .text.avr-libc.fplib
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_rempio2.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_sinus.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_sinus.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_sinus.o)
+ .text.avr-libc.fplib
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_sinus.o)
+ .progmem.gcc_fplib
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_sinus.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_mpack.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_mpack.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_mpack.o)
+ .text.avr-libc.fplib
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_mpack.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_powsodd.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_powsodd.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_powsodd.o)
+ .text.avr-libc.fplib
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_powsodd.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_powser.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_powser.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_powser.o)
+ .text.avr-libc.fplib
+                0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(fp_powser.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_mulsi3.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_mulsi3.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_mulsi3.o)
+ .text.libgcc   0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_mulsi3.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodhi4.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodhi4.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodhi4.o)
+ .text.libgcc   0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodhi4.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodsi4.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodsi4.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodsi4.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_divmodsi4.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_divmodsi4.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_divmodsi4.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_prologue.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_prologue.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_prologue.o)
+ .text.libgcc   0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_prologue.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_epilogue.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_epilogue.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_epilogue.o)
+ .text.libgcc   0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_epilogue.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .text.libgcc   0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
+ .text.libgcc   0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
+ .text.libgcc   0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_ctors.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_ctors.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_ctors.o)
+ .text.libgcc   0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_ctors.o)
+ .text          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_tablejump.o)
+ .data          0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_tablejump.o)
+ .bss           0x00000000        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_tablejump.o)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+text             0x00000000         0x00020000         xr
+data             0x00800060         0x0000ffa0         rw !x
+eeprom           0x00810000         0x00010000         rw !x
+fuse             0x00820000         0x00000400         rw !x
+lock             0x00830000         0x00000400         rw !x
+signature        0x00840000         0x00000400         rw !x
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+Address of section .data set to 0x800100
+LOAD d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32u4.o
+LOAD ./HaikuVM/examples/HaikuVM/HaikuVMUsingArduinoLIB.o
+LOAD ./HaikuVM/utility/haikuConfig.o
+LOAD ./HaikuVM/utility/haikuJava.o
+LOAD ./HaikuVM/utility/haikuJNI.o
+LOAD ./HaikuVM/utility/NativeCFunctions.o
+LOAD ./HaikuVM/HaikuAppMain.o
+LOAD ./HaikuVM/haikuJ2C.o
+LOAD ./HaikuVM/haikuJavaNatives.o
+LOAD ./HaikuVM/halfprecision.o
+LOAD ./HaikuVM/heap.o
+LOAD ./HaikuVM/JVM.o
+LOAD ./HaikuVM/romspace.o
+LOAD ./HaikuVM/simpleOS.o
+LOAD ./tutorials/ArduinoUsingCLIB.o
+LOAD ./tutorials/interruptTimer2.o
+LOAD ./tutorials/JNIenhanced.o
+LOAD ./tutorials/JNINativeLIBC.o
+LOAD ./tutorials/JNIsimple.o
+LOAD ./tutorials/JNI_FieldAccess.o
+LOAD ./tutorials/NativeCVariableClass.o
+LOAD ./tutorials/NativeCVariableEnhanced.o
+LOAD ./tutorials/NativeCVariableSimple.o
+LOAD ./tutorials/ProcessingCLIB.o
+LOAD D:\Users\cdn\workspace/lib/clibs\libleonardo.a
+LOAD d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a
+LOAD d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a
+LOAD d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
+LOAD d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libm.a
+LOAD d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a
+LOAD d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
+LOAD d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a
+LOAD d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a
+
+.hash
+ *(.hash)
+
+.dynsym
+ *(.dynsym)
+
+.dynstr
+ *(.dynstr)
+
+.gnu.version
+ *(.gnu.version)
+
+.gnu.version_d
+ *(.gnu.version_d)
+
+.gnu.version_r
+ *(.gnu.version_r)
+
+.rel.init
+ *(.rel.init)
+
+.rela.init
+ *(.rela.init)
+
+.rel.text
+ *(.rel.text)
+ *(.rel.text.*)
+ *(.rel.gnu.linkonce.t*)
+
+.rela.text
+ *(.rela.text)
+ *(.rela.text.*)
+ *(.rela.gnu.linkonce.t*)
+
+.rel.fini
+ *(.rel.fini)
+
+.rela.fini
+ *(.rela.fini)
+
+.rel.rodata
+ *(.rel.rodata)
+ *(.rel.rodata.*)
+ *(.rel.gnu.linkonce.r*)
+
+.rela.rodata
+ *(.rela.rodata)
+ *(.rela.rodata.*)
+ *(.rela.gnu.linkonce.r*)
+
+.rel.data
+ *(.rel.data)
+ *(.rel.data.*)
+ *(.rel.gnu.linkonce.d*)
+
+.rela.data
+ *(.rela.data)
+ *(.rela.data.*)
+ *(.rela.gnu.linkonce.d*)
+
+.rel.ctors
+ *(.rel.ctors)
+
+.rela.ctors
+ *(.rela.ctors)
+
+.rel.dtors
+ *(.rel.dtors)
+
+.rela.dtors
+ *(.rela.dtors)
+
+.rel.got
+ *(.rel.got)
+
+.rela.got
+ *(.rela.got)
+
+.rel.bss
+ *(.rel.bss)
+
+.rela.bss
+ *(.rela.bss)
+
+.rel.plt
+ *(.rel.plt)
+
+.rela.plt
+ *(.rela.plt)
+
+.text           0x00000000     0x2f5a
+ *(.vectors)
+ .vectors       0x00000000       0xac d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32u4.o
+                0x00000000                __vectors
+                0x00000000                __vector_default
+ *(.vectors)
+ *(.progmem.gcc*)
+ *(.progmem*)
+ .progmem.data  0x000000ac       0x9d ./HaikuVM/utility/haikuConfig.o
+                0x000000ac                Const0000
+                0x000000d3                Const0003
+                0x000000d5                exceptionTable
+                0x000000be                Const0001
+                0x000000cf                Const0002
+                0x000000e5                functionTable
+ .progmem.data  0x00000149      0x51b ./HaikuVM/utility/haikuJava.o
+                0x000005df                processing_hardware_arduino_cores_arduino_Print__class
+                0x000001eb                haiku_vm_MicroKernel_clinitHaikuMagic_V
+                0x00000222                java_lang_Error__class
+                0x00000171                java_lang_Throwable_fillInStackTrace_Ljava_lang_Throwable
+                0x00000176                java_lang_Throwable__class
+                0x000005f6                processing_hardware_arduino_cores_arduino_Arduino_digitalWrite_IIV
+                0x0000052d                processing_hardware_arduino_cores_arduino_Print_print_CV
+                0x000004dd                arduino_libraries_liquidcrystal_LiquidCrystal_write8bits_BV
+                0x00000182                java_lang_Object__class
+                0x00000436                arduino_libraries_liquidcrystal_LiquidCrystal_display_V
+                0x00000187                java_lang_Thread_stop_V
+                0x0000060a                processing_hardware_arduino_cores_arduino_Arduino__clinit(void) volatile
+                0x00000646                processing_hardware_arduino_cores_arduino_Stream__class
+                0x000001cd                java_lang_String_length_I
+                0x0000023d                arduino_libraries_liquidcrystal_LiquidCrystalHelloWorld_loop_V
+                0x000005ff                processing_hardware_arduino_cores_arduino_Arduino_millis_J
+                0x000001c8                YC__class
+                0x000001b6                java_lang_Thread_currentThread_Ljava_lang_Thread
+                0x0000062c                processing_hardware_arduino_cores_arduino_HardwareSerial__class
+                0x0000061b                processing_hardware_arduino_cores_arduino_HardwareSerial__init(void) volatile
+                0x0000056c                processing_hardware_arduino_cores_arduino_Print_printNumber_JIV
+                0x000001bd                java_lang_Thread_setStateAndSwitch_II
+                0x00000149                haiku_avr_lib_arduino_HaikuMicroKernelProcessing_init_V
+                0x00000297                arduino_libraries_liquidcrystal_LiquidCrystal_init_BBBBBBBBBBBBV
+                0x00000321                arduino_libraries_liquidcrystal_LiquidCrystal_begin_BBBV
+                0x0000017e                java_lang_Object__init(void) volatile
+                0x00000497                arduino_libraries_liquidcrystal_LiquidCrystal_pulseEnable_V
+                0x000003f5                arduino_libraries_liquidcrystal_LiquidCrystal_clear_V
+                0x00000227                arduino_libraries_liquidcrystal_LiquidCrystalHelloWorld_setup_V
+                0x00000254                arduino_libraries_liquidcrystal_LiquidCrystalHelloWorld__clinit(void) volatile
+                0x000001d6                java_lang_String_charAt_IC
+                0x0000014c                main_YLjava_lang_String
+                0x000001c0                java_lang_Thread__class
+                0x00000634                processing_hardware_arduino_cores_arduino_Stream__init(void) volatile
+                0x00000460                arduino_libraries_liquidcrystal_LiquidCrystal_send_BBV
+                0x00000554                processing_hardware_arduino_cores_arduino_Print_print_JV
+                0x00000161                java_lang_Throwable__init__Ljava_lang_String_V
+                0x00000626                processing_hardware_arduino_cores_arduino_HardwareSerial_write_BB
+                0x0000026e                arduino_libraries_liquidcrystal_LiquidCrystalHelloWorld__class
+                0x00000656                processing_hardware_arduino_cores_arduino_ArduinoImpl_digitalWrite_BBV
+                0x0000065f                processing_hardware_arduino_cores_arduino_ArduinoImpl__class
+                0x0000064b                processing_hardware_arduino_cores_arduino_HardwareSerialImpl_write_BB
+                0x0000015c                haiku_avr_lib_arduino_HaikuMicroKernelProcessing__class
+                0x000004b4                arduino_libraries_liquidcrystal_LiquidCrystal_write4bits_BV
+                0x000001e0                java_lang_String__class
+                0x00000659                processing_hardware_arduino_cores_arduino_ArduinoImpl_millis_J
+                0x00000616                processing_hardware_arduino_cores_arduino_Arduino__class
+                0x0000020f                java_lang_OutOfMemoryError__init__Ljava_lang_String_V
+                0x000005ed                processing_hardware_arduino_cores_arduino_Arduino_pinMode_IIV
+                0x00000273                YB__class
+                0x00000216                java_lang_OutOfMemoryError__class
+                0x00000507                arduino_libraries_liquidcrystal_LiquidCrystal__class
+                0x0000021b                java_lang_Error__init__Ljava_lang_String_V
+                0x00000278                arduino_libraries_liquidcrystal_LiquidCrystal__init__BBBBBBV
+                0x000001fb                haiku_vm_MicroKernel__clinit(void) volatile
+                0x00000457                arduino_libraries_liquidcrystal_LiquidCrystal_write_BB
+                0x00000604                processing_hardware_arduino_cores_arduino_Arduino_delayMicroseconds_IV
+                0x00000527                processing_hardware_arduino_cores_arduino_Print__init(void) volatile
+                0x000005d7                processing_hardware_arduino_cores_arduino_Print__clinit(void) volatile
+                0x00000653                processing_hardware_arduino_cores_arduino_ArduinoImpl_pinMode_BBV
+                0x000003ea                arduino_libraries_liquidcrystal_LiquidCrystal_begin_BBV
+                0x00000400                arduino_libraries_liquidcrystal_LiquidCrystal_setCursor_BBV
+                0x0000020a                haiku_vm_MicroKernel__class
+                0x0000044f                arduino_libraries_liquidcrystal_LiquidCrystal_command_BV
+                0x0000065c                processing_hardware_arduino_cores_arduino_ArduinoImpl_delayMicroseconds_IV
+                0x0000064e                processing_hardware_arduino_cores_arduino_HardwareSerialImpl__class
+                0x00000538                processing_hardware_arduino_cores_arduino_Print_print_Ljava_lang_String_V
+ .progmem.data  0x00000664        0x9 ./HaikuVM/haikuJ2C.o
+                0x00000664                defs
+ .progmem.data  0x0000066d      0x200 ./HaikuVM/JVM.o
+ .progmem.data  0x0000086d       0x82 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring_digital.c.o)
+                0x0000086d                port_to_mode_PGM
+                0x00000897                digital_pin_to_port_PGM
+                0x000008b5                digital_pin_to_bit_mask_PGM
+                0x0000087b                port_to_output_PGM
+                0x00000889                port_to_input_PGM
+                0x000008d3                digital_pin_to_timer_PGM
+                0x000008e3                analog_pin_to_channel_PGM
+ .progmem.data  0x000008ef       0x42 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+                0x000008ef                _cdcInterface
+ .progmem.data  0x00000931       0x67 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+                0x00000931                STRING_LANGUAGE
+                0x00000935                STRING_IPRODUCT
+                0x0000096f                USB_DeviceDescriptor
+                0x00000993                _initEndpoints
+                0x00000957                STRING_IMANUFACTURER
+                0x00000981                USB_DeviceDescriptorA
+ .progmem.data  0x00000998       0xfe D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+                0x00000a16                _asciimap
+                0x00000998                _hidReportDescriptor
+                0x000009fd                _hidInterface
+                0x00000a96                . = ALIGN (0x2)
+                0x00000a96                __trampolines_start = .
+ *(.trampolines)
+ .trampolines   0x00000a96        0x0 linker stubs
+ *(.trampolines*)
+                0x00000a96                __trampolines_end = .
+ *(.jumptables)
+ *(.jumptables*)
+ *(.lowtext)
+ *(.lowtext*)
+                0x00000a96                __ctors_start = .
+ *(.ctors)
+ .ctors         0x00000a96        0x2 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+ .ctors         0x00000a98        0x2 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+ .ctors         0x00000a9a        0x2 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+                0x00000a9c                __ctors_end = .
+                0x00000a9c                __dtors_start = .
+ *(.dtors)
+                0x00000a9c                __dtors_end = .
+ SORT(*)(.ctors)
+ SORT(*)(.dtors)
+ *(.init0)
+ .init0         0x00000a9c        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32u4.o
+                0x00000a9c                __init
+ *(.init0)
+ *(.init1)
+ *(.init1)
+ *(.init2)
+ .init2         0x00000a9c        0xc d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32u4.o
+ *(.init2)
+ *(.init3)
+ *(.init3)
+ *(.init4)
+ .init4         0x00000aa8       0x16 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_copy_data.o)
+                0x00000aa8                __do_copy_data
+ .init4         0x00000abe       0x10 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_clear_bss.o)
+                0x00000abe                __do_clear_bss
+ *(.init4)
+ *(.init5)
+ *(.init5)
+ *(.init6)
+ .init6         0x00000ace       0x16 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_ctors.o)
+                0x00000ace                __do_global_ctors
+ *(.init6)
+ *(.init7)
+ *(.init7)
+ *(.init8)
+ *(.init8)
+ *(.init9)
+ .init9         0x00000ae4        0x8 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32u4.o
+ *(.init9)
+ *(.text)
+ .text          0x00000aec        0x4 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5/crtm32u4.o
+                0x00000aec                __vector_38
+                0x00000aec                __vector_22
+                0x00000aec                __vector_28
+                0x00000aec                __vector_1
+                0x00000aec                __vector_32
+                0x00000aec                __vector_34
+                0x00000aec                __vector_24
+                0x00000aec                __vector_12
+                0x00000aec                __bad_interrupt
+                0x00000aec                __vector_6
+                0x00000aec                __vector_31
+                0x00000aec                __vector_35
+                0x00000aec                __vector_39
+                0x00000aec                __vector_3
+                0x00000aec                __vector_30
+                0x00000aec                __vector_25
+                0x00000aec                __vector_13
+                0x00000aec                __vector_17
+                0x00000aec                __vector_19
+                0x00000aec                __vector_7
+                0x00000aec                __vector_41
+                0x00000aec                __vector_27
+                0x00000aec                __vector_5
+                0x00000aec                __vector_33
+                0x00000aec                __vector_37
+                0x00000aec                __vector_4
+                0x00000aec                __vector_9
+                0x00000aec                __vector_2
+                0x00000aec                __vector_21
+                0x00000aec                __vector_15
+                0x00000aec                __vector_36
+                0x00000aec                __vector_29
+                0x00000aec                __vector_40
+                0x00000aec                __vector_8
+                0x00000aec                __vector_26
+                0x00000aec                __vector_14
+                0x00000aec                __vector_16
+                0x00000aec                __vector_18
+                0x00000aec                __vector_20
+                0x00000aec                __vector_42
+                0x00000af0                . = ALIGN (0x2)
+ *(.text.*)
+ .text.native_processing_hardware_arduino_cores_arduino_HardwareSerialImpl_write_BB
+                0x00000af0       0x1a ./HaikuVM/examples/HaikuVM/HaikuVMUsingArduinoLIB.o
+                0x00000af0                native_processing_hardware_arduino_cores_arduino_HardwareSerialImpl_write_BB
+ .text.native_processing_hardware_arduino_cores_arduino_ArduinoImpl_delayMicroseconds_IV
+                0x00000b0a       0x18 ./HaikuVM/utility/NativeCFunctions.o
+                0x00000b0a                native_processing_hardware_arduino_cores_arduino_ArduinoImpl_delayMicroseconds_IV
+ .text.native_processing_hardware_arduino_cores_arduino_ArduinoImpl_millis_J
+                0x00000b22       0x1e ./HaikuVM/utility/NativeCFunctions.o
+                0x00000b22                native_processing_hardware_arduino_cores_arduino_ArduinoImpl_millis_J
+ .text.native_processing_hardware_arduino_cores_arduino_ArduinoImpl_digitalWrite_BBV
+                0x00000b40       0x24 ./HaikuVM/utility/NativeCFunctions.o
+                0x00000b40                native_processing_hardware_arduino_cores_arduino_ArduinoImpl_digitalWrite_BBV
+ .text.native_processing_hardware_arduino_cores_arduino_ArduinoImpl_pinMode_BBV
+                0x00000b64       0x24 ./HaikuVM/utility/NativeCFunctions.o
+                0x00000b64                native_processing_hardware_arduino_cores_arduino_ArduinoImpl_pinMode_BBV
+ .text.main     0x00000b88        0xa ./HaikuVM/HaikuAppMain.o
+                0x00000b88                main
+ .text.throwException
+                0x00000b92        0x2 ./HaikuVM/haikuJ2C.o
+                0x00000b92                throwException
+ .text.getMethod
+                0x00000b94       0x9c ./HaikuVM/haikuJ2C.o
+                0x00000b94                getMethod
+ .text.push     0x00000c30       0x1c ./HaikuVM/haikuJ2C.o
+                0x00000c30                push
+ .text.getLocal
+                0x00000c4c       0x14 ./HaikuVM/haikuJ2C.o
+                0x00000c4c                getLocal
+ .text.setLocal
+                0x00000c60       0x1c ./HaikuVM/haikuJ2C.o
+                0x00000c60                setLocal
+ .text.pushTop0
+                0x00000c7c       0x14 ./HaikuVM/haikuJ2C.o
+                0x00000c7c                pushTop0
+ .text.pushTop  0x00000c90       0x14 ./HaikuVM/haikuJ2C.o
+                0x00000c90                pushTop
+ .text.pop      0x00000ca4       0x18 ./HaikuVM/haikuJ2C.o
+                0x00000ca4                pop
+ .text.popTop0  0x00000cbc       0x14 ./HaikuVM/haikuJ2C.o
+                0x00000cbc                popTop0
+ .text.popTop   0x00000cd0       0x14 ./HaikuVM/haikuJ2C.o
+                0x00000cd0                popTop
+ .text.apop     0x00000ce4        0xc ./HaikuVM/haikuJ2C.o
+                0x00000ce4                apop
+ .text.ipop     0x00000cf0        0xc ./HaikuVM/haikuJ2C.o
+                0x00000cf0                ipop
+ .text.popp2    0x00000cfc       0x18 ./HaikuVM/haikuJ2C.o
+                0x00000cfc                popp2
+ .text.areturn  0x00000d14       0x74 ./HaikuVM/haikuJ2C.o
+                0x00000d14                areturn
+ .text.invoke   0x00000d88      0x152 ./HaikuVM/haikuJ2C.o
+                0x00000d88                invoke
+ .text.getField
+                0x00000eda       0x24 ./HaikuVM/haikuJ2C.o
+                0x00000eda                getField
+ .text.compare  0x00000efe       0x46 ./HaikuVM/haikuJ2C.o
+                0x00000efe                compare
+ .text.ldc      0x00000f44       0x9c ./HaikuVM/haikuJ2C.o
+                0x00000f44                ldc
+ .text.native_java_lang_Thread_setStateAndSwitch_II
+                0x00000fe0       0x18 ./HaikuVM/haikuJavaNatives.o
+                0x00000fe0                native_java_lang_Thread_setStateAndSwitch_II
+ .text.getObjLength
+                0x00000ff8        0xe ./HaikuVM/heap.o
+                0x00000ff8                getObjLength
+ .text.setMark  0x00001006       0x7e ./HaikuVM/heap.o
+ .text.native_java_lang_System_gc_V
+                0x00001084      0x132 ./HaikuVM/heap.o
+                0x00001084                native_java_lang_System_gc_V
+ .text.GCalloc  0x000011b6      0x128 ./HaikuVM/heap.o
+                0x000011b6                GCalloc
+ .text.newarray
+                0x000012de       0x3e ./HaikuVM/heap.o
+                0x000012de                newarray
+ .text.newStack
+                0x0000131c        0xa ./HaikuVM/heap.o
+                0x0000131c                newStack
+ .text.newInstance
+                0x00001326        0xe ./HaikuVM/heap.o
+                0x00001326                newInstance
+ .text.GETCODEWORD2
+                0x00001334       0x1c ./HaikuVM/JVM.o
+                0x00001334                GETCODEWORD2
+ .text.GETCODEBYTE2
+                0x00001350       0x18 ./HaikuVM/JVM.o
+                0x00001350                GETCODEBYTE2
+ .text.setupHaikuVM
+                0x00001368       0x68 ./HaikuVM/JVM.o
+                0x00001368                setupHaikuVM
+ .text.switchThread
+                0x000013d0       0x70 ./HaikuVM/JVM.o
+                0x000013d0                switchThread
+ .text.startJVM
+                0x00001440      0x5ae ./HaikuVM/JVM.o
+                0x00001440                startJVM
+ .text.interpretNextByteCode
+                0x000019ee      0x568 ./HaikuVM/JVM.o
+                0x000019ee                interpretNextByteCode
+ .text.Java_haiku_avr_lib_arduino_HaikuMicroKernelProcessing_init
+                0x00001f56        0xe ./tutorials/ProcessingCLIB.o
+                0x00001f56                Java_haiku_avr_lib_arduino_HaikuMicroKernelProcessing_init
+ .text.native_haiku_avr_lib_arduino_HaikuMicroKernelProcessing_init_V
+                0x00001f64       0x16 ./tutorials/ProcessingCLIB.o
+                0x00001f64                native_haiku_avr_lib_arduino_HaikuMicroKernelProcessing_init_V
+ .text.__vector_23
+                0x00001f7a       0x90 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring.c.o)
+                0x00001f7a                __vector_23
+ .text.millis   0x0000200a       0x1c D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring.c.o)
+                0x0000200a                millis
+ .text.delay    0x00002026       0xb2 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring.c.o)
+                0x00002026                delay
+ .text.delayMicroseconds
+                0x000020d8       0x14 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring.c.o)
+                0x000020d8                delayMicroseconds
+ .text.init     0x000020ec       0xac D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring.c.o)
+                0x000020ec                init
+ .text.pinMode  0x00002198       0x7e D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring_digital.c.o)
+                0x00002198                pinMode
+ .text.turnOffPWM
+                0x00002216       0x9c D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring_digital.c.o)
+ .text.digitalWrite
+                0x000022b2       0x66 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring_digital.c.o)
+                0x000022b2                digitalWrite
+ .text._ZN7Serial_9availableEv
+                0x00002318       0x1c D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+                0x00002318                Serial_::available()
+ .text._ZN7Serial_4peekEv
+                0x00002334       0x32 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+                0x00002334                Serial_::peek()
+ .text._ZN7Serial_4readEv
+                0x00002366       0x46 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+                0x00002366                Serial_::read()
+ .text._GLOBAL__I_cdc_rx_buffer
+                0x000023ac       0x2e D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+ .text._ZN7Serial_5writeEh
+                0x000023da       0x50 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+                0x000023da                Serial_::write(unsigned char)
+ .text._ZN7Serial_5flushEv
+                0x0000242a        0x8 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+                0x0000242a                Serial_::flush()
+ .text._ZN7Serial_6acceptEv
+                0x00002432       0x4c D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+                0x00002432                Serial_::accept()
+ .text._Z16CDC_GetInterfacePh
+                0x0000247e       0x18 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+                0x0000247e                CDC_GetInterface(unsigned char*)
+ .text._Z9CDC_SetupR5Setup
+                0x00002496       0xac D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+                0x00002496                CDC_Setup(Setup&)
+ .text._ZN5Print5writeEPKhj
+                0x00002542       0x54 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+                0x00002542                Print::write(unsigned char const*, unsigned int)
+ .text._Z8USB_RecvhPvi
+                0x00002596       0x68 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+                0x00002596                USB_Recv(unsigned char, void*, int)
+ .text._Z8USB_Recvh
+                0x000025fe       0x32 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+                0x000025fe                USB_Recv(unsigned char)
+ .text._Z15USB_SendControlhPKvi
+                0x00002630       0x88 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+                0x00002630                USB_SendControl(unsigned char, void const*, int)
+ .text._Z15USB_RecvControlPvi
+                0x000026b8       0x30 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+                0x000026b8                USB_RecvControl(void*, int)
+ .text._Z9USB_Flushh
+                0x000026e8       0x14 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+                0x000026e8                USB_Flush(unsigned char)
+ .text._GLOBAL__I_TxLEDPulse
+                0x000026fc        0x2 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+ .text._ZN10USBDevice_6attachEv
+                0x000026fe       0x3c D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+                0x000026fe                USBDevice_::attach()
+ .text._Z8USB_SendhPKvi
+                0x0000273a      0x14a D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+                0x0000273a                USB_Send(unsigned char, void const*, int)
+ .text.__vector_10
+                0x00002884       0xdc D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+                0x00002884                __vector_10
+ .text._Z14SendInterfacesv
+                0x00002960       0x32 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+                0x00002960                SendInterfaces()
+ .text.__vector_11
+                0x00002992      0x292 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+                0x00002992                __vector_11
+ .text._Z9HID_SetupR5Setup
+                0x00002c24       0x38 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+                0x00002c24                HID_Setup(Setup&)
+ .text._ZN9Keyboard_5writeEh
+                0x00002c5c       0x3c D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+                0x00002c5c                Keyboard_::write(unsigned char)
+ .text._GLOBAL__I_Mouse
+                0x00002c98       0x1a D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+ .text._Z14HID_SendReporthPKvi
+                0x00002cb2       0x42 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+                0x00002cb2                HID_SendReport(unsigned char, void const*, int)
+ .text._ZN9Keyboard_10sendReportEP9KeyReport
+                0x00002cf4        0xc D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+                0x00002cf4                Keyboard_::sendReport(KeyReport*)
+ .text._ZN9Keyboard_10releaseAllEv
+                0x00002d00       0x1a D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+                0x00002d00                Keyboard_::releaseAll()
+ .text._ZN9Keyboard_7releaseEh
+                0x00002d1a       0x86 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+                0x00002d1a                Keyboard_::release(unsigned char)
+ .text._ZN9Keyboard_5pressEh
+                0x00002da0       0xe2 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+                0x00002da0                Keyboard_::press(unsigned char)
+ .text._Z17HID_GetDescriptori
+                0x00002e82       0x10 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+                0x00002e82                HID_GetDescriptor(int)
+ .text._Z16HID_GetInterfacePh
+                0x00002e92       0x18 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+                0x00002e92                HID_GetInterface(unsigned char*)
+ .text.avr-libc
+                0x00002eaa        0x6 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(exit.o)
+                0x00002eaa                exit
+ .text.avr-libc
+                0x00002eb0       0x12 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(memcpy_P.o)
+                0x00002eb0                memcpy_P
+ .text.avr-libc
+                0x00002ec2        0xe d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/../../../../avr/lib/avr5\libc.a(memset.o)
+                0x00002ec2                memset
+ .text.libgcc   0x00002ed0       0x44 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_udivmodsi4.o)
+                0x00002ed0                __udivmodsi4
+ .text.libgcc   0x00002f14       0x36 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_divmodsi4.o)
+                0x00002f14                __divmodsi4
+ .text.libgcc   0x00002f4a        0xc d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_tablejump.o)
+                0x00002f4e                __tablejump__
+                0x00002f4a                __tablejump2__
+                0x00002f56                . = ALIGN (0x2)
+ *(.fini9)
+ .fini9         0x00002f56        0x0 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+                0x00002f56                _exit
+ *(.fini9)
+ *(.fini8)
+ *(.fini8)
+ *(.fini7)
+ *(.fini7)
+ *(.fini6)
+ *(.fini6)
+ *(.fini5)
+ *(.fini5)
+ *(.fini4)
+ *(.fini4)
+ *(.fini3)
+ *(.fini3)
+ *(.fini2)
+ *(.fini2)
+ *(.fini1)
+ *(.fini1)
+ *(.fini0)
+ .fini0         0x00002f56        0x4 d:/winavr-20100110/bin/../lib/gcc/avr/4.3.3/avr5\libgcc.a(_exit.o)
+ *(.fini0)
+                0x00002f5a                _etext = .
+
+.data           0x00800100       0x2a load address 0x00002f5a
+                0x00800100                PROVIDE (__data_start, .)
+ *(.data)
+ *(.data*)
+ .data._ZL12_usbLineInfo
+                0x00800100        0x8 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+ .data._hid_protocol
+                0x00800108        0x1 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+                0x00800108                _hid_protocol
+ .data._hid_idle
+                0x00800109        0x1 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+                0x00800109                _hid_idle
+ *(.rodata)
+ *(.rodata*)
+ .rodata._ZTV7Serial_
+                0x0080010a       0x12 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+                0x0080010a                vtable for Serial_
+ .rodata._ZTV9Keyboard_
+                0x0080011c        0xe D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+                0x0080011c                vtable for Keyboard_
+ *(.gnu.linkonce.d*)
+                0x0080012a                . = ALIGN (0x2)
+                0x0080012a                _edata = .
+                0x0080012a                PROVIDE (__data_end, .)
+
+.bss            0x0080012a      0x95a
+                0x0080012a                PROVIDE (__bss_start, .)
+ *(.bss)
+ *(.bss*)
+ .bss.GCcalls   0x0080012a        0x2 ./HaikuVM/heap.o
+ .bss.timer0_overflow_count
+                0x0080012c        0x4 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring.c.o)
+                0x0080012c                timer0_overflow_count
+ .bss.timer0_millis
+                0x00800130        0x4 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring.c.o)
+                0x00800130                timer0_millis
+ .bss.timer0_fract
+                0x00800134        0x1 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring.c.o)
+ .bss.cdc_rx_buffer
+                0x00800135       0x44 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+                0x00800135                cdc_rx_buffer
+ .bss.Serial    0x00800179        0xe D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+                0x00800179                Serial
+ .bss.TxLEDPulse
+                0x00800187        0x1 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+                0x00800187                TxLEDPulse
+ .bss.RxLEDPulse
+                0x00800188        0x1 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+                0x00800188                RxLEDPulse
+ .bss._usbConfiguration
+                0x00800189        0x1 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+                0x00800189                _usbConfiguration
+ .bss._cmark    0x0080018a        0x2 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+                0x0080018a                _cmark
+ .bss._cend     0x0080018c        0x2 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+                0x0080018c                _cend
+ .bss._cdcComposite
+                0x0080018e        0x1 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+                0x0080018e                _cdcComposite
+ .bss.USBDevice
+                0x0080018f        0x1 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+                0x0080018f                USBDevice
+ .bss.Mouse     0x00800190        0x1 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+                0x00800190                Mouse
+ .bss.Keyboard  0x00800191        0xc D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+                0x00800191                Keyboard
+ *(COMMON)
+ COMMON         0x0080019d        0xc ./HaikuVM/utility/haikuConfig.o
+                0x0080019d                allStatics
+ COMMON         0x008001a9        0xc ./HaikuVM/haikuJ2C.o
+                0x008001a9                lsp
+                0x008001ab                stack
+                0x008001ad                top
+                0x008001b1                dataSp
+                0x008001b3                pc
+ COMMON         0x008001b5      0x8cf ./HaikuVM/JVM.o
+                0x008001b5                t
+                0x008001b6                heapmem
+                0x00800a83                bc
+                0x00800a84                PROVIDE (__bss_end, .)
+                0x00002f5a                __data_load_start = LOADADDR (.data)
+                0x00002f84                __data_load_end = (__data_load_start + SIZEOF (.data))
+
+.noinit         0x00800a84        0x0
+                0x00800a84                PROVIDE (__noinit_start, .)
+ *(.noinit*)
+                0x00800a84                PROVIDE (__noinit_end, .)
+                0x00800a84                _end = .
+                0x00800a84                PROVIDE (__heap_start, .)
+
+.eeprom         0x00810000        0x0
+ *(.eeprom*)
+                0x00810000                __eeprom_end = .
+
+.fuse
+ *(.fuse)
+ *(.lfuse)
+ *(.hfuse)
+ *(.efuse)
+
+.lock
+ *(.lock*)
+
+.signature
+ *(.signature*)
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment
+ *(.comment)
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges  0x00000000      0x630
+ *(.debug_aranges)
+ .debug_aranges
+                0x00000000       0x48 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring.c.o)
+ .debug_aranges
+                0x00000048       0x38 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring_digital.c.o)
+ .debug_aranges
+                0x00000080       0x78 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+ .debug_aranges
+                0x000000f8       0x48 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(new.cpp.o)
+ .debug_aranges
+                0x00000140       0xf0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .debug_aranges
+                0x00000230       0xc8 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+ .debug_aranges
+                0x000002f8      0x260 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .debug_aranges
+                0x00000558       0xd8 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+
+.debug_pubnames
+                0x00000000      0xfe4
+ *(.debug_pubnames)
+ .debug_pubnames
+                0x00000000       0x8d D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring.c.o)
+ .debug_pubnames
+                0x0000008d       0xf8 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring_digital.c.o)
+ .debug_pubnames
+                0x00000185      0x128 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+ .debug_pubnames
+                0x000002ad       0x94 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(new.cpp.o)
+ .debug_pubnames
+                0x00000341      0x200 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .debug_pubnames
+                0x00000541      0x28c D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+ .debug_pubnames
+                0x000007cd      0x5bf D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .debug_pubnames
+                0x00000d8c      0x258 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+
+.debug_info     0x00000000     0x82b9
+ *(.debug_info)
+ .debug_info    0x00000000      0x33e D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring.c.o)
+ .debug_info    0x0000033e      0x5cf D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring_digital.c.o)
+ .debug_info    0x0000090d     0x1890 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+ .debug_info    0x0000219d      0x13b D:\Users\cdn\workspace/lib/clibs\libleonardo.a(new.cpp.o)
+ .debug_info    0x000022d8     0x1afa D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .debug_info    0x00003dd2     0x1542 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+ .debug_info    0x00005314     0x21c5 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .debug_info    0x000074d9      0xde0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+ *(.gnu.linkonce.wi.*)
+
+.debug_abbrev   0x00000000     0x170b
+ *(.debug_abbrev)
+ .debug_abbrev  0x00000000      0x17d D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring.c.o)
+ .debug_abbrev  0x0000017d      0x167 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring_digital.c.o)
+ .debug_abbrev  0x000002e4      0x398 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+ .debug_abbrev  0x0000067c       0xdd D:\Users\cdn\workspace/lib/clibs\libleonardo.a(new.cpp.o)
+ .debug_abbrev  0x00000759      0x336 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .debug_abbrev  0x00000a8f      0x4c7 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+ .debug_abbrev  0x00000f56      0x343 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .debug_abbrev  0x00001299      0x472 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+
+.debug_line     0x00000000     0x3891
+ *(.debug_line)
+ .debug_line    0x00000000      0x3bd D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring.c.o)
+ .debug_line    0x000003bd      0x2fd D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring_digital.c.o)
+ .debug_line    0x000006ba      0x494 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+ .debug_line    0x00000b4e      0x1b2 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(new.cpp.o)
+ .debug_line    0x00000d00      0x757 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .debug_line    0x00001457      0xbf7 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+ .debug_line    0x0000204e     0x1136 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .debug_line    0x00003184      0x70d D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+
+.debug_frame    0x00000000      0xb60
+ *(.debug_frame)
+ .debug_frame   0x00000000       0x70 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring.c.o)
+ .debug_frame   0x00000070       0x50 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring_digital.c.o)
+ .debug_frame   0x000000c0       0xd0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+ .debug_frame   0x00000190       0x70 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(new.cpp.o)
+ .debug_frame   0x00000200      0x1c0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .debug_frame   0x000003c0      0x170 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+ .debug_frame   0x00000530      0x4a0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .debug_frame   0x000009d0      0x190 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+
+.debug_str      0x00000000     0x1e19
+ *(.debug_str)
+ .debug_str     0x00000000      0x102 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring.c.o)
+                                0x142 (size before relaxing)
+ .debug_str     0x00000102      0x127 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring_digital.c.o)
+                                0x1c7 (size before relaxing)
+ .debug_str     0x00000229      0xdd5 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+                                0xeb3 (size before relaxing)
+ .debug_str     0x00000ffe       0xb7 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(new.cpp.o)
+                                 0xf5 (size before relaxing)
+ .debug_str     0x000010b5      0x38a D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+                                0xbdf (size before relaxing)
+ .debug_str     0x0000143f      0x4f0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+                                0x6b6 (size before relaxing)
+ .debug_str     0x0000192f      0x1c0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+                                0x987 (size before relaxing)
+ .debug_str     0x00001aef      0x32a D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+                                0x589 (size before relaxing)
+
+.debug_loc      0x00000000     0x409f
+ *(.debug_loc)
+ .debug_loc     0x00000000      0x16d D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring.c.o)
+ .debug_loc     0x0000016d      0x223 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring_digital.c.o)
+ .debug_loc     0x00000390      0x22f D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+ .debug_loc     0x000005bf       0x80 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(new.cpp.o)
+ .debug_loc     0x0000063f      0xdb8 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .debug_loc     0x000013f7      0x828 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+ .debug_loc     0x00001c1f     0x1f05 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .debug_loc     0x00003b24      0x57b D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
+
+.debug_macinfo
+ *(.debug_macinfo)
+OUTPUT(LiquidCrystalHelloWorld.elf elf32-avr)
+LOAD linker stubs
+
+.debug_ranges   0x00000000      0x6b0
+ .debug_ranges  0x00000000       0x40 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring.c.o)
+ .debug_ranges  0x00000040       0x30 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(wiring_digital.c.o)
+ .debug_ranges  0x00000070       0x70 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(CDC.cpp.o)
+ .debug_ranges  0x000000e0       0x40 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(new.cpp.o)
+ .debug_ranges  0x00000120       0xe8 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(Print.cpp.o)
+ .debug_ranges  0x00000208      0x168 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(USBCore.cpp.o)
+ .debug_ranges  0x00000370      0x270 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(WString.cpp.o)
+ .debug_ranges  0x000005e0       0xd0 D:\Users\cdn\workspace/lib/clibs\libleonardo.a(HID.cpp.o)
