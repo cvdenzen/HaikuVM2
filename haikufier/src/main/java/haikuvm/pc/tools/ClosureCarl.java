@@ -54,6 +54,10 @@ import static org.objectweb.asm.util.Printer.*;
  * This class will gather all referenced fields and methods (recursively) (the scan method)
  * and create (the build method) new classes (only the ones used in the given method at scan()) and these classes
  * will only contain the used fields and methods.
+ * 
+ * A tree will be built with the referenced fields and methods. This tree is not necessarily complete:
+ * it will contain all fields and methods, but not in every branch of the tree. To improve performance,
+ * duplicate entries can be deleted. januari 2014.
  *
  * Advantages asm over bcel:
  * it is maintained
@@ -61,7 +65,7 @@ import static org.objectweb.asm.util.Printer.*;
  * Disadvantages asm:
  * it it programmed to be fast, not to be stable or to be maintainable
  * 
- * asm reference at http://download.forge.objectweb.org/asm/asm4-guide.pdf
+ * asm reference at http://download.forge.objectweb.org/asm/-guide.pdf
  * 
  * @author Carl van Denzen
  *
@@ -75,7 +79,9 @@ public class ClosureCarl {
 	 */
 	public ClosureCarl(ClassLoader classLoader) {
 		this.classLoader=classLoader;
-		// Create an ASM ClassReader
+		// Create the root of the tree
+		DefaultMutableTreeNode treeNode=new DefaultMutableTreeNode();
+		tree=new DefaultTreeModel(treeNode);
 	}
 	/**
 	 * A convenience constructor.
@@ -128,10 +134,10 @@ public class ClosureCarl {
 	 */
 	public void scan(Member rootMember) throws ClassNotFoundException {
 		logger.fine("** Scan ** "+rootMember);
-		DefaultMutableTreeNode treeNode=new DefaultMutableTreeNode(rootMember);
-		tree=new DefaultTreeModel(treeNode);
-		scan(rootMember,treeNode);
+		// Start this scan with the root node
+		scan(rootMember,(DefaultMutableTreeNode) tree.getRoot());
 
+		// Print the members, ordered by name
 		SortedSet<Member> sortedSet=new TreeSet<Member>(toBeIncludedMembers);
 		StringBuilder sb=new StringBuilder(1000);
 		sb.append("End of scan "+rootMember+ ", included members are:");
@@ -143,7 +149,7 @@ public class ClosureCarl {
 		//System.out.println("} /* "+new Date().toString()+" */");
 	}
 	/**
-	 * Start parsing this method
+	 * Start scanning this member
 	 * @param classname
 	 * @param member The method or field to be scanned
 	 * @param parentTreeNode The position of this element in the tree of included members (for presentational purposes only)
@@ -247,8 +253,8 @@ public class ClosureCarl {
 			@Override
 			public MethodVisitor visitMethod(int access, final String name,
 					String desc, String signature, String[] exceptions) {
-				System.out.println("visitMethod desc=" + desc + ", signature="+signature+", owner="+owner+", name=" + name);
-				Member newMember=new Member(owner,name,desc,member.getUrl());
+				System.out.println("visitMethod access="+access+", desc=" + desc + ", signature="+signature+", owner="+owner+", name=" + name);
+				Member newMember=new Member(owner,access,name,desc,member.getUrl());
 				// Check whether already included
 				if (toBeIncludedMembers.contains(newMember)) {
 					// Was already inserted, do not parse any further
@@ -283,7 +289,7 @@ public class ClosureCarl {
 					logger.finest("child="+en.nextElement());
 				};
 				// Parse the bytecode, to look for other methods that must be included
-				return new MethodVisitor(Opcodes.ASM4) {
+				return new MethodVisitor(Opcodes.ASM5) {
 					public void visitCode() {
 						System.out.println("visitCode "+owner+" "+name);
 					}
@@ -424,7 +430,8 @@ public class ClosureCarl {
 
 
 	/**
-	 * Experimental: print the tree
+	 * Experimental: print the tree.
+	 * Not every node has to have a user object: the root node doesn't have one
 	 * @return
 	 */
 	private void printTree(TreeModel tree) {
@@ -434,14 +441,17 @@ public class ClosureCarl {
 		while (enumeration.hasMoreElements()) {
 			DefaultMutableTreeNode n;
 			n=enumeration.nextElement();
-			Object member=n.getUserObject();
 			int level=n.getLevel();
 			// Print spaces to indent deeper levels. Print the empty string over n.getLevel positions
 			// If level==0, then format throws exception
 			if (level>0) {
 				sb.append(String.format("%"+level+"s",""));
 			}
-			sb.append(member.toString()).append("\n");
+			// member can be null for root node
+			Object member=n.getUserObject();
+			if (member!=null) {
+				sb.append(member.toString()).append("\n");
+			}
 		}
 		logger.fine("Tree:\n"+sb.toString());
 	}
@@ -528,15 +538,14 @@ public class ClosureCarl {
 		//
 		removeDirectoryTree(outputdirectory);
 		//
-		// Clean up the Set with the members
+		// Clean up the Set with the members (not needed)
 		//
 		cleanUpToBeIncludedMembers();
 		//
 		// Sort out the used classes from the toBeIncludedMembers
 		//
-		SortedSet<String> classes=new TreeSet<String>();
+		SortedSet<String> classes=new TreeSet<String>(); // TreeSet, so sorted nicely
 		for (Member member:toBeIncludedMembers) {
-			Class<?> cl;
 			String internalClassname;
 			internalClassname=member.getOwner();
 			classes.add(internalClassname);
@@ -571,7 +580,7 @@ public class ClosureCarl {
 	private int numberOfFields;
 	private int numberOfMethods;
 	private Set<Integer> distinctBCs=new HashSet<Integer>(); // track unique BC
-	
+
 	public Set<Integer> getDistinctBCs() {
 		return distinctBCs;
 	}
@@ -618,11 +627,17 @@ public class ClosureCarl {
 		 */
 		class CreationClassVisitorAdapter extends ClassVisitor {
 
-
-			private String name;
-			private String descriptor;
+			private String owner;
 			public CreationClassVisitorAdapter(ClassVisitor cv) {
-				super(Opcodes.ASM4,cv);
+
+				super(Opcodes.ASM5,cv);
+			}
+
+			@Override
+			public void visit(int version, int access, String name,
+					String signature, String superName, String[] interfaces) {
+				cv.visit(version, access, name, signature, superName, interfaces);
+				owner = name;
 			}
 			public FieldVisitor visitField(int access, String name, String desc,
 					String signature, Object value) {
@@ -638,16 +653,29 @@ public class ClosureCarl {
 					return null; // do not include this method
 				}
 			}
-			public MethodVisitor visitMethod(int access, String name,
+			@Override
+			public MethodVisitor visitMethod(final int access, String name,
 					String desc, String signature, String[] exceptions) {
-				Member newMember=new Member(internalClassname,name,desc);
+				final Member newMember=new Member(internalClassname,access,name,desc);
+				MethodVisitor mv=cv.visitMethod(access, internalClassname, desc, signature, exceptions);
 				if (toBeIncludedMembers.contains(newMember)) {
 					// This method should be included in the output
 					logger.fine("Create method include ++++"+newMember);
 					numberOfMethods++;
 					//return cv.visitMethod(access,name,desc,signature,exceptions);
 					// Collect all distinct byte codes in uniqueBCs.
-					return new MethodVisitor(Opcodes.ASM4) {
+					return new MethodVisitor(Opcodes.ASM5,mv) {
+						@Override
+						public void visitCode()
+						{
+							// Insert some special instructions for synchronized methods
+							if ((access & Opcodes.ACC_SYNCHRONIZED)!=0) {
+								// Insert an extra instruction
+								logger.fine("Call insert monitorenter for "+newMember);
+								mv.visitInsn(Opcodes.MONITORENTER);
+							}
+
+						};
 						public void visitInsn(int opcode) {
 							distinctBCs.add(opcode);
 						};
@@ -674,6 +702,15 @@ public class ClosureCarl {
 						public void visitJumpInsn(int opcode, Label label){
 							distinctBCs.add(opcode);
 						};
+						@Override
+						public void visitEnd() {
+							// Insert some special instructions for synchronized methods
+							if ((access & Opcodes.ACC_SYNCHRONIZED)!=0) {
+								logger.fine("Call insert monitorexit for "+newMember);
+								mv.visitInsn(Opcodes.MONITOREXIT);
+							}
+
+						}
 					};
 				} else {
 					logger.fine("Create method excludes ----"+newMember);
@@ -695,7 +732,7 @@ public class ClosureCarl {
 		// start parsing
 		ClassWriter cw = new ClassWriter(cr, 0);
 		CreationClassVisitorAdapter ca = new CreationClassVisitorAdapter(cw);
-		cr.accept(cw, 0);
+		cr.accept(ca, 0);
 		// Create an outputfile in the outputdirectory in a subdirectory for the given package/class
 		File classFile=new File(outputdirectory,internalClassname+".class");
 		classFile.delete(); // delete old file (a bit of overkill, it was already removed)
@@ -741,6 +778,13 @@ public class ClosureCarl {
 		Member member=new Member(className, methodName, signature);
 		// Cannot be implemented, I give up, return true
 		return true;
+	}
+	/**
+	 * No clue as what this method should do
+	 * (Closure.isMarked(jc.getClassName()+"."+method.getName()+method.getSignature())
+	 */
+	public boolean isMarked(Member member) {
+		return toBeIncludedMembers.contains(member);
 	}
 	static private Logger logger=Logger.getLogger("haikuvm.pc.tools");
 	// Not used, but could be useful:
