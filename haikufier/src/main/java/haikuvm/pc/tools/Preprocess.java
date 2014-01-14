@@ -20,6 +20,12 @@ import org.apache.bcel.generic.MethodGen;
 import org.apache.bcel.generic.TargetLostException;
 import org.apache.bcel.generic.Visitor;
 
+/**
+ * Preprocess contains methods to filter special methods (clinitHaikuMagic, haikuReleaseLock)
+ * and it adds monitor instructions to synchronized methods.
+ * @author CDN
+ *
+ */
 
 public class Preprocess {
 

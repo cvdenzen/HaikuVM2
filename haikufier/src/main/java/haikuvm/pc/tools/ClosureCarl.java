@@ -265,18 +265,22 @@ public class ClosureCarl {
 				//
 				// Is this a method that should be included?
 				//
+				if ("<clinit>".equals(newMember.getName())) { // just for debugging purpose
+					logger.fine("<clinit> found for member "+newMember);
+				}
 				if ((member.getName()!=null && !member.getName().isEmpty()) // if methodName empty, then include all
-						&& !"<clinit>".equals(name) // class init must be included
+						&& !"<clinit>".equals(newMember.getName()) // class init must be included
 						// && !("<init>".equals(name) && "()V".equals(desc)) // default constructor must be included
 						&& !newMember.getName().equals(name)
 						&& !interfaceMembers.contains(newMember) // all interfacemembers must be included
 						) {
 					// Should not be included
+					logger.fine(" -- exclude "+newMember);
 					return null;
 				}
 				// Yes, this method must be included
 				toBeIncludedMembers.add(newMember);
-				logger.fine("memberFound to true");
+				logger.fine("memberFound to true for "+newMember);
 				memberFound=true;
 				// Make a new node in the tree and add it to its parent
 				final DefaultMutableTreeNode treeNode=new DefaultMutableTreeNode(newMember);
@@ -425,6 +429,26 @@ public class ClosureCarl {
 		}
 		// start parsing, this will call the 
 		cr.accept(classScanner, 0);
+		//
+		// Insert class init method
+		//
+		// For every class, the clinit method must be included explicitly,
+		// because it is never called
+		Member clinitMember=new Member(member.getOwner(), "<clinit>", "()V");
+		if (!toBeIncludedMembers.contains(clinitMember)) {
+			try {
+				toBeIncludedMembers.add(clinitMember);
+				logger.fine("<clinit> artificially added for "+clinitMember);
+				scan(clinitMember,parentTreeNode);
+			} catch (ClassNotFoundException e) {
+				logger.severe(e.toString());
+				throw new IllegalArgumentException(e);
+			}
+		}
+		//
+		// Not every class has a <clinit> method. To avoid unnecessary searches for
+		// <clinit> methods, set is as found. (unnecessary is an understatement: it
+		// is an endless loop we are getting in).
 	} // scan()
 	private ClassLoader classLoader;
 
@@ -628,6 +652,10 @@ public class ClosureCarl {
 		class CreationClassVisitorAdapter extends ClassVisitor {
 
 			private String owner;
+			/**
+			 * This constructor is called with a classwriter or -visitor as argument.
+			 * @param cv
+			 */
 			public CreationClassVisitorAdapter(ClassVisitor cv) {
 
 				super(Opcodes.ASM5,cv);
@@ -677,31 +705,48 @@ public class ClosureCarl {
 
 						};
 						public void visitInsn(int opcode) {
+							super.visitInsn(opcode);
 							distinctBCs.add(opcode);
 						};
 						public void visitIntInsn(int opcode, int operand){
+							super.visitIntInsn(opcode, operand);
 							distinctBCs.add(opcode);
 						};
 						public void visitVarInsn(int opcode, int var){
+							super.visitVarInsn(opcode,var);
 							distinctBCs.add(opcode);
 						};
 						public void visitTypeInsn(int opcode, String desc){
+							super.visitTypeInsn(opcode, desc);
 							distinctBCs.add(opcode);
 
 						};
 						public void visitFieldInsn(int opc, String owner, String name, String desc){
+							super.visitFieldInsn(opc, owner, name, desc);
 							distinctBCs.add(opc);
 						};
 						public void visitMethodInsn(int opc, String owner, String name, String desc) {
+							super.visitMethodInsn(opc, owner, name, desc);
 							distinctBCs.add(opc);
 
 						};
 						public void visitInvokeDynamicInsn(String name, String desc, Handle bsm,
 								Object... bsmArgs) {
+							super.visitInvokeDynamicInsn(name,desc,bsm,bsmArgs);
 						};
 						public void visitJumpInsn(int opcode, Label label){
+							super.visitJumpInsn(opcode,label);
 							distinctBCs.add(opcode);
 						};
+						/* (non-Javadoc)
+						 * @see org.objectweb.asm.MethodVisitor#visitFrame(int, int, java.lang.Object[], int, java.lang.Object[])
+						 */
+						@Override
+						public void visitFrame(int type, int nLocal,
+								Object[] local, int nStack, Object[] stack) {
+							// TODO Auto-generated method stub
+							super.visitFrame(type, nLocal, local, nStack, stack);
+						}
 						@Override
 						public void visitEnd() {
 							// Insert some special instructions for synchronized methods
@@ -711,9 +756,10 @@ public class ClosureCarl {
 							}
 
 						}
+						
 					};
 				} else {
-					logger.fine("Create method excludes ----"+newMember);
+					logger.fine("Create method exclude ----"+newMember);
 					return null; // do not include this method
 				}
 			}

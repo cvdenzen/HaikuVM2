@@ -140,11 +140,11 @@ public class ClosureCarlTest {
 		// -Djava.util.logging.config.file=D:\\Users\\cdn\\workspace\\haikufier\\src\\test\\java\\logging.properties
 		// -classpath D:\\Users\\cdn\\workspace\\lib\\pc\\*
 		logger=Logger.getLogger("haikuvm.pc.tools");
-		instance.scan(new Member(classname.replace(".","/"), "", ""));
 		String a=System.getProperty("java.util.logging.config.file");
 		if (a.equals("hoi")) {
 			a="bla";
 		}
+		instance.scan(new Member(classname.replace(".","/"), "", ""));
 		// Outputdirectory
 		File outputdirectory=new File("D:\\tmp\\haikuoutputcarl");
 		if (!a.equals("hoi")) outputdirectory.mkdirs();
@@ -168,3 +168,6 @@ public class ClosureCarlTest {
 	}
 
 }
+/*
+-Djava.util.logging.config.file=${git_dir}\\haikufier\\src\\test\\java\\logging.properties -classpath ${git_dir}\\lib\\pc\\*
+*/

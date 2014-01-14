@@ -48,7 +48,7 @@ public class Compile2Data extends HaikuVM {
 	private static int pc=0;
 
 	public Compile2Data(String classname) {
-		super(classname);
+		super(classname); // HaikuVM
 	}
 
 	/**
@@ -56,7 +56,10 @@ public class Compile2Data extends HaikuVM {
 	 * @throws IOException
 	 */
 	void link() throws IOException {
-		if (classname==null || classname.startsWith("[") || closure.contains(classname) || !classnames.contains(classname.replace('\\', '.').replace('/', '.'))) return;		
+		if (classname==null || classname.startsWith("[")
+				|| closure.contains(classname) // has already been compiled
+				// classnames contains the classes that have been processed by Closure
+				|| !classnames.contains(classname.replace('\\', '.').replace('/', '.'))) return;		
 		if (classname.endsWith("HaikuMagic")) {
 			System.out.printf("link ! %s from %s will be not generated because it ends with 'HaikuMagic' which means it's template only!\n", classname, source);
 			return;
@@ -69,9 +72,11 @@ public class Compile2Data extends HaikuVM {
 		Preprocess p=new Preprocess(jc);
 		jc=p.preprocess();
 		
+		// Mark this class as processed
 		closure.add(classname);
 		System.out.printf("link > %s.class from %s\n", classname.replace('/', '.'), new File(source).getCanonicalPath());
 	
+		// Haikufy.choice: return "HaikuVM/utility"
 		File cf=new File(HaikuDefs.getProperty("APP_BASE")+"/"+Haikufy.choice("haikuJava")+"/"+classname+".c");
 		if (!singleFile && cf.getParentFile()!=null) cf.getParentFile().mkdirs();
 		printC2Image();
@@ -79,6 +84,7 @@ public class Compile2Data extends HaikuVM {
 		Verbose.println();
 		
 		
+		// Compile 2 Data all constant classes in the ConstantPool
 		ConstantPool cp=jc.getConstantPool();
 		Constant[] c=cp.getConstantPool();
 		for (int i=0; i< c.length; i++) {
