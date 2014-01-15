@@ -11,7 +11,7 @@ package arduino.libraries.dfr0009;
  * @author CDN
  *
  */
-interface KeyListener {
+public interface KeyListener {
 	void keyTyped(KeyEvent e);
 	void keyPressed(KeyEvent e);
 	void keyReleased(KeyEvent e);

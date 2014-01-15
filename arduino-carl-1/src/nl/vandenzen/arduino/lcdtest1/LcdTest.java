@@ -4,10 +4,12 @@ package nl.vandenzen.arduino.lcdtest1;
 
 import javax.bluetooth.BluetoothStateException;
 
-import lejos.addon.keyboard.KeyEvent;
-import lejos.addon.keyboard.KeyListener;
-import lejos.addon.keyboard.Keyboard;
+//import lejos.addon.keyboard.KeyEvent;
+//import lejos.addon.keyboard.KeyListener;
+//import lejos.addon.keyboard.Keyboard;
 import arduino.libraries.dfr0009.Keypad;
+import arduino.libraries.dfr0009.KeyEvent;
+import arduino.libraries.dfr0009.KeyListener;
 import arduino.libraries.liquidcrystal.LiquidCrystal;
 import static processing.hardware.arduino.cores.arduino.Arduino.*;
 
@@ -64,23 +66,16 @@ public class LcdTest {
 		lcd.begin((byte)16, (byte)2);
 		// Print a message to the LCD.
 		lcd.print("hello, world K!");
-		
-		// keyboard lezen
-		try {
-			keypad=new Keypad(1);
-		} catch (BluetoothStateException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-		}
-		
+
+		keypad=new Keypad(1);
 		keypad.addKeyEventListener(new KeyListener() {
-			
+
 			@Override
 			public void keyTyped(KeyEvent arg0) {
 				// TODO Auto-generated method stub
-				
+
 			}
-			
+
 			@Override
 			public void keyReleased(KeyEvent evt) {
 				// TODO Auto-generated method stub
@@ -89,7 +84,7 @@ public class LcdTest {
 				col=0;row=1;
 				lcd.print("    ");
 			}
-			
+
 			@Override
 			public void keyPressed(KeyEvent evt) {
 				// TODO Auto-generated method stub
@@ -98,7 +93,7 @@ public class LcdTest {
 				col=0;row=1;
 				lcd.print("    ");
 				lcd.print(evt.getKeyCode());
-				
+
 			}
 		});
 	}
@@ -109,7 +104,7 @@ public class LcdTest {
 		lcd.setCursor((byte)0, (byte)1);
 		// print the number of seconds since reset:
 		//lcd.print(millis()/1000);
-		
+
 		// testje:
 		debugValue=analogRead(A0);
 		lcd.print(debugValue++);
