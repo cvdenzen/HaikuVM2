@@ -55,19 +55,22 @@ import static org.objectweb.asm.util.Printer.*;
  * and create (the build method) new classes (only the ones used in the given method at scan()) and these classes
  * will only contain the used fields and methods.
  * 
- * A tree will be built with the referenced fields and methods. This tree is not necessarily complete:
+ * In the scan phase, a tree will be built with the referenced fields and methods.
+ * This tree is not necessarily complete:
  * it will contain all fields and methods, but not in every branch of the tree. To improve performance,
- * duplicate entries might have been deleted. januari 2014.
+ * duplicate entries might have been deleted. January 2014.
  * 
- * The UserObject in the tree can either be a Member (method or field) or a TreeModel. In
- * the latter case, it references a formerly created tree. The userObject of the rootNode of
- * that tree is the Member that would be in the location where the TreeModel userObject is.
+ * The UserObject in the tree can either be a Member (method or field) or a TreeNode. In
+ * the latter case, it references a formerly created node. The userObject of the node
+ * is the original node with the Member that would be in the location where the node userObject is.
  *
+ * There is a method listClinitsInOrder that produces an ordered list of <clinit> methods.
+ * 
  * Advantages asm over bcel:
- * it is maintained
+ * it is actively maintained (januari 2014)
  * it uses the Visitor pattern
  * Disadvantages asm:
- * it it programmed to be fast, not to be stable or to be maintainable
+ * it it programmed to be fast, not to be stable or to be maintainable(?)
  * 
  * asm reference at http://download.forge.objectweb.org/asm/-guide.pdf
  * 
@@ -186,6 +189,12 @@ public class ClosureCarl {
 			private boolean memberFound;
 			//private DefaultMutableTreeNode treeNode;
 
+			/**
+			 * The constructor for the class scanner. The scanner is used to collect
+			 * the methods and fields that are to be included in the executable for the target
+			 * machine.
+			 * @param treeNode
+			 */
 			public ClassScanner(DefaultMutableTreeNode treeNode) {
 				super(Opcodes.ASM5);
 				//this.treeNode=treeNode;
@@ -257,15 +266,15 @@ public class ClosureCarl {
 			@Override
 			public MethodVisitor visitMethod(int access, final String name,
 					String desc, String signature, String[] exceptions) {
-				System.out.println("visitMethod access="+access+", desc=" + desc + ", signature="+signature+", owner="+owner+", name=" + name);
+				logger.fine("visitMethod access="+access+", desc=" + desc + ", signature="+signature+", owner="+owner+", name=" + name);
 				Member newMember=new Member(owner,access,name,desc,member.getUrl());
 				// Check whether already included
-//				if (toBeIncludedMembers.contains(newMember)) {
-//					// Was already inserted, do not parse any further
-//					logger.fine("visitMethod: "+newMember+" already inserted, return null for MethodVisitor");
-//					memberFound=true;
-//					return null;
-//				};
+				//				if (toBeIncludedMembers.contains(newMember)) {
+				//					// Was already inserted, do not parse any further
+				//					logger.fine("visitMethod: "+newMember+" already inserted, return null for MethodVisitor");
+				//					memberFound=true;
+				//					return null;
+				//				};
 				//
 				// Is this a method that should be included?
 				//
@@ -285,9 +294,6 @@ public class ClosureCarl {
 					return null;
 				}
 				// Yes, this method must be included
-				if ("cloneObject".equals(newMember.getName())) {
-					logger.fine("memberFound to true for "+newMember);
-				}
 				logger.fine("memberFound to true for "+newMember);
 				memberFound=true;
 				// Make a new node in the tree and add it to its parent
@@ -296,7 +302,9 @@ public class ClosureCarl {
 				// Eclipse would not debug parentTreeNode (cannot resolve to variable)
 				logger.finest("parentTreeNode:"+parentTreeNode.toString());
 				if (toBeIncludedMembers.add(newMember)) {
+					// This is a new member, it has not been processed earlier
 					treeNode.setUserObject(newMember);
+					// Display its siblings
 					@SuppressWarnings("unchecked")
 					Enumeration<DefaultMutableTreeNode> en=parentTreeNode.children();
 					while (en.hasMoreElements()) {
@@ -305,36 +313,38 @@ public class ClosureCarl {
 					// Parse the bytecode, to look for other methods that must be included
 					return new MethodVisitor(Opcodes.ASM5) {
 						public void visitCode() {
-							System.out.println("visitCode "+owner+" "+name);
+							logger.finer("visitCode "+owner+" "+name);
 						}
 						public void visitFrame(int type, int nLocal, Object[] local, int nStack,
 								Object[] stack) {
-							System.out.println("visitFrame");
+							logger.finer("visitFrame");
 						};
 						public void visitInsn(int opcode) {
-							System.out.println("visitInsn("+opcode+" "+OPCODES[opcode]+")");
+							logger.finer("visitInsn("+opcode+" "+OPCODES[opcode]+")");
 						};
 						public void visitIntInsn(int opcode, int operand){
-							System.out.println("visitInsn("+opcode+" "+OPCODES[opcode]+","+operand+")");
+							logger.finer("visitInsn("+opcode+" "+OPCODES[opcode]+","+operand+")");
 						};
 						public void visitVarInsn(int opcode, int var){
-							System.out.println("visitVarInsn("+opcode+" "+OPCODES[opcode]+","+var+")");
+							logger.finer("visitVarInsn("+opcode+" "+OPCODES[opcode]+","+var+")");
 						};
 						public void visitTypeInsn(int opcode, String desc){
-							System.out.println("visitTypeInsn("+opcode+" "+OPCODES[opcode]+","+desc+")");
+							logger.finer("visitTypeInsn("+opcode+" "+OPCODES[opcode]+","+desc+")");
 
 						};
 						public void visitFieldInsn(int opc, String owner, String name, String desc){
-							System.out.println("visitFieldInsn("+opc+" "+OPCODES[opc]+","+owner+","+name+","+desc+")");
+							logger.finer("visitFieldInsn("+opc+" "+OPCODES[opc]+","+owner+","+name+","+desc+")");
 							// This field must be included in the result, the URL is the same as the caller?
 							Member newFieldMember=new Member(owner,name,desc,member.getUrl());
 							// Create a new node for this member
 							DefaultMutableTreeNode node=new DefaultMutableTreeNode(newFieldMember);
 							// This is a child of the method
-							node.setParent(treeNode);
+							//node.setParent(treeNode); do NOT use setParent, is for internal Swing use only
+							parentTreeNode.add(node);
+							// todo: should we do something special to assure the <clinit> is executed?
 						};
 						public void visitMethodInsn(int opc, String owner, String name, String desc) {
-							System.out.println("visitMethodInsn("+opc+" "+OPCODES[opc]+","+owner+","+name+", desc="+desc);
+							logger.finer("visitMethodInsn("+opc+" "+OPCODES[opc]+","+owner+","+name+", desc="+desc);
 							// Include this method in the result and check this method for references (recursively)
 							// This field must be included in the result, the URL is the same as the caller?
 							Member newMethodMember=new Member(owner,name,desc,member.getUrl());
@@ -352,7 +362,7 @@ public class ClosureCarl {
 						};
 						public void visitInvokeDynamicInsn(String name, String desc, Handle bsm,
 								Object... bsmArgs) {
-							System.out.println("visitInvokeDynamicInsn name="+name+", desc="+desc+", bsm="+bsm.toString());
+							logger.finer("visitInvokeDynamicInsn name="+name+", desc="+desc+", bsm="+bsm.toString());
 						};
 
 						@Override
@@ -376,7 +386,7 @@ public class ClosureCarl {
 						@Override
 						public void visitLocalVariable(String name, String desc, String signature,
 								Label start, Label end, int index){
-							System.out.println("visitLocalVariable name="+name+", desc="+desc+", signa="+signature
+							logger.finer("visitLocalVariable name="+name+", desc="+desc+", signa="+signature
 									+", startlabel="+start+", endlabel="+end+", index="+index);
 						};
 						@Override
@@ -408,7 +418,7 @@ public class ClosureCarl {
 					// Make a new node in the tree and add it to its parent
 					// To indicate that this is a kind of "symbolic link" to an earlier found
 					// Member, set the userObject to the original Node.
-					
+
 					// Find the original Node
 					DefaultMutableTreeNode rootNode=(DefaultMutableTreeNode) tree.getRoot();
 					DefaultMutableTreeNode originalNode=null;
@@ -890,6 +900,132 @@ public class ClosureCarl {
 	public boolean isMarked(Member member) {
 		return toBeIncludedMembers.contains(member);
 	}
+	/*
+	 * This section handles clinit (class init, static init).
+	 * It needs some fields, maybe it should go into a
+	 * separate (sub)class.
+	 */
+	// Collect all <clinit> Members with their level
+	private Map<Member,Integer> clinits;
+	private Set<DefaultMutableTreeNode> clinitsSeenNodes=new HashSet<>();
+	/**
+	 * List all <clinit> methods in the order that they should be executed.
+	 * @return An ArrayList with Members that are <clinit> "methods". The ordering
+	 * is the order in which the <clinit> methods should be called for initialisation.
+	 */
+	public ArrayList<Member> listClinitsInOrder() {
+		// Collect all <clinit> Members with their level
+		clinits=new HashMap<Member,Integer>() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = -2481500828723287858L;
+
+			@Override
+			public Integer put(Member m, Integer level) {
+				logger.info("clinits.put level="+level+", member="+m);
+				return super.put(m,level);
+			}
+		};
+
+		logger.fine("Enter");
+		// Enumerate all nodes
+
+		DefaultMutableTreeNode node=(DefaultMutableTreeNode) tree.getRoot();
+		// The first is at level 0, so levelAdjust is 0.
+		listClinitsInOrder(node,0);
+		logger.fine("1");
+		// Find available levels and sort them (automatically by TreeSet)
+		TreeSet<Integer> levels=new TreeSet<Integer>();
+		levels.addAll(clinits.values());
+		
+		ArrayList<Member> returnValue=new ArrayList<Member>();
+		// Fill the ArrayList. Start with lower levels
+		for (int l:levels) {
+			// todo make more efficient
+			for (Map.Entry<Member,Integer> e:clinits.entrySet()) {
+				if (e.getValue().equals(l)) {
+					returnValue.add(e.getKey());
+					break;
+				}
+			}
+		}
+		logger.fine("hallo1");
+		StringBuilder sb=new StringBuilder();
+		sb.append("<clinit>s:\n");
+		for (int i=0;i<returnValue.size();i++) {
+			sb.append("<clinit> ").append(returnValue.get(i)).append("\n");
+		}
+		sb.append("<clinit>s end of list");
+		logger.fine(sb.toString());
+		return returnValue;
+		
+	}
+	/**
+	 * Collect all <clinit> methods in the order that they should be executed.
+	 * Start at node, levelAdjust gives the level of this node.
+	 * @param node
+	 * @param levelAdjust
+	 */
+	private void listClinitsInOrder(DefaultMutableTreeNode node,int levelAdjust) {
+		// Walk the tree. The lower levels are the methods that should be
+		// executed first.
+		// The implementation of the tree is not straight-forward. It can contain
+		// "symbolic links". These links could lead to lower-leveled calls to the method:
+		// Consider a <clinit> that is for the first time seen in the tree at level 10.
+		// If later-on (in the scan phase), the same <clinit> is called, but at level 2,
+		// this level 2 node will contain a link to the original <clinit> method at level 10.
+		// But in fact, its effective lowest level is 2, not 10.
+		// This could also happen in a more hidden way: a call to a method that eventually
+		// calls the <clinit> method.
+
+		// Check whether this is an already known node
+		if (clinitsSeenNodes.contains(node)) {
+			return;
+		}
+		clinitsSeenNodes.add(node);
+		// Enumerate all nodes
+
+		//DefaultMutableTreeNode node=(DefaultMutableTreeNode) tree.getRoot();
+		StringBuilder sb=new StringBuilder(1000);
+		// Enumerate lowest levels first, but that is not necessary, implementation is not straight-forward
+		Enumeration<DefaultMutableTreeNode> enumeration=node.breadthFirstEnumeration();// .preorderEnumeration();//.depthFirstEnumeration();
+		while (enumeration.hasMoreElements()) {
+			DefaultMutableTreeNode n;
+			n=enumeration.nextElement();
+			int level=n.getLevel();
+			Object userObject=n.getUserObject();
+			if (userObject!=null) {
+				if (userObject instanceof Member) {
+					// Is it a clinit?
+					Member member=(Member) userObject;
+					logger.finer("<clinits> member="+member);
+					if ("<clinit>".equals(member.getName())) {
+						// Lookup this member in our map
+						Integer recordedLevel=clinits.get(member);
+						if (recordedLevel==null) {
+							// This is the first time we see this <clinit>
+							clinits.put(member, level+levelAdjust);
+						} else {
+							// There is already mapping
+							if (recordedLevel>level+levelAdjust) {
+								clinits.put(member, level+levelAdjust);
+							}
+						}
+					}
+				} else if (userObject instanceof DefaultMutableTreeNode) {
+					// This is a "symbolic link" to another tree. Follow it.
+					DefaultMutableTreeNode newNode=(DefaultMutableTreeNode) userObject;
+					logger.finer("<clinits> node="+newNode);
+					listClinitsInOrder(newNode, levelAdjust);
+				} else {
+					String message="userObject is invalid:"+userObject;
+					logger.severe(message);
+					throw new IllegalArgumentException(message);
+				}
+			}
+		}
+	}	
 	static private Logger logger=Logger.getLogger("haikuvm.pc.tools");
 	// Not used, but could be useful:
 	// http://stackoverflow.com/questions/5445511/how-do-i-create-a-parent-last-child-first-classloader-in-java-or-how-to-overr
