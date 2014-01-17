@@ -1,5 +1,10 @@
 package haikuvm.pc.tools;
 
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -33,11 +38,18 @@ import org.apache.bcel.classfile.JavaClass;
 import org.apache.bcel.classfile.Method;
  */
 
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTree;
+import javax.swing.event.TreeModelListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeModel;
@@ -50,6 +62,8 @@ import static org.objectweb.asm.Opcodes.*;
 import static org.objectweb.asm.util.Printer.*;
 /**
  * December 2013. Try asm instead of bcel.
+ * 
+ * This class should have a name like "TargetApplicationJavaClasses".
  * 
  * This class will gather all referenced fields and methods (recursively) (the scan method)
  * and create (the build method) new classes (only the ones used in the given method at scan()) and these classes
@@ -154,6 +168,9 @@ public class ClosureCarl {
 		sb.append("End of scan, end of included members");
 		logger.fine(sb.toString());
 		//System.out.println("} /* "+new Date().toString()+" */");
+		//		DefaultMutableTreeNode tn;
+		//		TreeModelListener tml;
+		//		tn.
 	}
 	/**
 	 * Start scanning this member
@@ -336,12 +353,16 @@ public class ClosureCarl {
 							logger.finer("visitFieldInsn("+opc+" "+OPCODES[opc]+","+owner+","+name+","+desc+")");
 							// This field must be included in the result, the URL is the same as the caller?
 							Member newFieldMember=new Member(owner,name,desc,member.getUrl());
-							// Create a new node for this member
-							DefaultMutableTreeNode node=new DefaultMutableTreeNode(newFieldMember);
-							// This is a child of the method
-							//node.setParent(treeNode); do NOT use setParent, is for internal Swing use only
-							parentTreeNode.add(node);
-							// todo: should we do something special to assure the <clinit> is executed?
+							if (toBeIncludedMembers.add(newFieldMember)) {
+								// Create a new node for this member
+								DefaultMutableTreeNode node=new DefaultMutableTreeNode(newFieldMember);
+								// This is a child of the method
+								//node.setParent(treeNode); do NOT use setParent, is for internal Swing use only
+								parentTreeNode.add(node);
+								logger.finer("Added member to parentNode "+parentTreeNode);
+
+								// todo: should we do something special to assure the <clinit> is executed?
+							}
 						};
 						public void visitMethodInsn(int opc, String owner, String name, String desc) {
 							logger.finer("visitMethodInsn("+opc+" "+OPCODES[opc]+","+owner+","+name+", desc="+desc);
@@ -938,7 +959,7 @@ public class ClosureCarl {
 		// Find available levels and sort them (automatically by TreeSet)
 		TreeSet<Integer> levels=new TreeSet<Integer>();
 		levels.addAll(clinits.values());
-		
+
 		ArrayList<Member> returnValue=new ArrayList<Member>();
 		// Fill the ArrayList. Start with lower levels
 		for (int l:levels) {
@@ -959,7 +980,7 @@ public class ClosureCarl {
 		sb.append("<clinit>s end of list");
 		logger.fine(sb.toString());
 		return returnValue;
-		
+
 	}
 	/**
 	 * Collect all <clinit> methods in the order that they should be executed.
@@ -1025,7 +1046,56 @@ public class ClosureCarl {
 				}
 			}
 		}
-	}	
+	}
+	private JFrame frame=new JFrame("TargetApplication methods and fields");
+
+	public void showTreeInNewFrame() {
+
+		// Create a lock to wait for window close
+		final Semaphore sema=new Semaphore(0);
+		//Schedule a job for the event-dispatching thread:
+		//creating and showing this application's GUI.
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				JTree jTree=new JTree(tree);
+				JScrollPane treeView = new JScrollPane(jTree);
+				int width=8000; // max width
+				int height=2000; // max height
+				Dimension maxDimension=new Dimension(width, height);
+				//jTree.setMaximumSize(maxDimension);
+				//treeView.setMaximumSize(maxDimension); //doesn't help
+				//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				Container newContentPane = frame.getContentPane();// treeView;
+				//newContentPane.setMaximumSize(maxDimension); // doesn't help
+				newContentPane.add(treeView,BorderLayout.CENTER);
+				//newContentPane.setPreferredSize(maxDimension);
+				//newContentPane.setOpaque(true); //content panes must be opaque
+				//frame.setContentPane(newContentPane);
+				frame.pack();
+				frame.setVisible(true);
+				//createAndShowGUI(); 
+			}
+		});
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosed(WindowEvent e) {
+				logger.fine("Window closed");
+				sema.release();		}
+			@Override
+			public void windowClosing(WindowEvent e) {
+				logger.fine("Window closing");
+				sema.release();
+			}
+		});
+		logger.fine("Display frame");
+		try {
+			sema.acquire();
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		logger.fine("Display frame end");
+	}
 	static private Logger logger=Logger.getLogger("haikuvm.pc.tools");
 	// Not used, but could be useful:
 	// http://stackoverflow.com/questions/5445511/how-do-i-create-a-parent-last-child-first-classloader-in-java-or-how-to-overr

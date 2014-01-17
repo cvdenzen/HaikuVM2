@@ -481,13 +481,13 @@ Use the -h or --help flag to print out the options.
 			} else {
 				new BuildMakes(System.getProperty("haikuvm.home")+"/"+HaikuDefs.getProperty("HAIKUVM4C")).build();
 			}
-            if (!Clinit.set().isEmpty() && !conditions.contains(Condition.CLINIT)) {
-                Verbose.error("Found static initializers but no method clinitHaikuMagic() to place them.");
-                for (Clinit desc : Clinit.set()) {
-                    System.err.println("    "+desc.getClassName());
-                }
-                System.err.println("  Consider to declare an (empty) method 'static void clinitHaikuMagic()' and call it in main.");
-            }
+//            if (!Clinit.set().isEmpty() && !conditions.contains(Condition.CLINIT)) {
+//                Verbose.error("Found static initializers but no method clinitHaikuMagic() to place them.");
+//                for (Clinit desc : Clinit.set()) {
+//                    System.err.println("    "+desc.getClassName());
+//                }
+//                System.err.println("  Consider to declare an (empty) method 'static void clinitHaikuMagic()' and call it in main.");
+//            }
             if (!conditions.contains(Condition.MAIN)) {
                 Verbose.error("Did not found a 'static void main(String[] args)' method to start.");
             }

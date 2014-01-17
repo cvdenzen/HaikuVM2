@@ -433,12 +433,12 @@ public class Compile2Data extends HaikuVM {
                 if (methodName.endsWith("_clinitHaikuMagic_V")) {
                     conditions.add(Condition.CLINIT.desc("found clinitHaikuMagic() in: "+classname));
                     outc.printf("\n");
-                    for (Clinit desc : Clinit.set()) {
-                        String include=desc.getClassName().replace('.', '/');
-                        outc.println("// clinit           "+include);
-                        includeThis(incSet, include);
-                        //outc.printf("extern const ByteCode %s__clinit__V;\n", mangle(desc.getClassName()));
-                    }
+//                    for (Clinit desc : Clinit.set()) {
+//                        String include=desc.getClassName().replace('.', '/');
+//                        outc.println("// clinit           "+include);
+//                        includeThis(incSet, include);
+//                        //outc.printf("extern const ByteCode %s__clinit__V;\n", mangle(desc.getClassName()));
+//                    }
                     /**
                         typedef struct {
                             uint8_t max_stack; int8_t purLocals; uint8_t purParams;
@@ -469,10 +469,10 @@ public class Compile2Data extends HaikuVM {
 
                     outh.printf("typedef struct {\n");
                     outh.printf("    uint8_t max_stack; int8_t purLocals; uint8_t purParams;\n");
-                    for (Clinit desc : Clinit.set()) {
-                        totalBClength+=3;
-                        outh.printf("\tOP_bc oph%d; OPadr fh%d;  // <clinit>\n", totalBClength, totalBClength);
-                    }
+//                    for (Clinit desc : Clinit.set()) {
+//                        totalBClength+=3;
+//                        outh.printf("\tOP_bc oph%d; OPadr fh%d;  // <clinit>\n", totalBClength, totalBClength);
+//                    }
                     outh.printf("    OP_bc op0;                                                             //       return\n");
                     outh.printf("}            %s_t;\n", methodName, methodName);
                     outh.printf("extern const %s_t %s;\n", methodName, methodName);
@@ -481,10 +481,10 @@ public class Compile2Data extends HaikuVM {
                     outc.printf("const           %s_t %s PROGMEM ={\n", methodName, methodName);
                     outc.printf("2, 0, 0,    // max_stack, purLocals, purParams\n");
                     outc.printf("\n");
-                    for (Clinit desc : Clinit.set()) {
-                        outc.printf("OP_INVOKESTATIC,     ADR(%s__clinit__V),   // %s.<clinit>\n", mangle(desc.getClassName()), desc.getClassName());
-                        BC2IDX.put("INVOKESTATIC");
-                    }
+//                    for (Clinit desc : Clinit.set()) {
+//                        outc.printf("OP_INVOKESTATIC,     ADR(%s__clinit__V),   // %s.<clinit>\n", mangle(desc.getClassName()), desc.getClassName());
+//                        BC2IDX.put("INVOKESTATIC");
+//                    }
                     outc.printf("OP_RETURN,                                                             //       return\n");
                     outc.printf("};\n");
                 } else {
@@ -549,12 +549,12 @@ public class Compile2Data extends HaikuVM {
 					outc.printf("\n");
 					if (methodName.endsWith("_clinitHaikuMagic_V")) {
                         conditions.add(Condition.CLINIT.desc("found clinitHaikuMagic() in: "+classname));
-						for (Clinit desc : Clinit.set()) {
-							totalBClength+=3;
-							outh.printf("\tOP_bc oph%d; OPadr fh%d;  // <clinit>\n", totalBClength, totalBClength);
-							outc.printf("OP_INVOKESTATIC,     ADR(%s__clinit__V),	// %s.<clinit>\n", mangle(desc.getClassName()), desc.getClassName());
-							BC2IDX.put("INVOKESTATIC");
-						}
+//						for (Clinit desc : Clinit.set()) {
+//							totalBClength+=3;
+//							outh.printf("\tOP_bc oph%d; OPadr fh%d;  // <clinit>\n", totalBClength, totalBClength);
+//							outc.printf("OP_INVOKESTATIC,     ADR(%s__clinit__V),	// %s.<clinit>\n", mangle(desc.getClassName()), desc.getClassName());
+//							BC2IDX.put("INVOKESTATIC");
+//						}
 					}
 					pc+=4;
 				}

@@ -63,8 +63,8 @@ public class ClosureCarlTest {
 		};
 		// Higher priority
 		String paths2[]={
-				"/D:\\Users\\cdn\\workspace\\arduino-carl-1\\bin\\",
-				"/D:\\Users\\cdn\\workspace\\gallerie\\bin\\",
+				"/D:\\git\\HaikuVM2\\arduino-carl-1\\bin\\",
+				"/D:\\git\\HaikuVM2\\gallerie\\bin\\",
 				"/D:\\Users\\cdn\\workspace\\examples\\bin\\",
 				"/D:\\Users\\cdn\\workspace\\haikuRT\\bin\\java\\lang\\"
 		};
@@ -149,6 +149,10 @@ public class ClosureCarlTest {
 		File outputdirectory=new File("D:\\tmp\\haikuoutputcarl");
 		if (!a.equals("hoi")) outputdirectory.mkdirs();
 		instance.createClassFiles(outputdirectory);
+		
+		instance.listClinitsInOrder();
+		
+		instance.showTreeInNewFrame();
 	}
 
 	/**

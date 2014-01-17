@@ -82,9 +82,9 @@ public class ClosureGenom2 {
 					String methodName= HaikuVM.getMethodSignature("1 bc "+mi.getInclude());
 					HaikuVM.functionTable.callOf(methodName);
 				}
-				if (method.getName().equals("<clinit>")) {
-					new Clinit(classname, level.length());
-				}
+//				if (method.getName().equals("<clinit>")) {
+//					new Clinit(classname, level.length());
+//				}
 	            if (method.isNative() ) {
 	                continue;
 	            }
