@@ -66,6 +66,7 @@ import javax.swing.tree.TreeNode;
 
 import org.junit.experimental.categories.Categories.IncludeCategory;
 import org.objectweb.asm.*;
+import org.objectweb.asm.util.Textifier;
 
 import static org.objectweb.asm.Opcodes.*;
 import static org.objectweb.asm.util.Printer.*;
@@ -744,8 +745,16 @@ public class TargetApplicationJavaClasses {
 		// Temporary!!!!! outh and outc !!!
 		//
 		try {
-			outh=new BufferedWriter(new FileWriter(new File(outputdirectory,"haikuJava.h")));
-			outc=new BufferedWriter(new FileWriter(new File(outputdirectory,"haikuJava.c")));
+			outputdirectory.mkdirs();
+			File file=new File(outputdirectory,"haikuJava.h");
+			file.createNewFile();
+			FileWriter fileWriter=new FileWriter(file);
+			outh=new BufferedWriter(fileWriter);
+			
+			file=new File(outputdirectory,"haikuJava.c");
+			file.createNewFile();
+			fileWriter=new FileWriter(file);
+			outc=new BufferedWriter(fileWriter);
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -819,6 +828,10 @@ public class TargetApplicationJavaClasses {
 				throw new IllegalArgumentException(message);
 			}
 		}
+		/**
+		 * The class that makes code into readable text. ??
+		 */
+		final Textifier textifier=new Textifier();
 		//
 		// Loop over all classes that are used
 		// and extract only the members (methods/fields)
@@ -854,6 +867,7 @@ public class TargetApplicationJavaClasses {
 					e.printStackTrace();
 				}
 				owner = name;
+				textifier.visit(version, access, name, signature, superName, interfaces);
 			}
 			@Override
 			public AnnotationVisitor visitAnnotation(String desc,boolean visible) {
@@ -901,8 +915,8 @@ public class TargetApplicationJavaClasses {
 						public void visitInsn(int opcode) {
 							super.visitInsn(opcode);
 							distinctBCs.add(opcode);
-							// Write instruction to c file output
-							outc.write(Opcodes.g);
+							// Write instruction to the textifier
+							textifier.visitInsn(opcode);
 						};
 						public void visitIntInsn(int opcode, int operand){
 							super.visitIntInsn(opcode, operand);
@@ -921,9 +935,10 @@ public class TargetApplicationJavaClasses {
 							super.visitFieldInsn(opc, owner, name, desc);
 							distinctBCs.add(opc);
 						};
-						public void visitMethodInsn(int opc, String owner, String name, String desc) {
-							super.visitMethodInsn(opc, owner, name, desc);
-							distinctBCs.add(opc);
+						public void visitMethodInsn(int opcode, String owner, String name, String desc) {
+							super.visitMethodInsn(opcode, owner, name, desc);
+							distinctBCs.add(opcode);
+							textifier.visitMethodInsn(opcode, owner, name, desc);
 
 						};
 						public void visitInvokeDynamicInsn(String name, String desc, Handle bsm,
@@ -933,6 +948,7 @@ public class TargetApplicationJavaClasses {
 						public void visitJumpInsn(int opcode, Label label){
 							super.visitJumpInsn(opcode,label);
 							distinctBCs.add(opcode);
+							textifier.visitJumpInsn(opcode, label);
 						};
 						/* (non-Javadoc)
 						 * @see org.objectweb.asm.MethodVisitor#visitFrame(int, int, java.lang.Object[], int, java.lang.Object[])
@@ -949,6 +965,16 @@ public class TargetApplicationJavaClasses {
 							if ((access & Opcodes.ACC_SYNCHRONIZED)!=0) {
 								logger.fine("Call insert monitorexit for "+newMember);
 								mv.visitInsn(Opcodes.MONITOREXIT);
+							}
+							textifier.visitMethodEnd();
+							List texts=textifier.getText();
+							for (Object o:texts) {
+								try {
+									outc.write(o.toString());
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
 							}
 
 						}

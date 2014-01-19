@@ -129,11 +129,12 @@ public class ClosureCarlTest {
 		if (logger.getUseParentHandlers()) {
 			logger=logger.getParent();
 		}
+		ConsoleHandler consoleHandler=null;
 		Handler[] handlers=logger.getHandlers();
 		for (Handler handler:handlers) {
 			if (handler instanceof ConsoleHandler) {
-				ConsoleHandler ch=(ConsoleHandler) handler;
-				ch.setLevel(level);
+				consoleHandler=(ConsoleHandler) handler;
+				consoleHandler.setLevel(level);
 			}
 		}
 		// output to file, settings are in run configuration, something like this:
@@ -144,10 +145,13 @@ public class ClosureCarlTest {
 		if (a.equals("hoi")) {
 			a="bla";
 		}
+		// Set logging to other level to improve performance
+		if (consoleHandler!=null) consoleHandler.setLevel(Level.INFO);
 		instance.scan(new Member(classname.replace(".","/"), "", ""));
 		// Outputdirectory
 		File outputdirectory=new File("D:\\tmp\\haikuoutputcarl");
 		if (!a.equals("hoi")) outputdirectory.mkdirs();
+		if (consoleHandler!=null) consoleHandler.setLevel(Level.FINEST);
 		instance.createClassFiles(outputdirectory);
 		
 		instance.listClinitsInOrder();
