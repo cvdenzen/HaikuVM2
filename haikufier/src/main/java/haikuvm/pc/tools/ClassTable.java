@@ -6,8 +6,15 @@ import java.util.Formatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
-
-
+/**
+ * Deprecated because this now goes into Member.
+ * Problems in this old class:
+ * it maintains some (not Object Oriented Programming) static fields.
+ * it overrides the toString() method with a completely different behaviour.
+ * @author CDN
+ *
+ */
+@Deprecated
 public class ClassTable {
 	private static class Info {
 		private String name;

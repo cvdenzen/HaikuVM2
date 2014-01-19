@@ -5,10 +5,17 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -18,6 +25,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Enumeration;
+import java.util.Formatter;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -49,6 +57,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
+import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -64,6 +73,7 @@ import static org.objectweb.asm.util.Printer.*;
  * December 2013. Try asm instead of bcel.
  * 
  * This class should have a name like "TargetApplicationJavaClasses".
+ * It used to be named "Closure".
  * 
  * This class will gather all referenced fields and methods (recursively) (the scan method)
  * and create (the build method) new classes (only the ones used in the given method at scan()) and these classes
@@ -91,18 +101,75 @@ import static org.objectweb.asm.util.Printer.*;
  * @author Carl van Denzen
  *
  */
-public class ClosureCarl {
+public class TargetApplicationJavaClasses {
 
 	/**
 	 * Create an instance that will lookup the referenced members in classes that can
 	 * be loaded with the specified classloader
 	 * @param classLoader The ClassLoader to use for finding referenced classes.
 	 */
-	public ClosureCarl(ClassLoader classLoader) {
+	public TargetApplicationJavaClasses(ClassLoader classLoader) {
 		this.classLoader=classLoader;
 		// Create the root of the tree
-		DefaultMutableTreeNode treeNode=new DefaultMutableTreeNode();
+		MemberTreeNode treeNode=new MemberTreeNode();
 		tree=new DefaultTreeModel(treeNode);
+		// Add a listener to keep the list with toBeIncludedMembers up-to-date
+		tree.addTreeModelListener(new TreeModelListener() {
+
+			@Override
+			public void treeStructureChanged(TreeModelEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void treeNodesRemoved(TreeModelEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void treeNodesInserted(TreeModelEvent e) {
+				// Check all inserted nodes
+				for (Object nodeObject:e.getChildren()) {
+					// If this Tree has (already) a userObject of type Member,
+					// add this member
+					// Assume we only insert MemberTreeNode
+					MemberTreeNode node=(MemberTreeNode) nodeObject;
+					if (node.getUserObject() instanceof Member) {
+						toBeIncludedMembers.add((Member) node.getUserObject());
+					}
+					node.addPropertyChangeListener("userObject", new PropertyChangeListener() {
+
+						@Override
+						public void propertyChange(PropertyChangeEvent evt) {
+							// userObject changed.
+							if (evt.getNewValue() instanceof Member) {
+								toBeIncludedMembers.add((Member) evt.getNewValue());
+							}
+
+						}
+					});
+				}
+
+
+			}
+
+			@Override
+			public void treeNodesChanged(TreeModelEvent e) {
+				// TODO Auto-generated method stub
+				// not interesting
+
+			}
+
+			/**
+			 * Insert the members that are userObjects of the nodes
+			 * @param nodes The TreeNodes that are affected/changed
+			 */
+			private void insertNodes(Object[] nodes) {
+
+			}
+		});
 	}
 	/**
 	 * A convenience constructor.
@@ -110,7 +177,7 @@ public class ClosureCarl {
 	 * be found in the classpath.
 	 * @param classpaths
 	 */
-	public ClosureCarl(String[] classpaths) {
+	public TargetApplicationJavaClasses(String[] classpaths) {
 		// Our classloader needs URLs as the classpath.
 		// Any URL ending in / is supposed to be a directory,
 		// Any URL not ending in / is supposed to be a jar file
@@ -138,7 +205,7 @@ public class ClosureCarl {
 	 * be found in the classpath.
 	 * @param classpath
 	 */
-	public ClosureCarl(String classpath) {
+	public TargetApplicationJavaClasses(String classpath) {
 		// Split the classpath string into its components
 		this(classpath.split(System.getProperty("path.separator",";")));
 	}
@@ -156,7 +223,7 @@ public class ClosureCarl {
 	public void scan(Member rootMember) throws ClassNotFoundException {
 		logger.fine("** Scan ** "+rootMember);
 		// Start this scan with the root node
-		scan(rootMember,(DefaultMutableTreeNode) tree.getRoot());
+		scan(rootMember,(MemberTreeNode) tree.getRoot());
 
 		// Print the members, ordered by name
 		SortedSet<Member> sortedSet=new TreeSet<Member>(toBeIncludedMembers);
@@ -168,7 +235,7 @@ public class ClosureCarl {
 		sb.append("End of scan, end of included members");
 		logger.fine(sb.toString());
 		//System.out.println("} /* "+new Date().toString()+" */");
-		//		DefaultMutableTreeNode tn;
+		//		MemberTreeNode tn;
 		//		TreeModelListener tml;
 		//		tn.
 	}
@@ -179,7 +246,7 @@ public class ClosureCarl {
 	 * @param parentTreeNode The position of this element in the tree of included members (for presentational purposes only)
 	 * @throws ClassNotFoundException 
 	 */
-	private void scan(final Member member,final DefaultMutableTreeNode parentTreeNode) throws ClassNotFoundException {
+	private void scan(final Member member,final MemberTreeNode parentTreeNode) throws ClassNotFoundException {
 		logger.fine("** Scan "+member+", parentTreeNode="+parentTreeNode);
 
 		/**
@@ -204,7 +271,7 @@ public class ClosureCarl {
 			 * If member is not found in this class, it must be looked up in the super class
 			 */
 			private boolean memberFound;
-			//private DefaultMutableTreeNode treeNode;
+			//private MemberTreeNode treeNode;
 
 			/**
 			 * The constructor for the class scanner. The scanner is used to collect
@@ -212,7 +279,7 @@ public class ClosureCarl {
 			 * machine.
 			 * @param treeNode
 			 */
-			public ClassScanner(DefaultMutableTreeNode treeNode) {
+			public ClassScanner(MemberTreeNode treeNode) {
 				super(Opcodes.ASM5);
 				//this.treeNode=treeNode;
 			}
@@ -227,7 +294,7 @@ public class ClosureCarl {
 				memberFound=false;
 				// All implemented interfaces must be included, and all their methods.
 				StringBuilder sb=new StringBuilder(1000);
-				sb.append("Interfaces (ClosureCarl.this="+ClosureCarl.this+")");
+				sb.append("Interfaces (ClosureCarl.this="+TargetApplicationJavaClasses.this+")");
 				// For all implemented interfaces
 				for (String interfacename:interfaces) {
 					sb.append("\n").append(interfacename);
@@ -237,7 +304,7 @@ public class ClosureCarl {
 					// of the class??
 					Set<Member> tempInterfaceMembers=new HashSet<>();
 					try {
-						ClosureCarl interfaceClosure=new ClosureCarl(classLoader);
+						TargetApplicationJavaClasses interfaceClosure=new TargetApplicationJavaClasses(classLoader);
 						Member interfaceMember=new Member(interfacename,"","");
 						interfaceClosure.scan(interfaceMember);
 						tempInterfaceMembers.addAll(interfaceClosure.toBeIncludedMembers);
@@ -314,7 +381,7 @@ public class ClosureCarl {
 				logger.fine("memberFound to true for "+newMember);
 				memberFound=true;
 				// Make a new node in the tree and add it to its parent
-				final DefaultMutableTreeNode treeNode=new DefaultMutableTreeNode();
+				final MemberTreeNode treeNode=new MemberTreeNode();
 				parentTreeNode.add(treeNode);
 				// Eclipse would not debug parentTreeNode (cannot resolve to variable)
 				logger.finest("parentTreeNode:"+parentTreeNode.toString());
@@ -323,7 +390,7 @@ public class ClosureCarl {
 					treeNode.setUserObject(newMember);
 					// Display its siblings
 					@SuppressWarnings("unchecked")
-					Enumeration<DefaultMutableTreeNode> en=parentTreeNode.children();
+					Enumeration<MemberTreeNode> en=parentTreeNode.children();
 					while (en.hasMoreElements()) {
 						logger.finest("child="+en.nextElement());
 					};
@@ -355,7 +422,7 @@ public class ClosureCarl {
 							Member newFieldMember=new Member(owner,name,desc,member.getUrl());
 							if (toBeIncludedMembers.add(newFieldMember)) {
 								// Create a new node for this member
-								DefaultMutableTreeNode node=new DefaultMutableTreeNode(newFieldMember);
+								MemberTreeNode node=new MemberTreeNode(newFieldMember);
 								// This is a child of the method
 								//node.setParent(treeNode); do NOT use setParent, is for internal Swing use only
 								parentTreeNode.add(node);
@@ -370,7 +437,7 @@ public class ClosureCarl {
 							// This field must be included in the result, the URL is the same as the caller?
 							Member newMethodMember=new Member(owner,name,desc,member.getUrl());
 							// Create a new node for this member NO the scan method will do this
-							//DefaultMutableTreeNode node=new DefaultMutableTreeNode(newMethodMember);
+							//MemberTreeNode node=new MemberTreeNode(newMethodMember);
 							// This is a child of the method
 							//node.setParent(treeNode);
 							try {
@@ -441,12 +508,12 @@ public class ClosureCarl {
 					// Member, set the userObject to the original Node.
 
 					// Find the original Node
-					DefaultMutableTreeNode rootNode=(DefaultMutableTreeNode) tree.getRoot();
-					DefaultMutableTreeNode originalNode=null;
+					MemberTreeNode rootNode=(MemberTreeNode) tree.getRoot();
+					MemberTreeNode originalNode=null;
 					@SuppressWarnings("unchecked")
-					Enumeration<DefaultMutableTreeNode> enumeration=rootNode.preorderEnumeration();//.depthFirstEnumeration();
+					Enumeration<MemberTreeNode> enumeration=rootNode.preorderEnumeration();//.depthFirstEnumeration();
 					while (enumeration.hasMoreElements()) {
-						DefaultMutableTreeNode n;
+						MemberTreeNode n;
 						n=enumeration.nextElement();
 						// member can be null for root node
 						Object member=n.getUserObject();
@@ -539,11 +606,11 @@ public class ClosureCarl {
 	 * @return
 	 */
 	private void printTree(TreeModel tree) {
-		DefaultMutableTreeNode node=(DefaultMutableTreeNode) tree.getRoot();
+		MemberTreeNode node=(MemberTreeNode) tree.getRoot();
 		StringBuilder sb=new StringBuilder(1000);
-		Enumeration<DefaultMutableTreeNode> enumeration=node.preorderEnumeration();//.depthFirstEnumeration();
+		Enumeration<MemberTreeNode> enumeration=node.preorderEnumeration();//.depthFirstEnumeration();
 		while (enumeration.hasMoreElements()) {
-			DefaultMutableTreeNode n;
+			MemberTreeNode n;
 			n=enumeration.nextElement();
 			int level=n.getLevel();
 			// Print spaces to indent deeper levels. Print the empty string over n.getLevel positions
@@ -559,7 +626,7 @@ public class ClosureCarl {
 					sb.append(userObject.toString()).append("\n");
 				} else if (userObject instanceof TreeNode) {
 					// treeNode's userObject is the treeNode with the original Member
-					Object member=((DefaultMutableTreeNode)userObject).getUserObject();
+					Object member=((MemberTreeNode)userObject).getUserObject();
 					sb.append("*").append(member).append("\n"); //indicate with the * that this not the original
 				} else {
 					sb.append("Unknown userObject:"+userObject).append("\n");
@@ -645,6 +712,16 @@ public class ClosureCarl {
 		}
 
 	}
+	//
+	// Temporary!!!!! outh and outc !!!
+	//
+	private BufferedWriter outh = null;
+	private BufferedWriter outc = null;
+
+	/**
+	 * Create the stripped java target class files in the outputdirectory
+	 * @param outputdirectory The directory into which te Java class files are to be written
+	 */
 	public void createClassFiles(final File outputdirectory) {
 		//
 		// Remove old class files in outputdirectory
@@ -655,33 +732,46 @@ public class ClosureCarl {
 		//
 		cleanUpToBeIncludedMembers();
 		//
-		// Sort out the used classes from the toBeIncludedMembers
-		//
-		SortedSet<String> classes=new TreeSet<String>(); // TreeSet, so sorted nicely
-		for (Member member:toBeIncludedMembers) {
-			String internalClassname;
-			internalClassname=member.getOwner();
-			classes.add(internalClassname);
-		}
-		//
 		// Show the classes
 		//
-		StringBuilder sb=new StringBuilder(100*classes.size());
-		for (String s:classes) {
+		TreeSet<String> owners=getOwners();
+		StringBuilder sb=new StringBuilder(100*owners.size());
+		for (String s:owners) {
 			sb.append(s).append("\n");
 		}
 		logger.fine("Classes used:\n"+sb.toString());
+		//
+		// Temporary!!!!! outh and outc !!!
+		//
+		try {
+			outh=new BufferedWriter(new FileWriter(new File(outputdirectory,"haikuJava.h")));
+			outc=new BufferedWriter(new FileWriter(new File(outputdirectory,"haikuJava.c")));
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		//
-		// Create some statistics
-		//
-		numberOfClasses=classes.size();
 		//
 		// Loop over all classes to generate the (stripped) class files
 		//
-		for (String c:classes) {
+		for (String c:owners) {
 			createClassFile(c,outputdirectory);
 		}
+		try {
+			outh.close();
+			outc.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		//
+		// Create some statistics
+		//
+		numberOfClasses=owners.size();
+		
 		logger.info("Number of classes    :"+numberOfClasses);
 		logger.info("Number of fields     :"+numberOfFields);
 		logger.info("Number of methods    :"+numberOfMethods);
@@ -698,7 +788,8 @@ public class ClosureCarl {
 		return distinctBCs;
 	}
 	/**
-	 * Create the stripped class file
+	 * Create the stripped class file.
+	 * Writing the class file is not necessary. TODO
 	 */
 	public void createClassFile(final String internalClassname,File outputdirectory) {
 		outputdirectory.mkdirs();
@@ -753,8 +844,22 @@ public class ClosureCarl {
 			@Override
 			public void visit(int version, int access, String name,
 					String signature, String superName, String[] interfaces) {
+				// forward call
 				cv.visit(version, access, name, signature, superName, interfaces);
+				// Print class comment into c output file
+				try {
+					outc.write(String.format("\nClass: %s\n*/\n", name));
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				owner = name;
+			}
+			@Override
+			public AnnotationVisitor visitAnnotation(String desc,boolean visible) {
+				logger.log(Level.FINE,"desc={0}, visble={1}",new Object[] {desc,visible});
+				// forward call
+				return super.visitAnnotation(desc, visible);
 			}
 			public FieldVisitor visitField(int access, String name, String desc,
 					String signature, Object value) {
@@ -796,6 +901,8 @@ public class ClosureCarl {
 						public void visitInsn(int opcode) {
 							super.visitInsn(opcode);
 							distinctBCs.add(opcode);
+							// Write instruction to c file output
+							outc.write(Opcodes.g);
 						};
 						public void visitIntInsn(int opcode, int operand){
 							super.visitIntInsn(opcode, operand);
@@ -866,6 +973,8 @@ public class ClosureCarl {
 		}
 		// start parsing
 		ClassWriter cw = new ClassWriter(cr, 0);
+		// Create a ClassVisitor that forwards calls to the visitor named as its parameter,
+		// see http://download.forge.objectweb.org/asm/asm4-guide.pdf
 		CreationClassVisitorAdapter ca = new CreationClassVisitorAdapter(cw);
 		cr.accept(ca, 0);
 		// Create an outputfile in the outputdirectory in a subdirectory for the given package/class
@@ -928,7 +1037,7 @@ public class ClosureCarl {
 	 */
 	// Collect all <clinit> Members with their level
 	private Map<Member,Integer> clinits;
-	private Set<DefaultMutableTreeNode> clinitsSeenNodes=new HashSet<>();
+	private Set<MemberTreeNode> clinitsSeenNodes=new HashSet<>();
 	/**
 	 * List all <clinit> methods in the order that they should be executed.
 	 * @return An ArrayList with Members that are <clinit> "methods". The ordering
@@ -952,7 +1061,7 @@ public class ClosureCarl {
 		logger.fine("Enter");
 		// Enumerate all nodes
 
-		DefaultMutableTreeNode node=(DefaultMutableTreeNode) tree.getRoot();
+		MemberTreeNode node=(MemberTreeNode) tree.getRoot();
 		// The first is at level 0, so levelAdjust is 0.
 		listClinitsInOrder(node,0);
 		logger.fine("1");
@@ -988,7 +1097,7 @@ public class ClosureCarl {
 	 * @param node
 	 * @param levelAdjust
 	 */
-	private void listClinitsInOrder(DefaultMutableTreeNode node,int levelAdjust) {
+	private void listClinitsInOrder(MemberTreeNode node,int levelAdjust) {
 		// Walk the tree. The lower levels are the methods that should be
 		// executed first.
 		// The implementation of the tree is not straight-forward. It can contain
@@ -1007,12 +1116,12 @@ public class ClosureCarl {
 		clinitsSeenNodes.add(node);
 		// Enumerate all nodes
 
-		//DefaultMutableTreeNode node=(DefaultMutableTreeNode) tree.getRoot();
+		//MemberTreeNode node=(MemberTreeNode) tree.getRoot();
 		StringBuilder sb=new StringBuilder(1000);
 		// Enumerate lowest levels first, but that is not necessary, implementation is not straight-forward
-		Enumeration<DefaultMutableTreeNode> enumeration=node.breadthFirstEnumeration();// .preorderEnumeration();//.depthFirstEnumeration();
+		Enumeration<MemberTreeNode> enumeration=node.breadthFirstEnumeration();// .preorderEnumeration();//.depthFirstEnumeration();
 		while (enumeration.hasMoreElements()) {
-			DefaultMutableTreeNode n;
+			MemberTreeNode n;
 			n=enumeration.nextElement();
 			int level=n.getLevel();
 			Object userObject=n.getUserObject();
@@ -1034,9 +1143,9 @@ public class ClosureCarl {
 							}
 						}
 					}
-				} else if (userObject instanceof DefaultMutableTreeNode) {
+				} else if (userObject instanceof MemberTreeNode) {
 					// This is a "symbolic link" to another tree. Follow it.
-					DefaultMutableTreeNode newNode=(DefaultMutableTreeNode) userObject;
+					MemberTreeNode newNode=(MemberTreeNode) userObject;
 					logger.finer("<clinits> node="+newNode);
 					listClinitsInOrder(newNode, levelAdjust);
 				} else {
@@ -1046,6 +1155,138 @@ public class ClosureCarl {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Collect all used class names, replace separator with _ and return
+	 * the ordered collection (automatically ordered by use of TreeSet).
+	 * @return
+	 */
+	public TreeSet<String> getMangledClassNames() {
+		TreeSet<String> classNames=new TreeSet<>();
+		// Loop over all toBeIncludedMembers and select the owner (=classname with / separator)
+		for (Member m:toBeIncludedMembers) {
+			classNames.add(m.getMangledClassName());
+		}
+		return classNames;
+	}
+
+	/**
+	 * Collect all used class names, replace separator with . and return
+	 * the ordered collection (automatically ordered by use of TreeSet).
+	 * @return
+	 */
+	public TreeSet<String> getClassNames() {
+		TreeSet<String> classNames=new TreeSet<>();
+		// Loop over all toBeIncludedMembers and select the owner (=classname with / separator)
+		for (Member m:toBeIncludedMembers) {
+			classNames.add(m.getClassName());
+		}
+		return classNames;
+	}
+
+	/**
+	 * Collect all used class names (internal format, with / as separator) and return
+	 * the ordered collection (automatically ordered by use of TreeSet).
+	 * @return
+	 */
+	public TreeSet<String> getOwners() {
+		TreeSet<String> ownerNames=new TreeSet<>();
+		// Loop over all toBeIncludedMembers and select the owner (=classname with / separator)
+		for (Member m:toBeIncludedMembers) {
+			ownerNames.add(m.getOwner());
+		}
+		return ownerNames;
+	}
+	/**
+	 * Original version by genom2 in ClassTable.java, toString().
+	 * Output goes into haikuConfig.c
+	 * 
+	 * 
+
+#if _DEBUG || NO_MICRO
+
+char classDesc000[] PROGMEM ="free block";
+char classDesc001[] PROGMEM ="arduino.libraries.dfr0009.Keypad";
+char classDesc002[] PROGMEM ="arduino.libraries.dfr0009.Keypad$1";
+char classDesc003[] PROGMEM ="arduino.libraries.liquidcrystal.LiquidCrystal";
+char classDesc004[] PROGMEM ="haiku.avr.lib.arduino.HaikuMicroKernel4ArduinoIDE";
+char classDesc005[] PROGMEM ="haiku.vm.MicroKernel";
+char classDesc006[] PROGMEM ="java.io.IOException";
+char classDesc007[] PROGMEM ="java.io.InputStream";
+..
+
+char classDesc137[] PROGMEM ="processing.hardware.arduino.cores.arduino.HardwareSerial";
+char classDesc138[] PROGMEM ="processing.hardware.arduino.cores.arduino.HardwareSerialImpl";
+char classDesc139[] PROGMEM ="processing.hardware.arduino.cores.arduino.Print";
+char classDesc140[] PROGMEM ="processing.hardware.arduino.cores.arduino.Stream";
+
+const char *	classDesc[] PROGMEM = {
+	classDesc001,
+	classDesc002,
+	classDesc003,
+	classDesc004,
+	classDesc005,
+	classDesc006,
+	classDesc007,
+..
+
+	classDesc140,
+	classDesc000,
+};
+
+//Needed for Heap and Stack debugging
+const jclass    classTable[] PROGMEM = {
+	(jclass)&arduino_libraries_dfr0009_Keypad__class,
+	(jclass)&arduino_libraries_dfr0009_Keypad_1__class,
+	(jclass)&arduino_libraries_liquidcrystal_LiquidCrystal__class,
+	(jclass)&haiku_avr_lib_arduino_HaikuMicroKernel4ArduinoIDE__class,
+	(jclass)&haiku_vm_MicroKernel__class,
+	(jclass)&java_io_IOException__class,
+	(jclass)&java_io_InputStream__class,
+..
+
+	(jclass)&processing_hardware_arduino_cores_arduino_HardwareSerialImpl__class,
+	(jclass)&processing_hardware_arduino_cores_arduino_Print__class,
+	(jclass)&processing_hardware_arduino_cores_arduino_Stream__class,
+	NULL
+};
+#endif
+
+
+     * todo: make it write directly into an outputStream (should be a parameter). This
+     * would make it more efficient (String is unnecessary).
+	 * @return
+	 */
+	public String getCDeclarationForClassString() {
+		StringBuilder sb=new StringBuilder();
+		// ??? prepareClasses();
+
+		sb.append("\n");
+		sb.append("\n");
+		sb.append( "#if _DEBUG || NO_MICRO\n");
+		sb.append("\n");
+		int i=0;
+		sb.append(new Formatter().format("char classDesc%03d[] PROGMEM =\"%s\";\n", i++, "free block"));
+		for (String name:getMangledClassNames()) {
+			sb.append(new Formatter().format("char classDesc%03d[] PROGMEM =\"%s\";\n", i++, name));
+		}
+
+		sb.append("\n");
+		sb.append("const char *	classDesc[] PROGMEM = {\n");
+		for (int j=0;j<i;j++) {
+			sb.append(new Formatter().format("\tclassDesc%03d,\n", j));
+		}
+		sb.append(new Formatter().format("\tclassDesc%03d,\n", 0));
+		sb.append("};\n");
+		sb.append("\n");
+		sb.append("//Needed for Heap and Stack debugging\n");
+		sb.append("const jclass    classTable[] PROGMEM = {\n");
+		//TreeSet<String> classNames=getMangledClassNames();
+		for (String name:getMangledClassNames()) {
+			sb.append(new Formatter().format("\t(jclass)&%s__class,\n", name));
+		}
+		return sb.toString();
 	}
 	private JFrame frame=new JFrame("TargetApplication methods and fields");
 

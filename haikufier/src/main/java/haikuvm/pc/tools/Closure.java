@@ -1,6 +1,6 @@
 package haikuvm.pc.tools;
 
-public class Closure extends ClosureCarl {
+public class Closure extends TargetApplicationJavaClasses {
 
 	public Closure(String classname) {
 		super(classname);

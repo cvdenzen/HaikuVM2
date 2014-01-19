@@ -34,7 +34,7 @@ public class ClosureCarlTest {
 	public static void setUpBeforeClass() throws Exception {
 	}
 	URLClassLoader classLoader;
-	ClosureCarl instance;
+	TargetApplicationJavaClasses instance;
 	/**
 	 * @throws java.lang.Exception
 	 */
@@ -87,7 +87,7 @@ public class ClosureCarlTest {
 		}
 		//classLoader=new URLClassLoader(urls);
 		//instance=new ClosureCarl(classLoader);
-		instance=new ClosureCarl(classLoader);
+		instance=new TargetApplicationJavaClasses(classLoader);
 	}
 
 	/**
@@ -98,7 +98,7 @@ public class ClosureCarlTest {
 	}
 
 	/**
-	 * Test method for {@link haikuvm.pc.tools.ClosureCarl#visitMethod(int, java.lang.String, java.lang.String, java.lang.String, java.lang.String[])}.
+	 * Test method for {@link haikuvm.pc.tools.TargetApplicationJavaClasses#visitMethod(int, java.lang.String, java.lang.String, java.lang.String, java.lang.String[])}.
 	 */
 	@Test
 	public void testVisitMethod() {
@@ -106,7 +106,7 @@ public class ClosureCarlTest {
 	}
 
 	/**
-	 * Test method for {@link haikuvm.pc.tools.ClosureCarl#ClosureCarl(java.lang.ClassLoader)}.
+	 * Test method for {@link haikuvm.pc.tools.TargetApplicationJavaClasses#ClosureCarl(java.lang.ClassLoader)}.
 	 */
 	@Test
 	public void testClosureCarl() {
@@ -114,7 +114,7 @@ public class ClosureCarlTest {
 	}
 
 	/**
-	 * Test method for {@link haikuvm.pc.tools.ClosureCarl#scan(java.lang.String)}.
+	 * Test method for {@link haikuvm.pc.tools.TargetApplicationJavaClasses#scan(java.lang.String)}.
 	 * @throws ClassNotFoundException 
 	 */
 	@Test
@@ -156,7 +156,7 @@ public class ClosureCarlTest {
 	}
 
 	/**
-	 * Test method for {@link haikuvm.pc.tools.ClosureCarl#root(java.lang.String)}.
+	 * Test method for {@link haikuvm.pc.tools.TargetApplicationJavaClasses#root(java.lang.String)}.
 	 */
 	@Test
 	public void testRoot() {
@@ -164,7 +164,7 @@ public class ClosureCarlTest {
 	}
 
 	/**
-	 * Test method for {@link haikuvm.pc.tools.ClosureCarl#isMarked(java.lang.String)}.
+	 * Test method for {@link haikuvm.pc.tools.TargetApplicationJavaClasses#isMarked(java.lang.String)}.
 	 */
 	@Test
 	public void testIsMarked() {
