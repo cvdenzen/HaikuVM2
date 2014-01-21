@@ -714,10 +714,24 @@ public class TargetApplicationJavaClasses {
 
 	}
 	//
-	// Temporary!!!!! outh and outc !!!
+	// outh and outc
 	//
+	/**
+	 * File haikuJava.h
+	 */
 	private BufferedWriter outh = null;
+	/**
+	 * File haikuJava.c
+	 */
 	private BufferedWriter outc = null;
+	/**
+	 * File haikuJ2C.h
+	 */
+	private BufferedWriter outj2ch = null;
+	/**
+	 * File haikuJ2C.c
+	 */
+	private BufferedWriter outj2cc = null;
 
 	/**
 	 * Create the stripped java target class files in the outputdirectory
@@ -755,6 +769,17 @@ public class TargetApplicationJavaClasses {
 			file.createNewFile();
 			fileWriter=new FileWriter(file);
 			outc=new BufferedWriter(fileWriter);
+
+			outputdirectory.mkdirs();
+			file=new File(outputdirectory,"haikuJ2C.h");
+			file.createNewFile();
+			fileWriter=new FileWriter(file);
+			outj2ch=new BufferedWriter(fileWriter);
+
+			file=new File(outputdirectory,"haikuJ2C.c");
+			file.createNewFile();
+			fileWriter=new FileWriter(file);
+			outj2cc=new BufferedWriter(fileWriter);
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -763,6 +788,22 @@ public class TargetApplicationJavaClasses {
 			e.printStackTrace();
 		}
 
+		//
+		// Write declarations into .c file
+		try {
+			outc.write("\n#include \"haikuConfig.h\"\n");
+			outc.write("#include \"haikuJava.h\"\n\n");
+			
+			outj2cc.write("\n#include <stdlib.h>\n#include <stdio.h>\n#include <stdarg.h>\n");
+			outj2cc.write("#include <string.h>\n\n#include \"haikuJ2C.h\"\n");
+			outj2cc.write("#include \"utility/haikuConfig.h\"#include \"simpleOS.h\"\n\n");
+			outj2cc.write("\n\n#if TRACEING\nint indent=0;\n#endif\n\n");
+			outj2cc.write("#define Debug(x)\n\njstack dataSp;\njstack lsp;\nunsigned char * pc;");
+			outj2cc.write("stackFrame4Debug_t* stack;\n\ntop_t top;");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		//
 		// Loop over all classes to generate the (stripped) class files
 		//
@@ -859,16 +900,10 @@ public class TargetApplicationJavaClasses {
 			public void visit(int version, int access, String name,
 					String signature, String superName, String[] interfaces) {
 				// forward call
-				cv.visit(version, access, name, signature, superName, interfaces);
-				// Print class comment into c output file
-				try {
-					outc.write(String.format("\nClass: %s\n*/\n", name));
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				//cv.visit(version, access, name, signature, superName, interfaces);
+				super.visit(version, access, internalClassname, signature, superName, interfaces);
 				owner = name;
-				textifier.visit(version, access, name, signature, superName, interfaces);
+				//textifier.visit(version, access, name, signature, superName, interfaces);
 			}
 			@Override
 			public AnnotationVisitor visitAnnotation(String desc,boolean visible) {
@@ -884,7 +919,7 @@ public class TargetApplicationJavaClasses {
 					// This method should be included in the output
 					logger.fine("Create field include ++++"+newMember);
 					numberOfFields++;
-					textifier.visitField(access, name, desc,  signature, value);
+					//textifier.visitField(access, name, desc,  signature, value);
 					return cv.visitField(access,name,desc,signature,value);
 				} else {
 					//logger.fine("Create field excludes ----"+newMember);
@@ -906,19 +941,19 @@ public class TargetApplicationJavaClasses {
 						@Override
 						public void visitCode()
 						{
+							mv.visitCode();
 							// Insert some special instructions for synchronized methods
 							if ((access & Opcodes.ACC_SYNCHRONIZED)!=0) {
 								// Insert an extra instruction
 								logger.fine("Call insert monitorenter for "+newMember);
 								mv.visitInsn(Opcodes.MONITORENTER);
 							}
-							mv.visitCode();
 						};
 						public void visitInsn(int opcode) {
 							mv.visitInsn(opcode);
 							distinctBCs.add(opcode);
 							// Write instruction to the textifier
-							textifier.visitInsn(opcode);
+							//textifier.visitInsn(opcode);
 						};
 						public void visitIntInsn(int opcode, int operand){
 							mv.visitIntInsn(opcode, operand);
@@ -940,7 +975,7 @@ public class TargetApplicationJavaClasses {
 						public void visitMethodInsn(int opcode, String owner, String name, String desc) {
 							mv.visitMethodInsn(opcode, owner, name, desc);
 							distinctBCs.add(opcode);
-							textifier.visitMethodInsn(opcode, owner, name, desc);
+							//textifier.visitMethodInsn(opcode, owner, name, desc);
 
 						};
 						public void visitInvokeDynamicInsn(String name, String desc, Handle bsm,
@@ -950,7 +985,7 @@ public class TargetApplicationJavaClasses {
 						public void visitJumpInsn(int opcode, Label label){
 							mv.visitJumpInsn(opcode,label);
 							distinctBCs.add(opcode);
-							textifier.visitJumpInsn(opcode, label);
+							//textifier.visitJumpInsn(opcode, label);
 						};
 						/* (non-Javadoc)
 						 * @see org.objectweb.asm.MethodVisitor#visitFrame(int, int, java.lang.Object[], int, java.lang.Object[])
@@ -959,7 +994,12 @@ public class TargetApplicationJavaClasses {
 						public void visitFrame(int type, int nLocal,
 								Object[] local, int nStack, Object[] stack) {
 							// TODO Auto-generated method stub
+							try {
 							mv.visitFrame(type, nLocal, local, nStack, stack);
+							}
+							catch (Exception ex) {
+								logger.log(Level.SEVERE,"Exception in visitFrame",ex);
+							}
 						}
 						@Override
 						public void visitEnd() {
@@ -968,19 +1008,8 @@ public class TargetApplicationJavaClasses {
 								logger.fine("Call insert monitorexit for "+newMember);
 								mv.visitInsn(Opcodes.MONITOREXIT);
 							}
-							textifier.visitMethodEnd();
-							List texts=textifier.getText();
-							for (Object o:texts) {
-								try {
-									outc.write(o.toString());
-								} catch (IOException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-							}
-
+							mv.visitEnd();
 						}
-
 					};
 				} else {
 					logger.fine("Create method exclude ----"+newMember);
@@ -990,6 +1019,7 @@ public class TargetApplicationJavaClasses {
 		}
 		// Do the plumbing
 		ClassReader cr = null;
+		// Open the input class file
 		try {
 			InputStream classInputStream;
 			// replace the dots in the classname into slashed to convert to internal classname format
@@ -1004,9 +1034,11 @@ public class TargetApplicationJavaClasses {
 		// Create a ClassVisitor that forwards calls to the visitor named as its parameter,
 		// see http://download.forge.objectweb.org/asm/asm4-guide.pdf
 		CreationClassVisitorAdapter ca = new CreationClassVisitorAdapter(cw);
-		COutputGenerator og=new COutputGenerator(Opcodes.ASM5, ca,null, null);
+		J2COutputGenerator j2cog=new J2COutputGenerator(Opcodes.ASM5, ca, outc, outh);
+		COutputGenerator og=new COutputGenerator(Opcodes.ASM5, j2cog,outc, outh);
 		cr.accept(og, 0);
 		// Create an outputfile in the outputdirectory in a subdirectory for the given package/class
+		// This is not used, but nice for a test
 		File classFile=new File(outputdirectory,internalClassname+".class");
 		classFile.delete(); // delete old file (a bit of overkill, it was already removed)
 		try {
