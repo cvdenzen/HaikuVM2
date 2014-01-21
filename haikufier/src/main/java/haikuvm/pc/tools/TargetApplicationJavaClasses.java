@@ -750,7 +750,7 @@ public class TargetApplicationJavaClasses {
 			file.createNewFile();
 			FileWriter fileWriter=new FileWriter(file);
 			outh=new BufferedWriter(fileWriter);
-			
+
 			file=new File(outputdirectory,"haikuJava.c");
 			file.createNewFile();
 			fileWriter=new FileWriter(file);
@@ -780,7 +780,7 @@ public class TargetApplicationJavaClasses {
 		// Create some statistics
 		//
 		numberOfClasses=owners.size();
-		
+
 		logger.info("Number of classes    :"+numberOfClasses);
 		logger.info("Number of fields     :"+numberOfFields);
 		logger.info("Number of methods    :"+numberOfMethods);
@@ -829,8 +829,9 @@ public class TargetApplicationJavaClasses {
 			}
 		}
 		/**
-		 * The class that makes code into readable text. ??
+		 * The class that makes code into readable text. ?? It doesn't do what we want
 		 */
+		@Deprecated
 		final Textifier textifier=new Textifier();
 		//
 		// Loop over all classes that are used
@@ -873,7 +874,7 @@ public class TargetApplicationJavaClasses {
 			public AnnotationVisitor visitAnnotation(String desc,boolean visible) {
 				logger.log(Level.FINE,"desc={0}, visble={1}",new Object[] {desc,visible});
 				// forward call
-				return super.visitAnnotation(desc, visible);
+				return cv.visitAnnotation(desc, visible);
 			}
 			public FieldVisitor visitField(int access, String name, String desc,
 					String signature, Object value) {
@@ -883,6 +884,7 @@ public class TargetApplicationJavaClasses {
 					// This method should be included in the output
 					logger.fine("Create field include ++++"+newMember);
 					numberOfFields++;
+					textifier.visitField(access, name, desc,  signature, value);
 					return cv.visitField(access,name,desc,signature,value);
 				} else {
 					//logger.fine("Create field excludes ----"+newMember);
@@ -910,43 +912,43 @@ public class TargetApplicationJavaClasses {
 								logger.fine("Call insert monitorenter for "+newMember);
 								mv.visitInsn(Opcodes.MONITORENTER);
 							}
-
+							mv.visitCode();
 						};
 						public void visitInsn(int opcode) {
-							super.visitInsn(opcode);
+							mv.visitInsn(opcode);
 							distinctBCs.add(opcode);
 							// Write instruction to the textifier
 							textifier.visitInsn(opcode);
 						};
 						public void visitIntInsn(int opcode, int operand){
-							super.visitIntInsn(opcode, operand);
+							mv.visitIntInsn(opcode, operand);
 							distinctBCs.add(opcode);
 						};
 						public void visitVarInsn(int opcode, int var){
-							super.visitVarInsn(opcode,var);
+							mv.visitVarInsn(opcode,var);
 							distinctBCs.add(opcode);
 						};
 						public void visitTypeInsn(int opcode, String desc){
-							super.visitTypeInsn(opcode, desc);
+							mv.visitTypeInsn(opcode, desc);
 							distinctBCs.add(opcode);
 
 						};
 						public void visitFieldInsn(int opc, String owner, String name, String desc){
-							super.visitFieldInsn(opc, owner, name, desc);
+							mv.visitFieldInsn(opc, owner, name, desc);
 							distinctBCs.add(opc);
 						};
 						public void visitMethodInsn(int opcode, String owner, String name, String desc) {
-							super.visitMethodInsn(opcode, owner, name, desc);
+							mv.visitMethodInsn(opcode, owner, name, desc);
 							distinctBCs.add(opcode);
 							textifier.visitMethodInsn(opcode, owner, name, desc);
 
 						};
 						public void visitInvokeDynamicInsn(String name, String desc, Handle bsm,
 								Object... bsmArgs) {
-							super.visitInvokeDynamicInsn(name,desc,bsm,bsmArgs);
+							mv.visitInvokeDynamicInsn(name,desc,bsm,bsmArgs);
 						};
 						public void visitJumpInsn(int opcode, Label label){
-							super.visitJumpInsn(opcode,label);
+							mv.visitJumpInsn(opcode,label);
 							distinctBCs.add(opcode);
 							textifier.visitJumpInsn(opcode, label);
 						};
@@ -957,7 +959,7 @@ public class TargetApplicationJavaClasses {
 						public void visitFrame(int type, int nLocal,
 								Object[] local, int nStack, Object[] stack) {
 							// TODO Auto-generated method stub
-							super.visitFrame(type, nLocal, local, nStack, stack);
+							mv.visitFrame(type, nLocal, local, nStack, stack);
 						}
 						@Override
 						public void visitEnd() {
@@ -1002,7 +1004,8 @@ public class TargetApplicationJavaClasses {
 		// Create a ClassVisitor that forwards calls to the visitor named as its parameter,
 		// see http://download.forge.objectweb.org/asm/asm4-guide.pdf
 		CreationClassVisitorAdapter ca = new CreationClassVisitorAdapter(cw);
-		cr.accept(ca, 0);
+		COutputGenerator og=new COutputGenerator(Opcodes.ASM5, ca,null, null);
+		cr.accept(og, 0);
 		// Create an outputfile in the outputdirectory in a subdirectory for the given package/class
 		File classFile=new File(outputdirectory,internalClassname+".class");
 		classFile.delete(); // delete old file (a bit of overkill, it was already removed)
@@ -1280,8 +1283,8 @@ const jclass    classTable[] PROGMEM = {
 #endif
 
 
-     * todo: make it write directly into an outputStream (should be a parameter). This
-     * would make it more efficient (String is unnecessary).
+	 * todo: make it write directly into an outputStream (should be a parameter). This
+	 * would make it more efficient (String is unnecessary).
 	 * @return
 	 */
 	public String getCDeclarationForClassString() {

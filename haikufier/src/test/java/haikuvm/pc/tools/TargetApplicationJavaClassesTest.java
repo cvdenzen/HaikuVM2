@@ -25,7 +25,7 @@ import org.junit.Test;
  * @author CDN
  *
  */
-public class ClosureCarlTest {
+public class TargetApplicationJavaClassesTest {
 
 	/**
 	 * @throws java.lang.Exception
@@ -145,7 +145,7 @@ public class ClosureCarlTest {
 		if (a.equals("hoi")) {
 			a="bla";
 		}
-		// Set logging to other level to improve performance
+		// Set logging to other level to improve performance (only for this test...)
 		if (consoleHandler!=null) consoleHandler.setLevel(Level.INFO);
 		instance.scan(new Member(classname.replace(".","/"), "", ""));
 		// Outputdirectory
