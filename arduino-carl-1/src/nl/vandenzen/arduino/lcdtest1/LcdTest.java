@@ -63,9 +63,10 @@ public class LcdTest {
 
 	public static void setup() {
 		// set up the LCD's number of columns and rows: 
+		
 		lcd.begin((byte)16, (byte)2);
 		// Print a message to the LCD.
-		lcd.print("hello, world K!");
+		lcd.print("hello, world KL!");
 
 		keypad=new Keypad(1);
 		keypad.addKeyEventListener(new KeyListener() {
