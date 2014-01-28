@@ -65,6 +65,8 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreeNode;
 
 import org.junit.experimental.categories.Categories.IncludeCategory;
+
+import haikuvm.pc.tools.asmvisitors.*;
 import org.objectweb.asm.*;
 import org.objectweb.asm.util.Textifier;
 
@@ -879,144 +881,7 @@ public class TargetApplicationJavaClasses {
 		// and extract only the members (methods/fields)
 		// that are used.
 		//
-		/**
-		 * Define a ClassVisitor that filters the members according to an input Collection
-		 * @author CDN
-		 *
-		 */
-		class CreationClassVisitorAdapter extends ClassVisitor {
 
-			private String owner;
-			/**
-			 * This constructor is called with a classwriter or -visitor as argument.
-			 * @param cv
-			 */
-			public CreationClassVisitorAdapter(ClassVisitor cv) {
-
-				super(Opcodes.ASM5,cv);
-			}
-
-			@Override
-			public void visit(int version, int access, String name,
-					String signature, String superName, String[] interfaces) {
-				// forward call
-				//cv.visit(version, access, name, signature, superName, interfaces);
-				super.visit(version, access, internalClassname, signature, superName, interfaces);
-				owner = name;
-				//textifier.visit(version, access, name, signature, superName, interfaces);
-			}
-			@Override
-			public AnnotationVisitor visitAnnotation(String desc,boolean visible) {
-				logger.log(Level.FINE,"desc={0}, visble={1}",new Object[] {desc,visible});
-				// forward call
-				return cv.visitAnnotation(desc, visible);
-			}
-			public FieldVisitor visitField(int access, String name, String desc,
-					String signature, Object value) {
-				// Fields only have to be included if they are referenced in called methods.
-				Member newMember=new Member(internalClassname, name,desc);
-				if (toBeIncludedMembers.contains(newMember)) {
-					// This method should be included in the output
-					logger.fine("Create field include ++++"+newMember);
-					numberOfFields++;
-					//textifier.visitField(access, name, desc,  signature, value);
-					return cv.visitField(access,name,desc,signature,value);
-				} else {
-					//logger.fine("Create field excludes ----"+newMember);
-					return null; // do not include this method
-				}
-			}
-			@Override
-			public MethodVisitor visitMethod(final int access, String name,
-					String desc, String signature, String[] exceptions) {
-				final Member newMember=new Member(internalClassname,access,name,desc);
-				MethodVisitor mv=cv.visitMethod(access, internalClassname, desc, signature, exceptions);
-				if (toBeIncludedMembers.contains(newMember)) {
-					// This method should be included in the output
-					logger.fine("Create method include ++++"+newMember);
-					numberOfMethods++;
-					//return cv.visitMethod(access,name,desc,signature,exceptions);
-					// Collect all distinct byte codes in uniqueBCs.
-					return new MethodVisitor(Opcodes.ASM5,mv) {
-						@Override
-						public void visitCode()
-						{
-							mv.visitCode();
-							// Insert some special instructions for synchronized methods
-							if ((access & Opcodes.ACC_SYNCHRONIZED)!=0) {
-								// Insert an extra instruction
-								logger.fine("Call insert monitorenter for "+newMember);
-								mv.visitInsn(Opcodes.MONITORENTER);
-							}
-						};
-						public void visitInsn(int opcode) {
-							mv.visitInsn(opcode);
-							distinctBCs.add(opcode);
-							// Write instruction to the textifier
-							//textifier.visitInsn(opcode);
-						};
-						public void visitIntInsn(int opcode, int operand){
-							mv.visitIntInsn(opcode, operand);
-							distinctBCs.add(opcode);
-						};
-						public void visitVarInsn(int opcode, int var){
-							mv.visitVarInsn(opcode,var);
-							distinctBCs.add(opcode);
-						};
-						public void visitTypeInsn(int opcode, String desc){
-							mv.visitTypeInsn(opcode, desc);
-							distinctBCs.add(opcode);
-
-						};
-						public void visitFieldInsn(int opc, String owner, String name, String desc){
-							mv.visitFieldInsn(opc, owner, name, desc);
-							distinctBCs.add(opc);
-						};
-						public void visitMethodInsn(int opcode, String owner, String name, String desc) {
-							mv.visitMethodInsn(opcode, owner, name, desc);
-							distinctBCs.add(opcode);
-							//textifier.visitMethodInsn(opcode, owner, name, desc);
-
-						};
-						public void visitInvokeDynamicInsn(String name, String desc, Handle bsm,
-								Object... bsmArgs) {
-							mv.visitInvokeDynamicInsn(name,desc,bsm,bsmArgs);
-						};
-						public void visitJumpInsn(int opcode, Label label){
-							mv.visitJumpInsn(opcode,label);
-							distinctBCs.add(opcode);
-							//textifier.visitJumpInsn(opcode, label);
-						};
-						/* (non-Javadoc)
-						 * @see org.objectweb.asm.MethodVisitor#visitFrame(int, int, java.lang.Object[], int, java.lang.Object[])
-						 */
-						@Override
-						public void visitFrame(int type, int nLocal,
-								Object[] local, int nStack, Object[] stack) {
-							// TODO Auto-generated method stub
-							try {
-							mv.visitFrame(type, nLocal, local, nStack, stack);
-							}
-							catch (Exception ex) {
-								logger.log(Level.SEVERE,"Exception in visitFrame",ex);
-							}
-						}
-						@Override
-						public void visitEnd() {
-							// Insert some special instructions for synchronized methods
-							if ((access & Opcodes.ACC_SYNCHRONIZED)!=0) {
-								logger.fine("Call insert monitorexit for "+newMember);
-								mv.visitInsn(Opcodes.MONITOREXIT);
-							}
-							mv.visitEnd();
-						}
-					};
-				} else {
-					logger.fine("Create method exclude ----"+newMember);
-					return null; // do not include this method
-				}
-			}
-		}
 		// Do the plumbing
 		ClassReader cr = null;
 		// Open the input class file
@@ -1033,10 +898,14 @@ public class TargetApplicationJavaClasses {
 		ClassWriter cw = new ClassWriter(cr, 0);
 		// Create a ClassVisitor that forwards calls to the visitor named as its parameter,
 		// see http://download.forge.objectweb.org/asm/asm4-guide.pdf
-		CreationClassVisitorAdapter ca = new CreationClassVisitorAdapter(cw);
+		CreationClassVisitorAdapter ca = new CreationClassVisitorAdapter(cw, toBeIncludedMembers);
 		J2COutputGenerator j2cog=new J2COutputGenerator(Opcodes.ASM5, ca, outc, outh);
 		COutputGenerator og=new COutputGenerator(Opcodes.ASM5, j2cog,outc, outh);
 		cr.accept(og, 0);
+		// Update some statistics that were created during the asm pass
+		distinctBCs.addAll(ca.getDistinctBCs());
+		numberOfFields+=ca.getNumberOfFields();
+		numberOfMethods+=ca.getNumberOfMethods();
 		// Create an outputfile in the outputdirectory in a subdirectory for the given package/class
 		// This is not used, but nice for a test
 		File classFile=new File(outputdirectory,internalClassname+".class");
@@ -1051,7 +920,6 @@ public class TargetApplicationJavaClasses {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		// class CreationClassVisitorAdapter
 	} // method createclassfile
 
 	/**

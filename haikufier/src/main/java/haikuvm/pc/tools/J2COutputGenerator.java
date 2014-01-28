@@ -44,16 +44,16 @@ public class J2COutputGenerator extends org.objectweb.asm.ClassVisitor {
 	class NullWriter extends Writer {
 		@Override
 		public void close() throws IOException {
-			// TODO Auto-generated method stub
+			// Do nothing
 		}
 		@Override
 		public void flush() throws IOException {
-			// TODO Auto-generated method stub
+			// Do nothing
 		}
 		@Override
 		public void write(char[] cbuf, int off, int len)
 				throws IOException {
-			// TODO Auto-generated method stub
+			// Do nothing
 		}
 	};
 	/**
