@@ -1,5 +1,9 @@
-package haikuvm.pc.tools;
+package haikuvm.pc.tools.asmvisitors;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Date;
 import java.util.logging.Level;
@@ -75,6 +79,28 @@ public class COutputGenerator extends org.objectweb.asm.ClassVisitor {
 			outh=new NullWriter();
 		}
 		//
+		// Write comment into the file
+		//
+		String cmg="/resources/CommentMachineGenerated.txt";
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		InputStream machGeneratedCommentStream=classLoader.getResourceAsStream(cmg);
+		if (machGeneratedCommentStream==null) {
+			logger.severe("Cannot find resource "+cmg);
+			System.exit(11);
+		}
+		Reader reader=new InputStreamReader(machGeneratedCommentStream); // use default charset
+		// Read the resource and write into outputstreams outh and outc
+		char[] b=new char[2000];
+		try {
+			while (reader.read(b)>0) {
+				outh.append(new String(b));
+				outh.append(new String(b));
+			}
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		//
 		// Write declarations into .c file
 		try {
 			outc.write("\n#include \"haikuConfig.h\"\n");
@@ -84,7 +110,7 @@ public class COutputGenerator extends org.objectweb.asm.ClassVisitor {
 			e.printStackTrace();
 		}
 	}
-	
+
 	//	protected COutputGenerator(int api,ClassVisitor cv) {
 	//		super(api,cv);
 	//	}

@@ -146,7 +146,8 @@ public class TargetApplicationJavaClassesTest {
 			a="bla";
 		}
 		// Set logging to other level to improve performance (only for this test...)
-		if (consoleHandler!=null) consoleHandler.setLevel(Level.INFO);
+		//if (consoleHandler!=null) consoleHandler.setLevel(Level.INFO);
+		if (consoleHandler!=null) consoleHandler.setLevel(Level.FINEST);
 		instance.scan(new Member(classname.replace(".","/"), "", ""));
 		// Outputdirectory
 		File outputdirectory=new File("D:\\tmp\\haikuoutputcarl");

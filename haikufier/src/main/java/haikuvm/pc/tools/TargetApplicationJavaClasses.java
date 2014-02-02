@@ -67,6 +67,7 @@ import javax.swing.tree.TreeNode;
 import org.junit.experimental.categories.Categories.IncludeCategory;
 
 import haikuvm.pc.tools.asmvisitors.*;
+
 import org.objectweb.asm.*;
 import org.objectweb.asm.util.Textifier;
 
@@ -117,6 +118,7 @@ public class TargetApplicationJavaClasses {
 		MemberTreeNode treeNode=new MemberTreeNode();
 		tree=new DefaultTreeModel(treeNode);
 		// Add a listener to keep the list with toBeIncludedMembers up-to-date
+		// NOT USED (yet)
 		tree.addTreeModelListener(new TreeModelListener() {
 
 			@Override
@@ -252,295 +254,14 @@ public class TargetApplicationJavaClasses {
 	private void scan(final Member member,final MemberTreeNode parentTreeNode) throws ClassNotFoundException {
 		logger.fine("** Scan "+member+", parentTreeNode="+parentTreeNode);
 
-		/**
-		 * The class that scans the input for used methods and fields
-		 * @author CDN
-		 *
-		 */
-		class ClassScanner extends ClassVisitor {
-			private String owner;
-			/**
-			 * The name of the superclass of this class. It is not very interesting, all
-			 * references in Java byte code seem to be fully qualified.
-			 */
-			private String superName;
-			/**
-			 * The members that are part of interfaces this class implements.
-			 * The owner of the members is set to the implementing class,
-			 * that is the class that is being parsed.
-			 */
-			private Set<Member> interfaceMembers=new HashSet<Member>();
-			/**
-			 * If member is not found in this class, it must be looked up in the super class
-			 */
-			private boolean memberFound;
-			//private MemberTreeNode treeNode;
-
-			/**
-			 * The constructor for the class scanner. The scanner is used to collect
-			 * the methods and fields that are to be included in the executable for the target
-			 * machine.
-			 * @param treeNode
-			 */
-			public ClassScanner(MemberTreeNode treeNode) {
-				super(Opcodes.ASM5);
-				//this.treeNode=treeNode;
-			}
-			public void visit(int version, int access, String name,
-					String signature, String superName, String[] interfaces) {
-				logger.log(Level.INFO,"Start visit() version={0}, access={1},name={2},signature={3},superName={4}",
-						new Object[]{version,access,name,signature,superName});
-				//System.out.println(name + " extends " + superName + " { /* treeNode="+treeNode+" */");
-				// name is the internal class name (e.g. lejos/addon/keyboard/KeyEvent)
-				this.owner=name;
-				this.superName=name;
-				memberFound=false;
-				// All implemented interfaces must be included, and all their methods.
-				StringBuilder sb=new StringBuilder(1000);
-				sb.append("Interfaces (ClosureCarl.this="+TargetApplicationJavaClasses.this+")");
-				// For all implemented interfaces
-				for (String interfacename:interfaces) {
-					sb.append("\n").append(interfacename);
-					// Set name parameter to empty, then all methods will be included.
-					// This is overhead: there is no need to include these interfaces.
-					// We will remove them after we have added the real implementations
-					// of the class??
-					Set<Member> tempInterfaceMembers=new HashSet<>();
-					try {
-						TargetApplicationJavaClasses interfaceClosure=new TargetApplicationJavaClasses(classLoader);
-						Member interfaceMember=new Member(interfacename,"","");
-						interfaceClosure.scan(interfaceMember);
-						tempInterfaceMembers.addAll(interfaceClosure.toBeIncludedMembers);
-					} catch (ClassNotFoundException e) {
-						// TODO Auto-generated catch block
-						logger.severe(e.toString());
-						throw new IllegalArgumentException(e);
-					}
-					// Include the implementation of the methods in the class we are visiting.
-					// Collect the new members in a separate Set to avoid concurrent updates
-					for (Member member:tempInterfaceMembers) {
-						Member m=new Member(owner,member.getName(),member.getDescriptor());
-						this.interfaceMembers.add(m);
-						sb.append("\n").append("  i+ "+m);
-					}
-				}
-				logger.fine(sb.toString());
-				logger.info("End visit(), owner(=class being parsed)="+owner);
-			}
-			public void visitSource(String source, String debug) {
-			}
-			public void visitOuterClass(String owner, String name, String desc) {
-				System.out.println("visitOuterClass owner,name,desc="+owner+", "+name+", "+desc);
-			}
-			public AnnotationVisitor visitAnnotation(String desc,
-					boolean visible) {
-				return null;
-			}
-			public void visitAttribute(Attribute attr) {
-			}
-			public void visitInnerClass(String name, String outerName,
-					String innerName, int access) {
-				System.out.println("visitInnerClass name,outername,innername,access="+name+", "+outerName+", "
-						+innerName+", "+access);
-			}
-			public FieldVisitor visitField(int access, String name, String desc,
-					String signature, Object value) {
-				System.out.println("visitField desc=" + desc + ", signature="+signature+" name=" + name);
-				// Fields only have to be included if they are referenced in called methods.
-
-				return null;
-			}
-			@Override
-			public MethodVisitor visitMethod(int access, final String name,
-					String desc, String signature, String[] exceptions) {
-				logger.fine("visitMethod access="+access+", desc=" + desc + ", signature="+signature+", owner="+owner+", name=" + name);
-				Member newMember=new Member(owner,access,name,desc,member.getUrl());
-				// Check whether already included
-				//				if (toBeIncludedMembers.contains(newMember)) {
-				//					// Was already inserted, do not parse any further
-				//					logger.fine("visitMethod: "+newMember+" already inserted, return null for MethodVisitor");
-				//					memberFound=true;
-				//					return null;
-				//				};
-				//
-				// Is this a method that should be included?
-				//
-				if ("<clinit>".equals(newMember.getName())) { // just for debugging purpose
-					logger.fine("<clinit> found for member "+newMember);
-				}
-				if ((member.getName()!=null && !member.getName().isEmpty()) // if methodName empty, then include all
-						&& !"<clinit>".equals(newMember.getName()) // class init must be included
-						// Default constructor is not needed to be always included: it will be
-						// called explicitly in the Java class code
-						// && !("<init>".equals(name) && "()V".equals(desc))
-						&& !newMember.getName().equals(member.getName())
-						&& !interfaceMembers.contains(newMember) // all interfacemembers must be included
-						) {
-					// Should not be included
-					logger.fine(" -- exclude "+newMember);
-					return null;
-				}
-				// Yes, this method must be included
-				logger.fine("memberFound to true for "+newMember);
-				memberFound=true;
-				// Make a new node in the tree and add it to its parent
-				final MemberTreeNode treeNode=new MemberTreeNode();
-				parentTreeNode.add(treeNode);
-				// Eclipse would not debug parentTreeNode (cannot resolve to variable)
-				logger.finest("parentTreeNode:"+parentTreeNode.toString());
-				if (toBeIncludedMembers.add(newMember)) {
-					// This is a new member, it has not been processed earlier
-					treeNode.setUserObject(newMember);
-					// Display its siblings
-					@SuppressWarnings("unchecked")
-					Enumeration<MemberTreeNode> en=parentTreeNode.children();
-					while (en.hasMoreElements()) {
-						logger.finest("child="+en.nextElement());
-					};
-					// Parse the bytecode, to look for other methods that must be included
-					return new MethodVisitor(Opcodes.ASM5) {
-						public void visitCode() {
-							logger.finer("visitCode "+owner+" "+name);
-						}
-						public void visitFrame(int type, int nLocal, Object[] local, int nStack,
-								Object[] stack) {
-							logger.finer("visitFrame");
-						};
-						public void visitInsn(int opcode) {
-							logger.finer("visitInsn("+opcode+" "+OPCODES[opcode]+")");
-						};
-						public void visitIntInsn(int opcode, int operand){
-							logger.finer("visitInsn("+opcode+" "+OPCODES[opcode]+","+operand+")");
-						};
-						public void visitVarInsn(int opcode, int var){
-							logger.finer("visitVarInsn("+opcode+" "+OPCODES[opcode]+","+var+")");
-						};
-						public void visitTypeInsn(int opcode, String desc){
-							logger.finer("visitTypeInsn("+opcode+" "+OPCODES[opcode]+","+desc+")");
-
-						};
-						public void visitFieldInsn(int opc, String owner, String name, String desc){
-							logger.finer("visitFieldInsn("+opc+" "+OPCODES[opc]+","+owner+","+name+","+desc+")");
-							// This field must be included in the result, the URL is the same as the caller?
-							Member newFieldMember=new Member(owner,name,desc,member.getUrl());
-							if (toBeIncludedMembers.add(newFieldMember)) {
-								// Create a new node for this member
-								MemberTreeNode node=new MemberTreeNode(newFieldMember);
-								// This is a child of the method
-								//node.setParent(treeNode); do NOT use setParent, is for internal Swing use only
-								parentTreeNode.add(node);
-								logger.finer("Added member to parentNode "+parentTreeNode);
-
-								// todo: should we do something special to assure the <clinit> is executed?
-							}
-						};
-						public void visitMethodInsn(int opc, String owner, String name, String desc) {
-							logger.finer("visitMethodInsn("+opc+" "+OPCODES[opc]+","+owner+","+name+", desc="+desc);
-							// Include this method in the result and check this method for references (recursively)
-							// This field must be included in the result, the URL is the same as the caller?
-							Member newMethodMember=new Member(owner,name,desc,member.getUrl());
-							// Create a new node for this member NO the scan method will do this
-							//MemberTreeNode node=new MemberTreeNode(newMethodMember);
-							// This is a child of the method
-							//node.setParent(treeNode);
-							try {
-								scan(newMethodMember,treeNode);
-							} catch (ClassNotFoundException e) {
-								logger.severe(e.toString());
-								throw new IllegalArgumentException(e);
-							}
-							//System.out.println("Already included: "+newMember);
-						};
-						public void visitInvokeDynamicInsn(String name, String desc, Handle bsm,
-								Object... bsmArgs) {
-							logger.finer("visitInvokeDynamicInsn name="+name+", desc="+desc+", bsm="+bsm.toString());
-						};
-
-						@Override
-						public void visitJumpInsn(int opcode, Label label){};
-						@Override
-						public void visitLabel(Label label){};
-						@Override
-						public void visitLdcInsn(Object cst){};
-						@Override
-						public void visitIincInsn(int var, int increment){};
-						@Override
-						public void visitTableSwitchInsn(int min, int max, Label dflt, Label... labels){};
-						@Override
-						public void visitLookupSwitchInsn(Label dflt, int[] keys, Label[] labels){};
-						@Override
-						public void visitMultiANewArrayInsn(String desc, int dims){};
-						@Override
-						public void visitTryCatchBlock(Label start, Label end, Label handler,
-								String type){
-						};
-						@Override
-						public void visitLocalVariable(String name, String desc, String signature,
-								Label start, Label end, int index){
-							logger.finer("visitLocalVariable name="+name+", desc="+desc+", signa="+signature
-									+", startlabel="+start+", endlabel="+end+", index="+index);
-						};
-						@Override
-						public void visitLineNumber(int line, Label start){};
-						@Override
-						public void visitMaxs(int maxStack, int maxLocals){};
-						@Override
-						public void visitEnd(){
-							System.out.println("visitEnd()");
-							if (!memberFound) {
-								logger.fine("Trying superclass "+superName);
-								// look for it in the super class
-								if (superName!=null && !superName.isEmpty()) {
-									try {
-										scan(new Member(superName,member.getName(),member.getDescriptor()),parentTreeNode);
-									} catch (ClassNotFoundException e) {
-										// TODO Auto-generated catch block
-										String message=e.toString();
-										logger.severe(message);
-										e.printStackTrace();
-										System.exit(7);
-									}
-								}
-							}
-						};
-					};
-				} else {
-					// This member was seen earlier
-					// Make a new node in the tree and add it to its parent
-					// To indicate that this is a kind of "symbolic link" to an earlier found
-					// Member, set the userObject to the original Node.
-
-					// Find the original Node
-					MemberTreeNode rootNode=(MemberTreeNode) tree.getRoot();
-					MemberTreeNode originalNode=null;
-					@SuppressWarnings("unchecked")
-					Enumeration<MemberTreeNode> enumeration=rootNode.preorderEnumeration();//.depthFirstEnumeration();
-					while (enumeration.hasMoreElements()) {
-						MemberTreeNode n;
-						n=enumeration.nextElement();
-						// member can be null for root node
-						Object member=n.getUserObject();
-						if (member!=null) {
-							if (member.equals(newMember)) {
-								// This is the original Node
-								originalNode=n;
-								break; // no need to search further
-							}
-						}
-					}
-					treeNode.setUserObject(originalNode);
-					return null; // need to investigate this
-				}
-			};
-		}
 
 		// Skip array types
 		if (member.getOwner().startsWith("[")) {
 			logger.fine("Skip arraytype="+member);
 			return;
 		}
-		// Create a ClassVisitor (subclass that collects used methods and fields)
-		ClassScanner classScanner = new ClassScanner(parentTreeNode);
+		// Create a ClassVisitor (class that collects used methods and fields)
+		ClassScanner classScanner = new ClassScanner(member);
 		ClassReader cr = null;
 		try {
 			InputStream classInputStream;
@@ -563,7 +284,7 @@ public class TargetApplicationJavaClasses {
 			}
 
 			URL selectedURL=null;
-			//classInputStream=classLoader.getResourceAsStream( internalClassname+ ".class");
+			// Select the last URL in the list, that is the one this member was found
 			if (urls.size()>0) {
 				selectedURL=urls.get(urls.size()-1);
 			} else {
@@ -578,8 +299,72 @@ public class TargetApplicationJavaClasses {
 			logger.severe(member+": "+e.getMessage());
 			e.printStackTrace();
 		}
-		// start parsing, this will call the 
+		// start parsing, this will call the ASM Visitor
 		cr.accept(classScanner, 0);
+		// Read the members to be included
+		Set<Member> s=classScanner.getToBeIncludedMembers();
+		// collect all interface members (can come from more than one interface)
+		Set<Member> tempInterfaceMembers=new HashSet<Member>();
+		// Scan all members that must be included
+		for (Iterator<Member> iter=s.iterator();iter.hasNext();) {
+			Member m=iter.next();
+			// It can be an interface member, specifying that all methods with the
+			// same name in the member object should be included
+			// An interface member can be recognized because it has an owner but no name.
+			if (m.getName()==null || m.getName().isEmpty()) {
+				// This is an interface specification.
+				// Find the interface methods in this class
+				TargetApplicationJavaClasses tajc=new TargetApplicationJavaClasses(classLoader);
+				tajc.scan(m);
+				tempInterfaceMembers.addAll(tajc.getToBeIncludedClasses());
+				// Remove this fake entry from the set
+				iter.remove();
+			}
+		}
+		// Include the implementation of the methods in the class we are visiting.
+		// Collect the new members in a separate Set to avoid concurrent updates
+		for (Member m1:tempInterfaceMembers) {
+			// Set owner to the owner of the class, not of the interface
+			m1.setOwner(member.getOwner());
+		}
+		// Add the interface members to the Set that contains all members for the application
+		s.addAll(tempInterfaceMembers);
+		// Check all new members
+		for (Member m1:s) {
+			// Create a new tree node with the member m1 as the userObject
+			MemberTreeNode n=new MemberTreeNode(m1);
+			// If this member is not yet put into the toBeIncludedMembers set, it must be
+			// scanned for new references. Otherwise it has already been seen and scanned.
+			if (toBeIncludedMembers.add(m1)) {
+				// Add to parent after checking whether this member is already known to avoid finding itself in the tree
+				parentTreeNode.add(n);
+				scan(m1, n);
+			} else {
+				// Member was already known, no need to rescan, but create a stub node
+				// This member was seen earlier
+				// Make a new node in the tree and add it to its parent
+				// To indicate that this is a kind of "symbolic link" to an earlier found
+				// Member, set the userObject to the original Node.
+				@SuppressWarnings("unchecked")
+				Enumeration<MemberTreeNode> enumeration=parentTreeNode.preorderEnumeration();//.depthFirstEnumeration();
+				while (enumeration.hasMoreElements()) {
+					MemberTreeNode existingNode;
+					existingNode=enumeration.nextElement();
+					// member can be null for root node
+					Object existingMember=existingNode.getUserObject();
+					if (existingMember!=null) {
+						if (existingMember.equals(m1)) {
+							// This is the original Node, set as "symbolic link"
+							logger.fine("Going to set UserObject for member "+m1+" to existing node "+existingNode);
+							n.setUserObject(existingNode);
+							break; // no need to search further
+						}
+					}
+				}
+				parentTreeNode.add(n);
+			}
+		}
+
 		//
 		// Insert class init method
 		//
@@ -600,7 +385,11 @@ public class TargetApplicationJavaClasses {
 				throw new IllegalArgumentException(e);
 			}
 		}
-	} // scan()
+	} private Set<Member> getToBeIncludedClasses() {
+		// TODO Auto-generated method stub
+		return toBeIncludedMembers;
+	}
+	// scan()
 	private ClassLoader classLoader;
 
 
@@ -625,6 +414,7 @@ public class TargetApplicationJavaClasses {
 			Object userObject=n.getUserObject();
 			if (userObject!=null) {
 				// Might be a "symbolic link" to another original
+				logger.finest("Print tree: "+userObject.toString());
 				if (userObject instanceof Member) {
 					sb.append(userObject.toString()).append("\n");
 				} else if (userObject instanceof TreeNode) {
@@ -795,7 +585,7 @@ public class TargetApplicationJavaClasses {
 		try {
 			outc.write("\n#include \"haikuConfig.h\"\n");
 			outc.write("#include \"haikuJava.h\"\n\n");
-			
+
 			outj2cc.write("\n#include <stdlib.h>\n#include <stdio.h>\n#include <stdarg.h>\n");
 			outj2cc.write("#include <string.h>\n\n#include \"haikuJ2C.h\"\n");
 			outj2cc.write("#include \"utility/haikuConfig.h\"#include \"simpleOS.h\"\n\n");

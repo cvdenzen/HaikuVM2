@@ -2,6 +2,7 @@ package haikuvm.pc.tools;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.logging.Logger;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 
@@ -21,12 +22,15 @@ public class MemberTreeNode extends DefaultMutableTreeNode {
 	public MemberTreeNode() {
 		super();
 	}
-
 	@Override
 	public String toString() {
 		if (getUserObject() instanceof MemberTreeNode) {
 			// Indicate that this is something like a symbolic link
 			// to another node
+			if (this.equals(getUserObject())) {
+				logger.severe("This MemberTreeNode has a userObject that is this MemberTreeNode. That causes a loop in the tree.");
+				System.exit(9);
+			}
 			return "*"+super.toString();
 		} else {
 			return super.toString();
@@ -105,6 +109,11 @@ public class MemberTreeNode extends DefaultMutableTreeNode {
 	public void setUserObject(Object newValue) {
 		Object oldValue=userObject;
 		super.setUserObject(newValue);
+		if (this.equals(newValue)) {
+			logger.severe("This MemberTreeNode has a userObject that is this MemberTreeNode. That causes a loop in the tree.");
+			System.exit(9);			
+		}
 		propertyChangeSupport.firePropertyChange("userObject", oldValue, newValue);
 	}
+	static private Logger logger=Logger.getLogger("haikuvm.pc.tools");
 }

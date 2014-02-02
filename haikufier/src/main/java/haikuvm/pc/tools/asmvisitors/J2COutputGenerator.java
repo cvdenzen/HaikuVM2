@@ -1,4 +1,4 @@
-package haikuvm.pc.tools;
+package haikuvm.pc.tools.asmvisitors;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.Date;
