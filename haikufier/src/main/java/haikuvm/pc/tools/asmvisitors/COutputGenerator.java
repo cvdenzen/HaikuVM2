@@ -1,4 +1,6 @@
 package haikuvm.pc.tools.asmvisitors;
+import haikuvm.pc.tools.Member;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -37,12 +39,17 @@ public class COutputGenerator extends org.objectweb.asm.ClassVisitor {
 	Textifier outhTextifier=new Textifier();
 	/**
 	 * The code in the haikuJava.h file
+	 * Use a StringBuilder as intermediate storage, to avoid
+	 * catching Exceptions that the Writer (outc or outh) might throw.
 	 */
-	StringBuilder outhSb=new StringBuilder();
+	private StringBuilder outhSb=new StringBuilder();
 	/**
 	 * The code in the haikuJava.c file
+	 * Use a StringBuilder as intermediate storage, to avoid
+	 * catching Exceptions that the Writer (outc or outh) might throw.
 	 */
-	StringBuilder outcSb=new StringBuilder();
+	private StringBuilder outcSb=new StringBuilder();
+	private String owner;
 
 	class NullWriter extends Writer {
 		@Override
@@ -78,37 +85,6 @@ public class COutputGenerator extends org.objectweb.asm.ClassVisitor {
 		if (outh==null) {
 			outh=new NullWriter();
 		}
-		//
-		// Write comment into the file
-		//
-		String cmg="/resources/CommentMachineGenerated.txt";
-		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		InputStream machGeneratedCommentStream=classLoader.getResourceAsStream(cmg);
-		if (machGeneratedCommentStream==null) {
-			logger.severe("Cannot find resource "+cmg);
-			System.exit(11);
-		}
-		Reader reader=new InputStreamReader(machGeneratedCommentStream); // use default charset
-		// Read the resource and write into outputstreams outh and outc
-		char[] b=new char[2000];
-		try {
-			while (reader.read(b)>0) {
-				outh.append(new String(b));
-				outh.append(new String(b));
-			}
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		//
-		// Write declarations into .c file
-		try {
-			outc.write("\n#include \"haikuConfig.h\"\n");
-			outc.write("#include \"haikuJava.h\"\n\n");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	//	protected COutputGenerator(int api,ClassVisitor cv) {
@@ -119,31 +95,25 @@ public class COutputGenerator extends org.objectweb.asm.ClassVisitor {
 	@Override
 	public void visit(int version, int access, String name, String signature,
 			String superName, String[] interfaces) {
-		if (cv != null) {
-			cv.visit(version, access, name, signature, superName, interfaces);
-		}
+		super.visit(version, access, name, signature, superName, interfaces);
 		// Print some comment in the output
+		outcSb.append(String.format("/*\nDate: %s\n",new Object[] {new Date().toString()}));
+		outcSb.append("/*\nClass "+name+", extends "+superName+"\n*/\n");
+		this.owner=name;
 		outcTextifier.visit(version, access, name, signature, superName, interfaces);
 	}
 
 	public void visitSource(String source, String debug) {
-		if (cv != null) {
-			cv.visitSource(source, debug);
-		}
+		super.visitSource(source, debug);
 		outcTextifier.visitSource(source, debug);
 	}
 	public void visitOuterClass(String owner, String name, String desc) {
-		if (cv != null) {
-			cv.visitOuterClass(owner, name, desc);
-		}
+		super.visitOuterClass(owner, name, desc);
 		outcTextifier.visitOuterClass(owner, name, desc);
 	}
 	public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
 		outcTextifier.visitAnnotation(desc, visible);
-		if (cv != null) {
-			return cv.visitAnnotation(desc, visible);
-		}
-		return null;
+		return super.visitAnnotation(desc, visible);
 	}
 	public AnnotationVisitor visitTypeAnnotation(int typeRef,
 			TypePath typePath, String desc, boolean visible) {
@@ -151,91 +121,182 @@ public class COutputGenerator extends org.objectweb.asm.ClassVisitor {
 			throw new RuntimeException();
 		}
 		outcTextifier.visitTypeAnnotation(typeRef, typePath, desc, visible);
-		if (cv != null) {
-			return cv.visitTypeAnnotation(typeRef, typePath, desc, visible);
-		}
-		return null;
+		return super.visitTypeAnnotation(typeRef, typePath, desc, visible);
 	}
 	public void visitAttribute(Attribute attr) {
 		outcTextifier.visitAttribute(attr);
-		if (cv != null) {
-			cv.visitAttribute(attr);
-		}
+		super.visitAttribute(attr);
 	}
 	public void visitInnerClass(String name, String outerName,
 			String innerName, int access) {
 		outcTextifier.visitInnerClass(name, outerName, innerName, access);
-		if (cv != null) {
-			cv.visitInnerClass(name, outerName, innerName, access);
-		}
+		super.visitInnerClass(name, outerName, innerName, access);
 	}
 	public FieldVisitor visitField(int access, String name, String desc,
 			String signature, Object value) {
 		outcTextifier.visitField(access, name, desc, signature, value);
-		if (cv != null) {
-			return cv.visitField(access, name, desc, signature, value);
-		}
-		return null;
+		return super.visitField(access, name, desc, signature, value);
 	}
 	public MethodVisitor visitMethod(int access, String name, String desc,
 			String signature, String[] exceptions) {
+		// Create a Member of this method
+		Member member=new Member(access,owner,name,desc,signature,exceptions);
 		outcTextifier.visitMethod(access, name, desc, signature, exceptions);
 		// Forward the call to the next ClassVisitor and store the MethodVisitor it returns(?)
 		MethodVisitor mv=null;
-		if (cv != null) {
-			mv=cv.visitMethod(access, name, desc, signature, exceptions);
-		}
+		mv=super.visitMethod(access, name, desc, signature, exceptions);
 		// if mv is null, nobody is interested in this method
 		if (mv!=null) {
-			mv=new COutputMethodAdapter(api,mv);
+			// chain the MethodVisitors
+			mv=new COutputMethodAdapter(api,mv,outcSb,outhSb,member);
 		}
 		return mv;
 	}
+	/*
+	 * (non-Javadoc)
+	 * This is the end of the class visit
+	 * @see org.objectweb.asm.ClassVisitor#visitEnd()
+	 */
 	public void visitEnd() {
-		if (cv != null) {
-			cv.visitEnd();
-		}
+		super.visitEnd();
 		// print the collected texts
 		// print the comments EXPERIMENTAL
-		StringBuilder sbh=new StringBuilder();
-		sbh.append("outhTextifier text:\n");
-		for (Object o:outhTextifier.text) {
-			sbh.append(o.toString());
-		}
-		logger.finest(sbh.toString());
 
 		StringBuilder sbc=new StringBuilder();
-		sbc.append("outcTextifier text:\n");
+		// Start a comment
+		sbc.append("/*\noutcTextifier text:\n");
 		for (Object o:outcTextifier.text) {
 			sbc.append(o.toString());
 		}
-		logger.finest(sbc.toString());
-		// If there is an outc defined (parameter), write to it
-		if (outc!=null) {
-			try {
-				outc.write(String.format("/*\nDate: %s\n",new Object[] {new Date().toString()}));
-				outc.write(sbc.toString());
-				outc.write("*/\n");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		// End the comment tag
+		sbc.append("\n*/\n");
+		// Prepend this Textifier output to the regular output
+		outcSb.insert(0, sbc);
+
+		// Print the .h comments
+		StringBuilder sbh=new StringBuilder();
+		sbh.append("/*\nouthTextifier text:\n");
+		for (Object o:outhTextifier.text) {
+			sbh.append(o.toString());
 		}
-		// print the "çode" as collected in this class
-		outhSb.insert(0, "outhSb:\n");
-		logger.finest(outhSb.toString());
-		outcSb.insert(0, "outcSb:\n");
-		logger.finest(outcSb.toString());
+		// End comment tag
+		sbh.append("\n*/\n");
+		// Prepend this Textifier output to the regular output
+		outhSb.insert(0, sbh);
+
+		// Write the content, as collected in the StringBuilders outcSb and outhSb
+		// to the output writers
+		try {
+			outc.append(outcSb.toString());
+			outh.append(outhSb.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	class COutputMethodAdapter extends MethodVisitor {
-		public COutputMethodAdapter(int api,MethodVisitor mv) {
+		private StringBuilder outcSb;
+		private StringBuilder outhSb;
+		private Member member;
+		private int opcodeCounter=0; // to create unique identifiers for opcodes
+		/**
+		// Because the method stack frame must be computed, and the counts must be
+		// output first (before the code), we keep track of the position where to
+		 * insert these counts (maxStack, maxLocals, paramsize)
+		 */
+		private int insertionPointForMaxs=0;
+
+		public COutputMethodAdapter(int api,MethodVisitor mv,StringBuilder outcSb,StringBuilder outhSb,Member member) {
 			super(api,mv);
+			this.outcSb=outcSb;
+			this.outhSb=outhSb;
+			this.member=member;
+		}
+		/**
+		 * This does not work for api version <ASM5 (java 8?)
+		 */
+		@Override
+		public void visitParameter(String name, int access) {
+			super.visitParameter(name, access);
+		}
+		@Override
+		public void visitCode() {
+			outcSb.append(String.format("const %s_t\n  %s PROGMEM = {\n",
+					new Object[] {member.getMangledName(),member.getMangledName()}));
+			// Later on, the maxStack etc. must be inserted at this position, so remember it
+			insertionPointForMaxs=outcSb.length();
+			outhSb.append("typedef struct {\n"
+					+"uint8_t max_stack; int8_t purLocals; uint8_t purParams;\n");
 		}
 		@Override
 		public void visitInsn(int opcode) {
 			super.visitInsn(opcode); // calls mv.visitInsn if mv!=null
 			outcTextifier.visitInsn(opcode);
+			// Print the name of the opcode
+			outcSb.append(org.objectweb.asm.util.Printer.OPCODES[opcode]).append(",\n");
+			outhSb.append(String.format("OP_bc op%d;",opcodeCounter++));
+		}
+
+		@Override
+		public void visitIntInsn(int opcode, int operand) {
+			super.visitIntInsn(opcode, operand);
+			// Print the name of the opcode
+			outcSb.append(org.objectweb.asm.util.Printer.OPCODES[opcode]).append(",");
+			switch(opcode) {
+			case Opcodes.BIPUSH:
+				// byte
+				outcSb.append("B(").append(operand).append(")\n");
+				break;
+			case Opcodes.SIPUSH:
+				// short
+				outcSb.append("INT16(").append(operand).append(")\n");
+				break;
+			}
+		}
+		@Override
+		public void visitVarInsn(int opcode, int var) {
+			super.visitVarInsn(opcode, var);
+			// Print the name of the opcode
+			outcSb.append(org.objectweb.asm.util.Printer.OPCODES[opcode]).append(",");
+			outcSb.append("B(").append(var).append(")\n");
+		}
+		@Override
+		public void visitTypeInsn(int opcode, String type) {
+			super.visitTypeInsn(opcode, type);
+			// Print the name of the opcode
+			outcSb.append(org.objectweb.asm.util.Printer.OPCODES[opcode]).append(",");
+			switch(opcode) {
+			case Opcodes.NEW:
+				outcSb.append("B(").append(type).append("),\n");
+				break;
+			case Opcodes.ANEWARRAY:
+				outcSb.append("ADR(").append(type).append("),\n");
+				break;
+			}
+		}
+		@Override
+		public void visitMaxs(int maxStack, int maxLocals) {
+			int paramSize=0; // The size of the parameters ???
+			// Calculate paramSize
+			String desc=member.getDescriptor();
+			// heuristics, count the number op comma's (,), add 1, multiply by 2
+			String t[]=desc.split(",");
+			paramSize=t.length;
+			paramSize++;
+			paramSize*=2;
+			super.visitMaxs(maxStack, maxLocals);
+			// Print out the values
+			outcSb.insert(insertionPointForMaxs,
+					String.format("%d,%d,%d // max_stack, purLocals, purParams\n",
+							new Object[]{maxStack,maxLocals,paramSize}));
+		}
+		@Override
+		public void visitEnd() {
+			outcSb.append("\n}\n");
+
+			// Append the name of the struct definition to the .h file
+			outhSb.append(String.format("\n} %s",member.getMangledName()));
 		}
 	}
 
