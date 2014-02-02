@@ -16,6 +16,8 @@ public class Member implements Comparable {
 	private String descriptor;
 	private URL url;
 	private int access=-1;
+	private String signature;
+	private String[] exceptions;
 	/**
 	 * @param owner The internal class name of the class in which this member is declared.
 	 * Internal class name is the class name with dots replaced by slashes.
@@ -30,18 +32,28 @@ public class Member implements Comparable {
 	 * @param name The name of the member
 	 * @param url The URL from which this member has been loaded
 	 */
-	public Member(String owner, int access, String name, String descriptor, URL url) {
+	public Member(int access, String owner, String name, String descriptor,
+			String signature, String[] exceptions,URL url) {
+		// TODO Auto-generated constructor stub
 		super();
-		this.owner=owner;
 		this.access=access;
+		this.owner=owner;
 		this.name=name;
 		this.descriptor = descriptor;
+		this.signature=signature;
+		this.exceptions=exceptions;
 		this.url=url;
 		if (owner.contains(".")) {
 			String message="owner class name should not contain . character:"+this;
 			logger.severe(message);
 			throw new IllegalArgumentException(message);
 		}
+	}
+	public Member(String owner, int access, String name, String descriptor, URL url) {
+		this(access,owner,name,descriptor,null,null,url);
+	}
+	public Member(int access,String owner,String name,String desc,String signature,String[] exceptions) {
+		this(access,owner,name,desc,signature,exceptions,null);
 	}
 	/**
 	 * @param owner The internal class name of the class in which this member is declared.
@@ -78,6 +90,13 @@ public class Member implements Comparable {
 	public Member(String internalClassname, int access, String name,
 			String desc) {
 		this(internalClassname,access,name,desc,null);
+	}
+	/**
+	 * Create a Member for a Class (no method or field name defined)
+	 * @param name The name of the class in internal class format.
+	 */
+	public Member(String name) {
+		this(name,"","");
 	}
 	public int getAccess() {
 		return access;

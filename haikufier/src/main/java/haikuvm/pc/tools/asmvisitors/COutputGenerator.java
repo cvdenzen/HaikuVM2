@@ -1,4 +1,6 @@
 package haikuvm.pc.tools.asmvisitors;
+import haikuvm.pc.tools.Member;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -43,6 +45,7 @@ public class COutputGenerator extends org.objectweb.asm.ClassVisitor {
 	 * The code in the haikuJava.c file
 	 */
 	StringBuilder outcSb=new StringBuilder();
+	private String owner;
 
 	class NullWriter extends Writer {
 		@Override
@@ -78,37 +81,6 @@ public class COutputGenerator extends org.objectweb.asm.ClassVisitor {
 		if (outh==null) {
 			outh=new NullWriter();
 		}
-		//
-		// Write comment into the file
-		//
-		String cmg="/resources/CommentMachineGenerated.txt";
-		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-		InputStream machGeneratedCommentStream=classLoader.getResourceAsStream(cmg);
-		if (machGeneratedCommentStream==null) {
-			logger.severe("Cannot find resource "+cmg);
-			System.exit(11);
-		}
-		Reader reader=new InputStreamReader(machGeneratedCommentStream); // use default charset
-		// Read the resource and write into outputstreams outh and outc
-		char[] b=new char[2000];
-		try {
-			while (reader.read(b)>0) {
-				outh.append(new String(b));
-				outh.append(new String(b));
-			}
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		//
-		// Write declarations into .c file
-		try {
-			outc.write("\n#include \"haikuConfig.h\"\n");
-			outc.write("#include \"haikuJava.h\"\n\n");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	//	protected COutputGenerator(int api,ClassVisitor cv) {
@@ -119,31 +91,29 @@ public class COutputGenerator extends org.objectweb.asm.ClassVisitor {
 	@Override
 	public void visit(int version, int access, String name, String signature,
 			String superName, String[] interfaces) {
-		if (cv != null) {
-			cv.visit(version, access, name, signature, superName, interfaces);
-		}
+		super.visit(version, access, name, signature, superName, interfaces);
 		// Print some comment in the output
+		try {
+			outc.append("/*\nClass "+name+", extends "+superName+"\n*/\n");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.owner=name;
 		outcTextifier.visit(version, access, name, signature, superName, interfaces);
 	}
 
 	public void visitSource(String source, String debug) {
-		if (cv != null) {
-			cv.visitSource(source, debug);
-		}
+		super.visitSource(source, debug);
 		outcTextifier.visitSource(source, debug);
 	}
 	public void visitOuterClass(String owner, String name, String desc) {
-		if (cv != null) {
-			cv.visitOuterClass(owner, name, desc);
-		}
+		super.visitOuterClass(owner, name, desc);
 		outcTextifier.visitOuterClass(owner, name, desc);
 	}
 	public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
 		outcTextifier.visitAnnotation(desc, visible);
-		if (cv != null) {
-			return cv.visitAnnotation(desc, visible);
-		}
-		return null;
+		return super.visitAnnotation(desc, visible);
 	}
 	public AnnotationVisitor visitTypeAnnotation(int typeRef,
 			TypePath typePath, String desc, boolean visible) {
@@ -151,50 +121,46 @@ public class COutputGenerator extends org.objectweb.asm.ClassVisitor {
 			throw new RuntimeException();
 		}
 		outcTextifier.visitTypeAnnotation(typeRef, typePath, desc, visible);
-		if (cv != null) {
-			return cv.visitTypeAnnotation(typeRef, typePath, desc, visible);
-		}
-		return null;
+		return super.visitTypeAnnotation(typeRef, typePath, desc, visible);
 	}
 	public void visitAttribute(Attribute attr) {
 		outcTextifier.visitAttribute(attr);
-		if (cv != null) {
-			cv.visitAttribute(attr);
-		}
+		super.visitAttribute(attr);
 	}
 	public void visitInnerClass(String name, String outerName,
 			String innerName, int access) {
 		outcTextifier.visitInnerClass(name, outerName, innerName, access);
-		if (cv != null) {
-			cv.visitInnerClass(name, outerName, innerName, access);
-		}
+		super.visitInnerClass(name, outerName, innerName, access);
 	}
 	public FieldVisitor visitField(int access, String name, String desc,
 			String signature, Object value) {
 		outcTextifier.visitField(access, name, desc, signature, value);
-		if (cv != null) {
-			return cv.visitField(access, name, desc, signature, value);
-		}
-		return null;
+		return super.visitField(access, name, desc, signature, value);
 	}
 	public MethodVisitor visitMethod(int access, String name, String desc,
 			String signature, String[] exceptions) {
+		// Create a Member of this method
+		Member member=new Member(access,owner,name,desc,signature,exceptions);
+		try {
+			outc.append(String.format("const %s_t %s {\n",
+					new Object[] {member.getMangledName(),member.getMangledName()}));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		outcTextifier.visitMethod(access, name, desc, signature, exceptions);
 		// Forward the call to the next ClassVisitor and store the MethodVisitor it returns(?)
 		MethodVisitor mv=null;
-		if (cv != null) {
-			mv=cv.visitMethod(access, name, desc, signature, exceptions);
-		}
+		mv=super.visitMethod(access, name, desc, signature, exceptions);
 		// if mv is null, nobody is interested in this method
 		if (mv!=null) {
-			mv=new COutputMethodAdapter(api,mv);
+			// chain the MethodVisitors
+			mv=new COutputMethodAdapter(api,mv,outc,outh);
 		}
 		return mv;
 	}
 	public void visitEnd() {
-		if (cv != null) {
-			cv.visitEnd();
-		}
+		super.visitEnd();
 		// print the collected texts
 		// print the comments EXPERIMENTAL
 		StringBuilder sbh=new StringBuilder();
@@ -229,8 +195,12 @@ public class COutputGenerator extends org.objectweb.asm.ClassVisitor {
 	}
 
 	class COutputMethodAdapter extends MethodVisitor {
-		public COutputMethodAdapter(int api,MethodVisitor mv) {
+		private Writer outc;
+		private Writer outh;
+		public COutputMethodAdapter(int api,MethodVisitor mv,Writer outc,Writer outh) {
 			super(api,mv);
+			this.outc=outc;
+			this.outh=outh;
 		}
 		@Override
 		public void visitInsn(int opcode) {

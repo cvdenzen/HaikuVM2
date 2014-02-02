@@ -15,7 +15,9 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -580,6 +582,29 @@ public class TargetApplicationJavaClasses {
 			e.printStackTrace();
 		}
 
+		//
+		// Write comment into the file
+		//
+		String cmg="resources/CommentMachineGenerated.txt";
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		InputStream machGeneratedCommentStream=classLoader.getResourceAsStream(cmg);
+		if (machGeneratedCommentStream==null) {
+			logger.severe("Cannot find resource "+cmg);
+			System.exit(11);
+		}
+		Reader reader=new InputStreamReader(machGeneratedCommentStream); // use default charset
+		// Read the resource and write into outputstreams outh and outc
+		char[] b=new char[2000];
+		int len=0;
+		try {
+			while ((len=reader.read(b))>0) {
+				outh.append(new String(b,0,len));
+				outc.append(new String(b,0,len));
+			}
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		//
 		// Write declarations into .c file
 		try {
