@@ -277,19 +277,14 @@ public class COutputGenerator extends org.objectweb.asm.ClassVisitor {
 		}
 		@Override
 		public void visitMaxs(int maxStack, int maxLocals) {
-			int paramSize=0; // The size of the parameters ???
+			int argumentsSize=0; // The size of the parameters ???
 			// Calculate paramSize
-			String desc=member.getDescriptor();
-			// heuristics, count the number op comma's (,), add 1, multiply by 2
-			String t[]=desc.split(",");
-			paramSize=t.length;
-			paramSize++;
-			paramSize*=2;
+			argumentsSize=member.getArgumentsSize();
 			super.visitMaxs(maxStack, maxLocals);
 			// Print out the values
 			outcSb.insert(insertionPointForMaxs,
-					String.format("%d,%d,%d // max_stack, purLocals, purParams\n",
-							new Object[]{maxStack,maxLocals,paramSize}));
+					String.format("%d,%d,%d // max_stack, maxLocals, argumentsSize\n",
+							new Object[]{maxStack,maxLocals,argumentsSize}));
 		}
 		@Override
 		public void visitEnd() {

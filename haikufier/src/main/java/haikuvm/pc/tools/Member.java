@@ -5,6 +5,8 @@ import java.net.URL;
 import java.util.Formatter;
 import java.util.logging.Logger;
 
+import org.objectweb.asm.Type;
+
 /**
  * A Member identifies a method, field uniquely
  * @author CDN
@@ -81,6 +83,9 @@ public class Member implements Comparable {
 	public Member(String owner, String name, String descriptor) {
 		this(owner, name, descriptor, null);
 	}
+	public Member(Member m) {
+		this(m.access,m.owner,m.name,m.descriptor,m.signature,m.exceptions,m.url);
+	}
 	/**
 	 * Create a new member with a null url
 	 * @param owner
@@ -156,8 +161,15 @@ public class Member implements Comparable {
 		return result;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
+	/**
+	 * This customEquals method is a more relaxed version of a standard equals method.
+	 * Strings that are null are considedered the same as empty Strings.
+	 * I did not put this code in the default equals(Object) method, because that one is
+	 * very likely to be overwritten by any enthousiastic IDE (NetBeans, Eclipse, ...)
+	 * @param obj
+	 * @return
+	 */
+	private boolean customEquals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
@@ -165,6 +177,29 @@ public class Member implements Comparable {
 		if (!(obj instanceof Member))
 			return false;
 		Member other = (Member) obj;
+
+		String thisDescriptor=descriptor;
+		if (thisDescriptor==null) thisDescriptor="";
+		String thisName=name;
+		if (thisName==null) thisName="";
+		String thisOwner=owner;
+		if (thisOwner==null) thisOwner="";
+		
+		String otherDescriptor=other.descriptor;
+		if (otherDescriptor==null) otherDescriptor="";
+		String otherName=other.name;
+		if (otherName==null) otherName="";
+		String otherOwner=other.owner;
+		if (otherOwner==null) otherOwner="";
+		
+		if (!thisDescriptor.equals(otherDescriptor)) return false;
+		if (!thisName.equals(otherName)) return false;
+		if (!thisOwner.equals(otherOwner)) return false;
+		
+		org.objectweb.asm.commons.Method m;
+		return true;
+		/*
+		 * Original code:
 		if (descriptor == null) {
 			if (other.descriptor != null)
 				return false;
@@ -181,6 +216,11 @@ public class Member implements Comparable {
 		} else if (!owner.equals(other.owner))
 			return false;
 		return true;
+		*/
+	}
+	@Override
+	public boolean equals(Object obj) {
+		return customEquals(obj);
 	}
 
 	public String toString() {
@@ -249,5 +289,36 @@ public class Member implements Comparable {
 	 */
 	public String getClassName() {
 		return owner.replace('/','.');
+	}
+	/**
+	 * Return the sizes of the returnvalue and params in units of 4 bytes (so a long will count as 2)
+	 * Argument size is returnvalue>>2, return size is returnvalue&3.
+	 * @return
+	 */
+	public int getArgumentsAndReturnSizes() {
+		int s=0;
+		// Use asm Type object to calculate the ParamSize
+		Type t=Type.getMethodType(descriptor);
+		s=t.getArgumentsAndReturnSizes();
+		return s;
+	}
+	/**
+	 * Return the size of the returnvalue in units of 4 bytes (so a long will count as 2)
+	 * @return
+	 */
+	public int getReturnSize() {
+		int s=0;
+		// Use asm Type object to calculate the size
+		Type t=Type.getReturnType(descriptor);
+		s=t.getSize();
+		return s;
+	}
+	/**
+	 * Return the size of the returnvalue in units of 4 bytes (so a long will count as 2)
+	 * @return
+	 */
+	public int getArgumentsSize() {
+		// Use asm Type object to calculate the size
+		return getArgumentsAndReturnSizes()>>2;
 	}
 } // end of Member inner class

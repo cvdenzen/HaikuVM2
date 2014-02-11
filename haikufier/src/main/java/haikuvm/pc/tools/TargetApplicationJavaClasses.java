@@ -71,6 +71,7 @@ import org.junit.experimental.categories.Categories.IncludeCategory;
 import haikuvm.pc.tools.asmvisitors.*;
 
 import org.objectweb.asm.*;
+import org.objectweb.asm.commons.Method;
 import org.objectweb.asm.util.Textifier;
 
 import static org.objectweb.asm.Opcodes.*;
@@ -144,7 +145,7 @@ public class TargetApplicationJavaClasses {
 					// Assume we only insert MemberTreeNode
 					MemberTreeNode node=(MemberTreeNode) nodeObject;
 					if (node.getUserObject() instanceof Member) {
-						toBeIncludedMembers.add((Member) node.getUserObject());
+						referencedMembers.add((Member) node.getUserObject());
 					}
 					node.addPropertyChangeListener("userObject", new PropertyChangeListener() {
 
@@ -152,7 +153,7 @@ public class TargetApplicationJavaClasses {
 						public void propertyChange(PropertyChangeEvent evt) {
 							// userObject changed.
 							if (evt.getNewValue() instanceof Member) {
-								toBeIncludedMembers.add((Member) evt.getNewValue());
+								referencedMembers.add((Member) evt.getNewValue());
 							}
 
 						}
@@ -233,7 +234,7 @@ public class TargetApplicationJavaClasses {
 		scan(rootMember,(MemberTreeNode) tree.getRoot());
 
 		// Print the members, ordered by name
-		SortedSet<Member> sortedSet=new TreeSet<Member>(toBeIncludedMembers);
+		SortedSet<Member> sortedSet=new TreeSet<Member>(referencedMembers);
 		StringBuilder sb=new StringBuilder(1000);
 		sb.append("End of scan "+rootMember+ ", included members are:");
 		for (Member member:sortedSet) {
@@ -304,11 +305,12 @@ public class TargetApplicationJavaClasses {
 		// start parsing, this will call the ASM Visitor
 		cr.accept(classScanner, 0);
 		// Read the members to be included
-		Set<Member> s=classScanner.getToBeIncludedMembers();
+		Set<Member> referencedMembersTemp=classScanner.getReferencedMembers();
 		// collect all interface members (can come from more than one interface)
 		Set<Member> tempInterfaceMembers=new HashSet<Member>();
-		// Scan all members that must be included
-		for (Iterator<Member> iter=s.iterator();iter.hasNext();) {
+		// Scan all members that must be included, to find wildcard
+		// (interface) members.
+		for (Iterator<Member> iter=referencedMembersTemp.iterator();iter.hasNext();) {
 			Member m=iter.next();
 			// It can be an interface member, specifying that all methods with the
 			// same name in the member object should be included
@@ -316,28 +318,69 @@ public class TargetApplicationJavaClasses {
 			if (m.getName()==null || m.getName().isEmpty()) {
 				// This is an interface specification.
 				// Find the interface methods in this class
+				// Use a new TargetApplicationJavaClasses
+				logger.finer("Scan for interface members, member="+m);
 				TargetApplicationJavaClasses tajc=new TargetApplicationJavaClasses(classLoader);
 				tajc.scan(m);
-				tempInterfaceMembers.addAll(tajc.getToBeIncludedClasses());
+				tempInterfaceMembers.addAll(tajc.getReferencedMembers());
 				// Remove this fake entry from the set
 				iter.remove();
 			}
 		}
+
 		// Include the implementation of the methods in the class we are visiting.
 		// Collect the new members in a separate Set to avoid concurrent updates
 		for (Member m1:tempInterfaceMembers) {
-			// Set owner to the owner of the class, not of the interface
-			m1.setOwner(member.getOwner());
+			// Create a clone, to 
+			// include the interface member to avoid repetitive
+			// visits to the interface members
+			referencedMembersTemp.add(m1);
+			// Set owner to the owner of the class, not of the interface.
+			// Do this in a copy of the member, otherwise it would be the same object.
+			Member m2=new Member(m1);
+			m2.setOwner(member.getOwner());
+			referencedMembersTemp.add(m2);
+		}
+		// Check whether the Member we were looking for is found.
+		if (member.getName()!=null && !member.getName().isEmpty()&&!classScanner.isMemberFound()) {
+			// Member was not found, so it could be in a superclass or an interface
+			logger.finest("Member not found, try superclass or interface, member="+member);
+			Set<Member> foundMembers=new HashSet<Member>();
+			// Clone the original member, do not destroy the original
+			Member m3=new Member(member);
+			if (!classScanner.getSuperName().isEmpty()) {
+				m3.setOwner(classScanner.getSuperName());
+				TargetApplicationJavaClasses tajc=new TargetApplicationJavaClasses(classLoader);
+				tajc.scan(m3,parentTreeNode);
+				foundMembers=tajc.getReferencedMembers();
+			}
+			referencedMembersTemp.addAll(foundMembers);
+			if (foundMembers.isEmpty()) {
+				// Try if this Member is in an interface
+				for (String interf:classScanner.getInterfaces()) {
+					m3.setOwner(interf);
+					TargetApplicationJavaClasses tajc=new TargetApplicationJavaClasses(classLoader);
+					tajc.scan(m3,parentTreeNode);
+					foundMembers=tajc.getReferencedMembers();
+					if (!foundMembers.isEmpty()) {
+						// We found this member in this interface, don't look further
+						break;
+					}
+				}
+			}
+			referencedMembersTemp.addAll(foundMembers);
+			// Add the foundMembers to the toBeIncludedMembers
+			referencedMembers.addAll(referencedMembersTemp);
 		}
 		// Add the interface members to the Set that contains all members for the application
-		s.addAll(tempInterfaceMembers);
+		referencedMembersTemp.addAll(tempInterfaceMembers);
 		// Check all new members
-		for (Member m1:s) {
+		for (Member m1:referencedMembersTemp) {
 			// Create a new tree node with the member m1 as the userObject
 			MemberTreeNode n=new MemberTreeNode(m1);
 			// If this member is not yet put into the toBeIncludedMembers set, it must be
 			// scanned for new references. Otherwise it has already been seen and scanned.
-			if (toBeIncludedMembers.add(m1)) {
+			if (referencedMembers.add(m1)) {
 				// Add to parent after checking whether this member is already known to avoid finding itself in the tree
 				parentTreeNode.add(n);
 				scan(m1, n);
@@ -371,15 +414,15 @@ public class TargetApplicationJavaClasses {
 		// Insert class init method
 		//
 		// For every class, the clinit method must be included explicitly,
-		// because it is never called
+		// because it is never called.
+		// Not every class has a <clinit> method
 		Member clinitMember=new Member(member.getOwner(), "<clinit>", "()V");
-		if (!toBeIncludedMembers.contains(clinitMember)) {
+		//
+		// Not every class has a <clinit> method. To avoid unnecessary searches for
+		// <clinit> methods, set it as found. (unnecessary is an understatement: it
+		// is an endless loop we are getting in).
+		if (referencedMembers.add(clinitMember)) {
 			try {
-				//
-				// Not every class has a <clinit> method. To avoid unnecessary searches for
-				// <clinit> methods, set is as found. (unnecessary is an understatement: it
-				// is an endless loop we are getting in).
-				toBeIncludedMembers.add(clinitMember);
 				logger.fine("<clinit> artificially added for "+clinitMember);
 				scan(clinitMember,parentTreeNode);
 			} catch (ClassNotFoundException e) {
@@ -387,14 +430,29 @@ public class TargetApplicationJavaClasses {
 				throw new IllegalArgumentException(e);
 			}
 		}
-	} private Set<Member> getToBeIncludedClasses() {
+	} 
+	/**
+	 * 
+	 * @return A set of Strings containing the internal class names (with / and not with .)
+	 */
+	public Set<String> getToBeIncludedClasses() {
 		// TODO Auto-generated method stub
-		return toBeIncludedMembers;
+		Set<String> classes=new HashSet<String>();
+		for (Member m:referencedMembers) {
+			classes.add(m.getOwner());
+		}
+		return classes;
 	}
 	// scan()
 	private ClassLoader classLoader;
 
 
+	/**
+	 * @return the toBeIncludedMembers
+	 */
+	public Set<Member> getReferencedMembers() {
+		return referencedMembers;
+	}
 	/**
 	 * Experimental: print the tree.
 	 * @return
@@ -436,7 +494,7 @@ public class TargetApplicationJavaClasses {
 	 */
 	private void cleanUpToBeIncludedMembers() {
 		logger.info("Start cleanUpToBeIncludedMembers()");
-		for (Iterator<Member> ite=toBeIncludedMembers.iterator();ite.hasNext();) {
+		for (Iterator<Member> ite=referencedMembers.iterator();ite.hasNext();) {
 			// find all empty members, i.e. no field/method present
 			Member m=ite.next();
 			if (m.getName()==null || m.getName().isEmpty()) {
@@ -450,7 +508,7 @@ public class TargetApplicationJavaClasses {
 	/**
 	 * The set of methods and fields to be included
 	 */
-	final private Set<Member> toBeIncludedMembers=new HashSet<Member>() {
+	final private Set<Member> referencedMembers=new HashSet<Member>() {
 		/**
 		 * 
 		 */
@@ -715,7 +773,7 @@ public class TargetApplicationJavaClasses {
 		ClassWriter cw = new ClassWriter(cr,org.objectweb.asm.ClassWriter.COMPUTE_FRAMES);
 		// Create a ClassVisitor that forwards calls to the visitor named as its parameter,
 		// see http://download.forge.objectweb.org/asm/asm4-guide.pdf
-		CreationClassVisitorAdapter ca = new CreationClassVisitorAdapter(cw, toBeIncludedMembers);
+		CreationClassVisitorAdapter ca = new CreationClassVisitorAdapter(cw, referencedMembers);
 		J2COutputGenerator j2cog=new J2COutputGenerator(Opcodes.ASM5, ca, outc, outh);
 		COutputGenerator og=new COutputGenerator(Opcodes.ASM5, j2cog,outc, outh);
 		cr.accept(og, 0);
@@ -774,7 +832,7 @@ public class TargetApplicationJavaClasses {
 	 * (Closure.isMarked(jc.getClassName()+"."+method.getName()+method.getSignature())
 	 */
 	public boolean isMarked(Member member) {
-		return toBeIncludedMembers.contains(member);
+		return referencedMembers.contains(member);
 	}
 	/*
 	 * This section handles clinit (class init, static init).
@@ -911,7 +969,7 @@ public class TargetApplicationJavaClasses {
 	public TreeSet<String> getMangledClassNames() {
 		TreeSet<String> classNames=new TreeSet<>();
 		// Loop over all toBeIncludedMembers and select the owner (=classname with / separator)
-		for (Member m:toBeIncludedMembers) {
+		for (Member m:referencedMembers) {
 			classNames.add(m.getMangledClassName());
 		}
 		return classNames;
@@ -925,7 +983,7 @@ public class TargetApplicationJavaClasses {
 	public TreeSet<String> getClassNames() {
 		TreeSet<String> classNames=new TreeSet<>();
 		// Loop over all toBeIncludedMembers and select the owner (=classname with / separator)
-		for (Member m:toBeIncludedMembers) {
+		for (Member m:referencedMembers) {
 			classNames.add(m.getClassName());
 		}
 		return classNames;
@@ -939,7 +997,7 @@ public class TargetApplicationJavaClasses {
 	public TreeSet<String> getOwners() {
 		TreeSet<String> ownerNames=new TreeSet<>();
 		// Loop over all toBeIncludedMembers and select the owner (=classname with / separator)
-		for (Member m:toBeIncludedMembers) {
+		for (Member m:referencedMembers) {
 			ownerNames.add(m.getOwner());
 		}
 		return ownerNames;
