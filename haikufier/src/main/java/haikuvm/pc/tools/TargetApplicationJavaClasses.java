@@ -634,11 +634,8 @@ public class TargetApplicationJavaClasses {
 		}
 		Reader reader=new InputStreamReader(machGeneratedCommentStream); // use default charset
 		// Read the resource and write into outputstreams outh and outc
-<<<<<<< HEAD
 		// (this is the warning that the outh and outc are machine generated and not to be
 		// edited by hand).
-=======
->>>>>>> e4ab4eaaf49ec68b28bc26d2f3ce3900f11cf47f
 		char[] b=new char[2000];
 		int len=0;
 		try {
