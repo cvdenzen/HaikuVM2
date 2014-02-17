@@ -1,5 +1,6 @@
 package haikuvm.pc.tools.asmvisitors;
 import haikuvm.pc.tools.Member;
+import haikuvm.pc.tools.ReferencedMembers;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,6 +9,8 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -50,6 +53,7 @@ public class COutputGenerator extends org.objectweb.asm.ClassVisitor {
 	 */
 	private StringBuilder outcSb=new StringBuilder();
 	private String owner;
+	private ReferencedMembers<Member> referencedMembers;
 
 	class NullWriter extends Writer {
 		@Override
@@ -73,10 +77,11 @@ public class COutputGenerator extends org.objectweb.asm.ClassVisitor {
 	 * @param outc The writer to write the C code to
 	 * @param outh The writer to write the header file (.h file) code to
 	 */
-	public COutputGenerator(int api,ClassVisitor cv,Writer outc,Writer outh) {
+	public COutputGenerator(int api,ClassVisitor cv,Writer outc,Writer outh,ReferencedMembers<Member> referencedMembers) {
 		super(api,cv);
 		this.outc=outc;
 		this.outh=outh;
+		this.referencedMembers=referencedMembers;
 
 		// Assure valid values for outc and outh
 		if (outc==null) {
@@ -234,7 +239,7 @@ public class COutputGenerator extends org.objectweb.asm.ClassVisitor {
 			super.visitInsn(opcode); // calls mv.visitInsn if mv!=null
 			outcTextifier.visitInsn(opcode);
 			// Print the name of the opcode
-			outcSb.append(org.objectweb.asm.util.Printer.OPCODES[opcode]).append(",\n");
+			outcSb.append(org.objectweb.asm.util.Printer.OPCODES[opcode]);
 			outhSb.append(String.format("OP_bc op%d;",opcodeCounter++));
 		}
 
@@ -243,16 +248,32 @@ public class COutputGenerator extends org.objectweb.asm.ClassVisitor {
 			super.visitIntInsn(opcode, operand);
 			// Print the name of the opcode
 			outcSb.append(org.objectweb.asm.util.Printer.OPCODES[opcode]).append(",");
+			outhSb.append(String.format("OP_bc op%d,",opcodeCounter++)).append(",");
 			switch(opcode) {
 			case Opcodes.BIPUSH:
 				// byte
-				outcSb.append("B(").append(operand).append(")\n");
+				outcSb.append("B(").append(operand).append("),\n");
+				outhSb.append(String.format("OP_bc op%d,\n",opcodeCounter++));
 				break;
 			case Opcodes.SIPUSH:
 				// short
-				outcSb.append("INT16(").append(operand).append(")\n");
+				outcSb.append("INT16(").append(operand).append("),\n");
+				outhSb.append(String.format("OP_bc op%d,\n",opcodeCounter++));
+				break;
+			default:
+				outcSb.append("\n");
+				outhSb.append("\n");
 				break;
 			}
+		}
+		@Override
+		public void visitMethodInsn(int opcode,String owner,String name,String desc) {
+			// invoke a method
+			super.visitMethodInsn(opcode,owner,name,desc);
+			// Go find the Member in referencedMembers
+			Member m=new Member(owner,name,desc);
+			Member mr=referencedMembers.get(owner,name,desc);
+			
 		}
 		@Override
 		public void visitVarInsn(int opcode, int var) {

@@ -328,6 +328,9 @@ public class BC2IDX {
 		haikuConfigh.printf("\n");
 		int invokeShortMax=HaikuVM.functionTable.getInvokeShortMax();
 		
+		/*
+		 * The first bytecodes are reserved for codes to invoke methods 
+		 */
 		for (int i = 0; i < invokeShortMax; i++) {
 			haikuConfigh.printf("#define %-30s	%d\n", "OP_INVOKESHORT_"+HaikuVM.functionTable.get(i), i);
 		}

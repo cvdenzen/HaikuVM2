@@ -25,6 +25,7 @@ import java.text.Format;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Formatter;
@@ -120,9 +121,10 @@ public class TargetApplicationJavaClasses {
 		// Create the root of the tree
 		MemberTreeNode treeNode=new MemberTreeNode();
 		tree=new DefaultTreeModel(treeNode);
-		// Add a listener to keep the list with toBeIncludedMembers up-to-date
+		// Add a listener to keep the list with referencedMembers up-to-date
 		// NOT USED (yet)
 		tree.addTreeModelListener(new TreeModelListener() {
+
 
 			@Override
 			public void treeStructureChanged(TreeModelEvent e) {
@@ -305,7 +307,7 @@ public class TargetApplicationJavaClasses {
 		// start parsing, this will call the ASM Visitor
 		cr.accept(classScanner, 0);
 		// Read the members to be included
-		Set<Member> referencedMembersTemp=classScanner.getReferencedMembers();
+		ReferencedMembers<Member> referencedMembersTemp=classScanner.getReferencedMembers();
 		// collect all interface members (can come from more than one interface)
 		Set<Member> tempInterfaceMembers=new HashSet<Member>();
 		// Scan all members that must be included, to find wildcard
@@ -369,7 +371,7 @@ public class TargetApplicationJavaClasses {
 				}
 			}
 			referencedMembersTemp.addAll(foundMembers);
-			// Add the foundMembers to the toBeIncludedMembers
+			// Add the foundMembers to the referencedMembers
 			referencedMembers.addAll(referencedMembersTemp);
 		}
 		// Add the interface members to the Set that contains all members for the application
@@ -378,7 +380,7 @@ public class TargetApplicationJavaClasses {
 		for (Member m1:referencedMembersTemp) {
 			// Create a new tree node with the member m1 as the userObject
 			MemberTreeNode n=new MemberTreeNode(m1);
-			// If this member is not yet put into the toBeIncludedMembers set, it must be
+			// If this member is not yet put into the referencedMembers set, it must be
 			// scanned for new references. Otherwise it has already been seen and scanned.
 			if (referencedMembers.add(m1)) {
 				// Add to parent after checking whether this member is already known to avoid finding itself in the tree
@@ -448,9 +450,9 @@ public class TargetApplicationJavaClasses {
 
 
 	/**
-	 * @return the toBeIncludedMembers
+	 * @return the referencedMembers
 	 */
-	public Set<Member> getReferencedMembers() {
+	public ReferencedMembers<Member> getReferencedMembers() {
 		return referencedMembers;
 	}
 	/**
@@ -489,11 +491,11 @@ public class TargetApplicationJavaClasses {
 		logger.fine("Tree:\n"+sb.toString());
 	}
 	/**
-	 * Remove all entries from toBeIncludedMembers that are not used,
+	 * Remove all entries from referencedMembers that are not used,
 	 * i.e. empty Class definitions
 	 */
-	private void cleanUpToBeIncludedMembers() {
-		logger.info("Start cleanUpToBeIncludedMembers()");
+	private void cleanUpReferencedMembers() {
+		logger.info("Start cleanUpreferencedMembers()");
 		for (Iterator<Member> ite=referencedMembers.iterator();ite.hasNext();) {
 			// find all empty members, i.e. no field/method present
 			Member m=ite.next();
@@ -505,26 +507,6 @@ public class TargetApplicationJavaClasses {
 		}
 	}
 
-	/**
-	 * The set of methods and fields to be included
-	 */
-	final private Set<Member> referencedMembers=new HashSet<Member>() {
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-
-		/**
-		 * Make the add method do some logging
-		 */
-		public boolean add(Member member) {
-			boolean returnValue=super.add(member);
-			if (returnValue) {
-				logger.fine("*** toBeIncludedMembers: add "+member);
-			}
-			return returnValue;
-		}
-	};
 	private void removeDirectoryTree(File directory) {
 		//
 		// Remove all files from the outputdirectory. Stupid that it has
@@ -597,7 +579,7 @@ public class TargetApplicationJavaClasses {
 		//
 		// Clean up the Set with the members (not needed)
 		//
-		cleanUpToBeIncludedMembers();
+		cleanUpReferencedMembers();
 		//
 		// Show the classes
 		//
@@ -695,6 +677,10 @@ public class TargetApplicationJavaClasses {
 			e.printStackTrace();
 		}
 		//
+		// Select the invokemethod calls to be compiled as invokeshort
+		//
+		selectInvokeShortMethodCalls();
+		//
 		// Create some statistics
 		//
 		numberOfClasses=owners.size();
@@ -705,6 +691,31 @@ public class TargetApplicationJavaClasses {
 		logger.info("Number of bytecodes  :"+distinctBCs.size());
 
 		printTree(tree);
+	}
+	/**
+	 * Select the methods that are to be compiled as invokeshort byte code
+	 */
+	private void selectInvokeShortMethodCalls() {
+		int numberOfSpares=250-distinctBCs.size(); // the available space
+		// Select the methods with most of invocation
+		ArrayList<Member> list=new ArrayList<>(referencedMembers);
+		// Order by max. use count
+		Collections.sort(list,new Comparator<Member>() {
+			public int compare(Member m1,Member m2) {
+				if (m1.getUseCount()>m2.getUseCount()) {
+					return -1;
+				} else if (m1.getUseCount()<m2.getUseCount()) {
+					return 1;
+				} else {
+					return 0; // equal
+				}
+			}
+		});
+		for (int i=0;i<numberOfSpares;i++) {
+			Member m=list.get(i);
+			m.setInvokeShortIndex(i);
+		}
+
 	}
 	private int numberOfClasses;
 	private int numberOfFields;
@@ -775,7 +786,7 @@ public class TargetApplicationJavaClasses {
 		// see http://download.forge.objectweb.org/asm/asm4-guide.pdf
 		CreationClassVisitorAdapter ca = new CreationClassVisitorAdapter(cw, referencedMembers);
 		J2COutputGenerator j2cog=new J2COutputGenerator(Opcodes.ASM5, ca, outc, outh);
-		COutputGenerator og=new COutputGenerator(Opcodes.ASM5, j2cog,outc, outh);
+		COutputGenerator og=new COutputGenerator(Opcodes.ASM5, j2cog,outc, outh,referencedMembers);
 		cr.accept(og, 0);
 		// Update some statistics that were created during the asm pass
 		distinctBCs.addAll(ca.getDistinctBCs());
@@ -844,6 +855,7 @@ public class TargetApplicationJavaClasses {
 	private Set<MemberTreeNode> clinitsSeenNodes=new HashSet<>();
 	/**
 	 * List all <clinit> methods in the order that they should be executed.
+	 * TODO: is this ordering the right one????
 	 * @return An ArrayList with Members that are <clinit> "methods". The ordering
 	 * is the order in which the <clinit> methods should be called for initialisation.
 	 */
@@ -968,7 +980,7 @@ public class TargetApplicationJavaClasses {
 	 */
 	public TreeSet<String> getMangledClassNames() {
 		TreeSet<String> classNames=new TreeSet<>();
-		// Loop over all toBeIncludedMembers and select the owner (=classname with / separator)
+		// Loop over all referencedMembers and select the owner (=classname with / separator)
 		for (Member m:referencedMembers) {
 			classNames.add(m.getMangledClassName());
 		}
@@ -982,7 +994,7 @@ public class TargetApplicationJavaClasses {
 	 */
 	public TreeSet<String> getClassNames() {
 		TreeSet<String> classNames=new TreeSet<>();
-		// Loop over all toBeIncludedMembers and select the owner (=classname with / separator)
+		// Loop over all referencedMembers and select the owner (=classname with / separator)
 		for (Member m:referencedMembers) {
 			classNames.add(m.getClassName());
 		}
@@ -996,7 +1008,7 @@ public class TargetApplicationJavaClasses {
 	 */
 	public TreeSet<String> getOwners() {
 		TreeSet<String> ownerNames=new TreeSet<>();
-		// Loop over all toBeIncludedMembers and select the owner (=classname with / separator)
+		// Loop over all referencedMembers and select the owner (=classname with / separator)
 		for (Member m:referencedMembers) {
 			ownerNames.add(m.getOwner());
 		}
@@ -1141,6 +1153,8 @@ const jclass    classTable[] PROGMEM = {
 		}
 		logger.fine("Display frame end");
 	}
+	private ReferencedMembers<Member> referencedMembers=new ReferencedMembers<>();
+
 	static private Logger logger=Logger.getLogger("haikuvm.pc.tools");
 	// Not used, but could be useful:
 	// http://stackoverflow.com/questions/5445511/how-do-i-create-a-parent-last-child-first-classloader-in-java-or-how-to-overr

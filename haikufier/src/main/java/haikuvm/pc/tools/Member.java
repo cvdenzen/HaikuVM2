@@ -20,6 +20,8 @@ public class Member implements Comparable {
 	private int access=-1;
 	private String signature;
 	private String[] exceptions;
+	private int useCount=0; // the number of times this member is used in the target code
+	private int invokeShortIndex=-1; // positive value means this member (method) has been chosen for shortInvoke
 	/**
 	 * @param owner The internal class name of the class in which this member is declared.
 	 * Internal class name is the class name with dots replaced by slashes.
@@ -321,4 +323,30 @@ public class Member implements Comparable {
 		// Use asm Type object to calculate the size
 		return getArgumentsAndReturnSizes()>>2;
 	}
+	/**
+	 * Increment the number of times this member is used in the target code
+	 */
+	public void incrementUseCount() {
+		useCount++;
+	}
+	
+	/**
+	 * @return the useCount
+	 */
+	public int getUseCount() {
+		return useCount;
+	}
+	/**
+	 * @return the invokeShortIndex
+	 */
+	public int getInvokeShortIndex() {
+		return invokeShortIndex;
+	}
+	/**
+	 * @param invokeShortIndex the invokeShortIndex to set
+	 */
+	public void setInvokeShortIndex(int invokeShortIndex) {
+		this.invokeShortIndex = invokeShortIndex;
+	}
+	
 } // end of Member inner class

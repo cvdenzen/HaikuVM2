@@ -73,7 +73,7 @@ Kenner werden auch bemerkt haben, dass sich die Tools von HaikuVM an denen von l
 ---+ Was ist HaikuVM
 
 HaikuVM ist eine Java VM (JVM) für AVR Atmega Prozessoren. HaikuVM wurde mit dem Ziel entwickelt den Roboter ASURO mit Java programmieren zu können. ASURO wird von einem AVR Mega8 gesteuert. D.h. die HaikuVM muss mit wenig Resourcen aus kommen können. Im Fall vom Atmega sind das: 
-   * 8k Byte RAM (davon werden 1k vom bootloader benötigt)
+   * 8k Byte ROM (davon werden 1k vom bootloader benötigt)
    * 1k RAM
    * 8Mhz Takt
 
