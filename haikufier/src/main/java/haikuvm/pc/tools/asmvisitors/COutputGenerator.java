@@ -1,6 +1,9 @@
 package haikuvm.pc.tools.asmvisitors;
 import haikuvm.pc.tools.Member;
+<<<<<<< HEAD
 import haikuvm.pc.tools.ReferencedMembers;
+=======
+>>>>>>> e4ab4eaaf49ec68b28bc26d2f3ce3900f11cf47f
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,9 +54,14 @@ public class COutputGenerator extends org.objectweb.asm.ClassVisitor {
 	 * Use a StringBuilder as intermediate storage, to avoid
 	 * catching Exceptions that the Writer (outc or outh) might throw.
 	 */
+<<<<<<< HEAD
 	private StringBuilder outcSb=new StringBuilder();
 	private String owner;
 	private ReferencedMembers<Member> referencedMembers;
+=======
+	StringBuilder outcSb=new StringBuilder();
+	private String owner;
+>>>>>>> e4ab4eaaf49ec68b28bc26d2f3ce3900f11cf47f
 
 	class NullWriter extends Writer {
 		@Override
@@ -102,8 +110,17 @@ public class COutputGenerator extends org.objectweb.asm.ClassVisitor {
 			String superName, String[] interfaces) {
 		super.visit(version, access, name, signature, superName, interfaces);
 		// Print some comment in the output
+<<<<<<< HEAD
 		outcSb.append(String.format("/*\nDate: %s\n",new Object[] {new Date().toString()}));
 		outcSb.append("/*\nClass "+name+", extends "+superName+"\n*/\n");
+=======
+		try {
+			outc.append("/*\nClass "+name+", extends "+superName+"\n*/\n");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+>>>>>>> e4ab4eaaf49ec68b28bc26d2f3ce3900f11cf47f
 		this.owner=name;
 		outcTextifier.visit(version, access, name, signature, superName, interfaces);
 	}
@@ -146,6 +163,16 @@ public class COutputGenerator extends org.objectweb.asm.ClassVisitor {
 			String signature, String[] exceptions) {
 		// Create a Member of this method
 		Member member=new Member(access,owner,name,desc,signature,exceptions);
+<<<<<<< HEAD
+=======
+		try {
+			outc.append(String.format("const %s_t %s {\n",
+					new Object[] {member.getMangledName(),member.getMangledName()}));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+>>>>>>> e4ab4eaaf49ec68b28bc26d2f3ce3900f11cf47f
 		outcTextifier.visitMethod(access, name, desc, signature, exceptions);
 		// Forward the call to the next ClassVisitor and store the MethodVisitor it returns(?)
 		MethodVisitor mv=null;
@@ -153,7 +180,11 @@ public class COutputGenerator extends org.objectweb.asm.ClassVisitor {
 		// if mv is null, nobody is interested in this method
 		if (mv!=null) {
 			// chain the MethodVisitors
+<<<<<<< HEAD
 			mv=new COutputMethodAdapter(api,mv,outcSb,outhSb,member);
+=======
+			mv=new COutputMethodAdapter(api,mv,outc,outh);
+>>>>>>> e4ab4eaaf49ec68b28bc26d2f3ce3900f11cf47f
 		}
 		return mv;
 	}
@@ -201,6 +232,7 @@ public class COutputGenerator extends org.objectweb.asm.ClassVisitor {
 	}
 
 	class COutputMethodAdapter extends MethodVisitor {
+<<<<<<< HEAD
 		private StringBuilder outcSb;
 		private StringBuilder outhSb;
 		private Member member;
@@ -233,6 +265,14 @@ public class COutputGenerator extends org.objectweb.asm.ClassVisitor {
 			insertionPointForMaxs=outcSb.length();
 			outhSb.append("typedef struct {\n"
 					+"uint8_t max_stack; int8_t purLocals; uint8_t purParams;\n");
+=======
+		private Writer outc;
+		private Writer outh;
+		public COutputMethodAdapter(int api,MethodVisitor mv,Writer outc,Writer outh) {
+			super(api,mv);
+			this.outc=outc;
+			this.outh=outh;
+>>>>>>> e4ab4eaaf49ec68b28bc26d2f3ce3900f11cf47f
 		}
 		@Override
 		public void visitInsn(int opcode) {

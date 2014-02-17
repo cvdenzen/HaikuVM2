@@ -20,8 +20,11 @@ public class Member implements Comparable {
 	private int access=-1;
 	private String signature;
 	private String[] exceptions;
+<<<<<<< HEAD
 	private int useCount=0; // the number of times this member is used in the target code
 	private int invokeShortIndex=-1; // positive value means this member (method) has been chosen for shortInvoke
+=======
+>>>>>>> e4ab4eaaf49ec68b28bc26d2f3ce3900f11cf47f
 	/**
 	 * @param owner The internal class name of the class in which this member is declared.
 	 * Internal class name is the class name with dots replaced by slashes.
