@@ -22,6 +22,7 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.TypePath;
 import org.objectweb.asm.util.Textifier;
+import static org.objectweb.asm.util.Printer.OPCODES;
 
 /**
  * This class will fill the haikuJava.h and haikuJava.c (into outc and outh)
@@ -261,8 +262,8 @@ public class COutputGenerator extends org.objectweb.asm.ClassVisitor {
 				outhSb.append(String.format("OP_bc op%d,\n",opcodeCounter++));
 				break;
 			default:
-				outcSb.append("\n");
-				outhSb.append("\n");
+				outcSb.append("%d,\n");
+				outhSb.append(String.format("int operand%d\n",opcodeCounter++));
 				break;
 			}
 		}
@@ -273,7 +274,18 @@ public class COutputGenerator extends org.objectweb.asm.ClassVisitor {
 			// Go find the Member in referencedMembers
 			Member m=new Member(owner,name,desc);
 			Member mr=referencedMembers.get(owner,name,desc);
-			
+			// if this member was selected to be called via invokeshort:
+			if (mr==null) {
+				logger.severe("member not found, very strange: "+m);
+				System.exit(11);
+			}
+			if (mr.getInvokeShortIndex()>=0) {
+				outcSb.append(mr.getInvokeShortIndex());
+				outhSb.append(String.format("OP_bc invokeshort%d, // invokeshort %s\n", opcodeCounter++,mr.getMangledName()));
+			} else {
+				outcSb.append(String.format("%s, ADR(%s), // invoke \n",OPCODES[opcode], mr.getMangledName()));
+				outhSb.append(String.format("OP_bc op%d, int operand%d",opcodeCounter++,opcodeCounter++));
+			}
 		}
 		@Override
 		public void visitVarInsn(int opcode, int var) {

@@ -135,7 +135,13 @@ public class Member implements Comparable {
 	 * @return true if the member is a field (and not a method)
 	 */
 	public boolean isField() {
-		return !descriptor.startsWith("(");
+		return (!descriptor.startsWith("(")) && (name!=null) && !name.isEmpty();
+	}
+	/**
+	 * @return true if the member is a method (and not a field or class)
+	 */
+	public boolean isMethod() {
+		return descriptor.startsWith("(");
 	}
 
 	/**

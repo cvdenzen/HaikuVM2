@@ -698,8 +698,14 @@ public class TargetApplicationJavaClasses {
 	private void selectInvokeShortMethodCalls() {
 		int numberOfSpares=250-distinctBCs.size(); // the available space
 		// Select the methods with most of invocation
-		ArrayList<Member> list=new ArrayList<>(referencedMembers);
-		// Order by max. use count
+		// Select only methods (not fields). For performance reasons, do it in a Set
+		ArrayList<Member> list=new ArrayList<>();
+		for (Member m:referencedMembers) {
+			if (m.isMethod()) {
+				list.add(m);
+			}
+		}
+		// Sort by max. use count
 		Collections.sort(list,new Comparator<Member>() {
 			public int compare(Member m1,Member m2) {
 				if (m1.getUseCount()>m2.getUseCount()) {
@@ -713,6 +719,7 @@ public class TargetApplicationJavaClasses {
 		});
 		for (int i=0;i<numberOfSpares;i++) {
 			Member m=list.get(i);
+			// Indicate that this member is available for invokeshort calls
 			m.setInvokeShortIndex(i);
 		}
 
