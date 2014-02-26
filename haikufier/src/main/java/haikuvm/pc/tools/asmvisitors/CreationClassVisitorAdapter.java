@@ -73,10 +73,11 @@ public class CreationClassVisitorAdapter extends ClassVisitor {
 	public MethodVisitor visitMethod(final int access, String name,
 			String desc, String signature, String[] exceptions) {
 		final Member newMember=new Member(internalClassname,access,name,desc);
-		MethodVisitor mv=cv.visitMethod(access, internalClassname, desc, signature, exceptions);
 		if (referencedMembers.contains(newMember)) {
 			// This method should be included in the output
 			logger.fine("Create method include ++++"+newMember);
+			// call the next visitor in the chain
+			MethodVisitor mv=cv.visitMethod(access, internalClassname, desc, signature, exceptions);
 			numberOfMethods++;
 			//return cv.visitMethod(access,name,desc,signature,exceptions);
 			// Collect all distinct byte codes in uniqueBCs.
@@ -137,7 +138,7 @@ public class CreationClassVisitorAdapter extends ClassVisitor {
 				public void visitFrame(int type, int nLocal,
 						Object[] local, int nStack, Object[] stack) {
 					try {
-					super.visitFrame(type, nLocal, local, nStack, stack);
+						super.visitFrame(type, nLocal, local, nStack, stack);
 					}
 					catch (Exception ex) {
 						logger.log(Level.SEVERE,"Exception in visitFrame",ex);
@@ -158,7 +159,7 @@ public class CreationClassVisitorAdapter extends ClassVisitor {
 			return null; // do not include this method
 		}
 	} // visitmethod
-	
+
 	/**
 	 * @return the distinctBCs
 	 */
@@ -186,6 +187,6 @@ public class CreationClassVisitorAdapter extends ClassVisitor {
 	private Set<Integer> distinctBCs=new HashSet<Integer>();
 	private int numberOfFields;
 	private int numberOfMethods;
-	
+
 	private static Logger logger=Logger.getLogger("haikuvm.pc.tools.asmvisitors");
 } // class

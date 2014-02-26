@@ -6,6 +6,7 @@ import haikuvm.pc.tools.MemberTreeNode;
 import haikuvm.pc.tools.ReferencedMembers;
 import haikuvm.pc.tools.TargetApplicationJavaClasses;
 
+import java.net.URL;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
@@ -39,10 +40,13 @@ public class ClassScanner extends ClassVisitor {
 	 * in the Method that is scanned by this class.
 	 */
 	private ReferencedMembers<Member> referencedMembers=new ReferencedMembers<Member>();
+	private ReferencedMembers<Member> fields=new ReferencedMembers<>();
+	private ReferencedMembers<Member> methods=new ReferencedMembers<>();
 	private Member member;
 	private String[] interfaces;
 	private int access;
 	private boolean memberFound=false;
+	private URL url;
 	/**
 	 * The constructor for the class scanner. The scanner is used to collect
 	 * the methods and fields that are to be included in the executable for the target
@@ -54,6 +58,14 @@ public class ClassScanner extends ClassVisitor {
 		super(Opcodes.ASM5);
 		this.member=member;
 	}
+	/**
+	 * Create a ClassScanner that only  reports the members in the class and that does not scan
+	 * any method in the class
+	 */
+	public ClassScanner(URL url) {
+		this((Member)null);
+		this.url=url;
+	}
 	public void visit(int version, int access, String name,
 			String signature, String superName, String[] interfaces) {
 		logger.log(Level.INFO,"Start visit() version={0}, access={1},name={2},signature={3},superName={4}",
@@ -64,23 +76,6 @@ public class ClassScanner extends ClassVisitor {
 		this.owner=name;
 		this.superName=superName;
 		this.interfaces=interfaces;
-		// All implemented interfaces must be included, and all their methods.
-		StringBuilder sb=new StringBuilder(1000);
-		// For all implemented interfaces
-		sb.append("Interfaces:\n");
-		for (String interfacename:interfaces) {
-			sb.append("\n").append(interfacename);
-			// Set name parameter to empty, then all methods will be included.
-			// This is overhead: there is no need to include these interfaces.
-			// We will remove them after we have added the real implementations
-			// of the class??
-			Set<Member> tempInterfaceMembers=new HashSet<>();
-			Member interfaceMember=new Member(interfacename,"","");
-			// Add it to the toBeIncluded Collection so it will be handled later
-			referencedMembers.add(interfaceMember);
-		}
-		sb.append("******* end of list of interfaces ********");
-		logger.fine(sb.toString());
 		logger.info("End visit(), owner(=class being parsed)="+owner);
 	}
 	public void visitSource(String source, String debug) {
@@ -103,7 +98,7 @@ public class ClassScanner extends ClassVisitor {
 			String signature, Object value) {
 		System.out.println("visitField desc=" + desc + ", signature="+signature+" name=" + name);
 		// Fields only have to be included if they are referenced in called methods.
-
+		fields.add(new Member(access,owner,name,desc,signature,(String[])null,url));
 		return null;
 	}
 	@Override

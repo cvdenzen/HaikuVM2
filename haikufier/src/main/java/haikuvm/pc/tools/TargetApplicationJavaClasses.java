@@ -24,6 +24,7 @@ import java.net.URLClassLoader;
 import java.text.Format;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -252,7 +253,7 @@ public class TargetApplicationJavaClasses {
 	/**
 	 * Start scanning this member
 	 * @param classname
-	 * @param member The method or field to be scanned
+	 * @param member The to be scanned
 	 * @param parentTreeNode The position of this element in the tree of included members (for presentational purposes only)
 	 * @throws ClassNotFoundException 
 	 */
@@ -330,7 +331,7 @@ public class TargetApplicationJavaClasses {
 			}
 		}
 
-		// Include the implementation of the methods in the class we are visiting.
+		// Include the implementation of the interface methods in the class we are visiting.
 		// Collect the new members in a separate Set to avoid concurrent updates
 		for (Member m1:tempInterfaceMembers) {
 			// Create a clone, to 
@@ -371,6 +372,10 @@ public class TargetApplicationJavaClasses {
 				}
 			}
 			referencedMembersTemp.addAll(foundMembers);
+			// scan the referenced methods
+			for (Member m:referencedMembersTemp) {
+				scan(m,parentTreeNode);
+			}
 			// Add the foundMembers to the referencedMembers
 			referencedMembers.addAll(referencedMembersTemp);
 		}
@@ -432,7 +437,51 @@ public class TargetApplicationJavaClasses {
 				throw new IllegalArgumentException(e);
 			}
 		}
-	} 
+	}
+	private Collection<Member> getMembers(String classname) {
+		HashSet<Member> members=new HashSet<>();
+		// Create a ClassVisitor (class that collects used methods and fields)
+		ClassReader cr = null;
+		URL url=null; // the url where this class was loaded from
+		try {
+			InputStream classInputStream;
+			// Class loading in Java is difficult, parent loader always has priority.
+			// This is problematic for e.g. java.lang.Object and java.lang.String that we
+			// want to redefine in HaikuVM
+			// Solution used here: find all URLs for the searched resource and pick the last one found
+			// (that will be the one in the last added classloader).
+			// test
+			ArrayList<URL> urls=new ArrayList<URL>();
+			Enumeration<URL> e=null;
+			try {
+				e = classLoader.getResources(member.getOwner()+".class");
+				while (e.hasMoreElements()) {
+					urls.add(e.nextElement());
+				};
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			// Select the last URL in the list, that is the one this member was found
+			if (urls.size()>0) {
+				url=urls.get(urls.size()-1);
+			} else {
+				logger.severe(e.toString());
+				throw new ClassNotFoundException("Resource not found: "+classname);
+			}
+			classInputStream=url.openStream();
+			cr = new ClassReader(classInputStream);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			logger.severe(classname+": "+e.getMessage());
+			e.printStackTrace();
+		}
+		ClassScanner classScanner = new ClassScanner(url);
+		// start parsing, this will call the ASM Visitor
+		cr.accept(classScanner, 0);
+		
+		return members;
+	}
 	/**
 	 * 
 	 * @return A set of Strings containing the internal class names (with / and not with .)
@@ -791,10 +840,11 @@ public class TargetApplicationJavaClasses {
 		ClassWriter cw = new ClassWriter(cr,org.objectweb.asm.ClassWriter.COMPUTE_FRAMES);
 		// Create a ClassVisitor that forwards calls to the visitor named as its parameter,
 		// see http://download.forge.objectweb.org/asm/asm4-guide.pdf
-		CreationClassVisitorAdapter ca = new CreationClassVisitorAdapter(cw, referencedMembers);
-		J2COutputGenerator j2cog=new J2COutputGenerator(Opcodes.ASM5, ca, outc, outh);
+		J2COutputGenerator j2cog=new J2COutputGenerator(Opcodes.ASM5, cw, outc, outh);
 		COutputGenerator og=new COutputGenerator(Opcodes.ASM5, j2cog,outc, outh,referencedMembers);
-		cr.accept(og, 0);
+		// This is the first visitor, that delegates calls to og
+		CreationClassVisitorAdapter ca = new CreationClassVisitorAdapter(og, referencedMembers);
+		cr.accept(ca, 0);
 		// Update some statistics that were created during the asm pass
 		distinctBCs.addAll(ca.getDistinctBCs());
 		numberOfFields+=ca.getNumberOfFields();

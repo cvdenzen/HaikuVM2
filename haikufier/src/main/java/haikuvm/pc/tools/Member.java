@@ -98,6 +98,9 @@ public class Member implements Comparable {
 			String desc) {
 		this(internalClassname,access,name,desc,null);
 	}
+	public Member(String owner, int access, String name, String descriptor, String signature, URL url) {
+		this(access,owner,name,descriptor,signature,(String[])null,url);
+	}
 	/**
 	 * Create a Member for a Class (no method or field name defined)
 	 * @param name The name of the class in internal class format.
