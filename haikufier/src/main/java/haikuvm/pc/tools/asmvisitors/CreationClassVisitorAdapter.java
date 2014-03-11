@@ -86,15 +86,29 @@ public class CreationClassVisitorAdapter extends ClassVisitor {
 				public void visitCode()
 				{
 					super.visitCode();
+				};
+				/* (non-Javadoc)
+				 * @see org.objectweb.asm.MethodVisitor#visitFrame(int, int, java.lang.Object[], int, java.lang.Object[])
+				 */
+				@Override
+				public void visitFrame(int type, int nLocal,
+						Object[] local, int nStack, Object[] stack) {
+					try {
+						super.visitFrame(type, nLocal, local, nStack, stack);
+					}
+					catch (Exception ex) {
+						logger.log(Level.SEVERE,"Exception in visitFrame",ex);
+					}
+				}
+
+				public void visitInsn(int opcode) {
+					super.visitInsn(opcode);
 					// Insert some special instructions for synchronized methods
 					if ((access & Opcodes.ACC_SYNCHRONIZED)!=0) {
 						// Insert an extra instruction
 						logger.fine("Call insert monitorenter for "+newMember);
 						super.visitInsn(Opcodes.MONITORENTER);
 					}
-				};
-				public void visitInsn(int opcode) {
-					super.visitInsn(opcode);
 					distinctBCs.add(opcode);
 					// Write instruction to the textifier
 					//textifier.visitInsn(opcode);
@@ -131,18 +145,8 @@ public class CreationClassVisitorAdapter extends ClassVisitor {
 					distinctBCs.add(opcode);
 					//textifier.visitJumpInsn(opcode, label);
 				};
-				/* (non-Javadoc)
-				 * @see org.objectweb.asm.MethodVisitor#visitFrame(int, int, java.lang.Object[], int, java.lang.Object[])
-				 */
-				@Override
-				public void visitFrame(int type, int nLocal,
-						Object[] local, int nStack, Object[] stack) {
-					try {
-						super.visitFrame(type, nLocal, local, nStack, stack);
-					}
-					catch (Exception ex) {
-						logger.log(Level.SEVERE,"Exception in visitFrame",ex);
-					}
+				public void visitMaxs(int maxStack, int maxLocals) {
+					super.visitMaxs(maxStack, maxLocals);
 				}
 				@Override
 				public void visitEnd() {

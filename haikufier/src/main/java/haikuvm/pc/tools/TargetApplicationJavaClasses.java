@@ -32,6 +32,7 @@ import java.util.Enumeration;
 import java.util.Formatter;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -74,6 +75,7 @@ import haikuvm.pc.tools.asmvisitors.*;
 
 import org.objectweb.asm.*;
 import org.objectweb.asm.commons.Method;
+import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.util.Textifier;
 
 import static org.objectweb.asm.Opcodes.*;
@@ -266,8 +268,6 @@ public class TargetApplicationJavaClasses {
 			logger.fine("Skip arraytype="+member);
 			return;
 		}
-		// Create a ClassVisitor (class that collects used methods and fields)
-		ClassScanner classScanner = new ClassScanner(member);
 		ClassReader cr = null;
 		try {
 			InputStream classInputStream;
@@ -305,8 +305,30 @@ public class TargetApplicationJavaClasses {
 			logger.severe(member+": "+e.getMessage());
 			e.printStackTrace();
 		}
+		// If this class has not yet been transformed into a tree (ClassNode object), do it now
+		//ClassNode classNode=null;
+		ClassNode classNode=new ClassNode();
+		cr.accept(classNode, 0);
+		ClassNode oldValue=classNodes.put(member.getOwner(),classNode);
+		if (oldValue!=null) {
+			// No problem.
+			//logger.severe("Error in HaikuVM2: classNodes already contains the classNode object.");
+			//System.exit(15);
+		};
+		// Create a ClassVisitor (class that collects used methods and fields)
+		ClassScanner classScanner = new ClassScanner(member);
 		// start parsing, this will call the ASM Visitor
 		cr.accept(classScanner, 0);
+		/*
+		 * Handling of super/subclasses (including interfaces):
+		 * Referencing a member can be through INVOKEVIRTUAL, INVOKEINTERFACE?
+		 * For every referenced member, this member is also set as "used" in all
+		 * of its subclasses (or implementing classes, or sub-interfaces).
+		 * When a new class is encountered, all of its superclass methods are set as "used".
+		 */
+		// Find the current class
+
+		String currentClass=member.getOwner();
 		// Read the members to be included
 		ReferencedMembers<Member> referencedMembersTemp=classScanner.getReferencedMembers();
 		// collect all interface members (can come from more than one interface)
@@ -438,7 +460,22 @@ public class TargetApplicationJavaClasses {
 			}
 		}
 	}
-	private Collection<Member> getMembers(String classname) {
+	/**
+	 * Get the subclasses of the given class
+	 * @param currentClass in internal format (with slashes)
+	 * @return a Set of Strings with superclass names (in internal format)
+	 */
+	private HashSet<String> getSubClasses(String currentClass) {
+		throw new Error("Method not implemented");
+	}
+	/**
+	 * This method is not used.
+	 * @param classname
+	 * @return
+	 * @throws ClassNotFoundException
+	 */
+	@Deprecated
+	private Collection<Member> getMembers(String classname) throws ClassNotFoundException {
 		HashSet<Member> members=new HashSet<>();
 		// Create a ClassVisitor (class that collects used methods and fields)
 		ClassReader cr = null;
@@ -454,7 +491,7 @@ public class TargetApplicationJavaClasses {
 			ArrayList<URL> urls=new ArrayList<URL>();
 			Enumeration<URL> e=null;
 			try {
-				e = classLoader.getResources(member.getOwner()+".class");
+				e = classLoader.getResources(classname+".class");
 				while (e.hasMoreElements()) {
 					urls.add(e.nextElement());
 				};
@@ -479,7 +516,7 @@ public class TargetApplicationJavaClasses {
 		ClassScanner classScanner = new ClassScanner(url);
 		// start parsing, this will call the ASM Visitor
 		cr.accept(classScanner, 0);
-		
+
 		return members;
 	}
 	/**
@@ -748,14 +785,14 @@ public class TargetApplicationJavaClasses {
 		int numberOfSpares=250-distinctBCs.size(); // the available space
 		// Select the methods with most of invocation
 		// Select only methods (not fields). For performance reasons, do it in a Set
-		ArrayList<Member> list=new ArrayList<>();
+		ArrayList<Member> referencedMethods=new ArrayList<>();
 		for (Member m:referencedMembers) {
 			if (m.isMethod()) {
-				list.add(m);
+				referencedMethods.add(m);
 			}
 		}
 		// Sort by max. use count
-		Collections.sort(list,new Comparator<Member>() {
+		Collections.sort(referencedMethods,new Comparator<Member>() {
 			public int compare(Member m1,Member m2) {
 				if (m1.getUseCount()>m2.getUseCount()) {
 					return -1;
@@ -767,7 +804,7 @@ public class TargetApplicationJavaClasses {
 			}
 		});
 		for (int i=0;i<numberOfSpares;i++) {
-			Member m=list.get(i);
+			Member m=referencedMethods.get(i);
 			// Indicate that this member is available for invokeshort calls
 			m.setInvokeShortIndex(i);
 		}
@@ -837,7 +874,7 @@ public class TargetApplicationJavaClasses {
 			e.printStackTrace();
 		}
 		// start parsing
-		ClassWriter cw = new ClassWriter(cr,org.objectweb.asm.ClassWriter.COMPUTE_FRAMES);
+		ClassWriter cw = new ClassWriter(cr,0 /*org.objectweb.asm.ClassWriter.COMPUTE_FRAMES*/);
 		// Create a ClassVisitor that forwards calls to the visitor named as its parameter,
 		// see http://download.forge.objectweb.org/asm/asm4-guide.pdf
 		J2COutputGenerator j2cog=new J2COutputGenerator(Opcodes.ASM5, cw, outc, outh);
@@ -846,9 +883,12 @@ public class TargetApplicationJavaClasses {
 		CreationClassVisitorAdapter ca = new CreationClassVisitorAdapter(og, referencedMembers);
 		cr.accept(ca, 0);
 		// Update some statistics that were created during the asm pass
+		
+
 		distinctBCs.addAll(ca.getDistinctBCs());
 		numberOfFields+=ca.getNumberOfFields();
 		numberOfMethods+=ca.getNumberOfMethods();
+		
 		// Create an outputfile in the outputdirectory in a subdirectory for the given package/class
 		// This is not used, but nice for a test
 		File classFile=new File(outputdirectory,internalClassname+".class");
@@ -1212,7 +1252,9 @@ const jclass    classTable[] PROGMEM = {
 	}
 	private ReferencedMembers<Member> referencedMembers=new ReferencedMembers<>();
 
-	static private Logger logger=Logger.getLogger("haikuvm.pc.tools");
+	private Map<String,ClassNode> classNodes=new HashMap<String,ClassNode>();
+
+	final static private Logger logger=Logger.getLogger("haikuvm.pc.tools");
 	// Not used, but could be useful:
 	// http://stackoverflow.com/questions/5445511/how-do-i-create-a-parent-last-child-first-classloader-in-java-or-how-to-overr
 

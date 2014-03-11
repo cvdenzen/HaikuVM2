@@ -6,9 +6,9 @@
 	<classpathentry kind="src" path="src/test/java"/>
 	<classpathentry excluding="main/java/|main/resources/|test/resources/|test/java/|main/" kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/asm5"/>
 	<classpathentry kind="lib" path="/lib/pc/bcel-5.2.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="/lib/pc/RXTXcomm.jar"/>
+	<classpathentry kind="lib" path="D:/downloads/asm-5.0_BETA-bin/asm-5.0_BETA/lib/all/asm-debug-all-5.0_BETA.jar" sourcepath="/arduino-carl-1/src_asm_5_0_BETA"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

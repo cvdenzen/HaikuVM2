@@ -153,8 +153,15 @@ public class COutputGenerator extends org.objectweb.asm.ClassVisitor {
 		mv=super.visitMethod(access, name, desc, signature, exceptions);
 		// if mv is null, nobody is interested in this method
 		if (mv!=null) {
-			// chain the MethodVisitors
-			mv=new COutputMethodAdapter(api,mv,outcSb,outhSb,member);
+			// Should this method be included?
+			Member mr=referencedMembers.get(owner,name,desc);
+			// if this member was selected to be called via invokeshort:
+			if (mr==null) {
+				logger.finest("This method is not included, do not process it: "+member);
+			} else {
+				// chain the MethodVisitors
+				mv=new COutputMethodAdapter(api,mv,outcSb,outhSb,member);
+			}
 		}
 		return mv;
 	}
@@ -228,6 +235,8 @@ public class COutputGenerator extends org.objectweb.asm.ClassVisitor {
 		}
 		@Override
 		public void visitCode() {
+			super.visitCode();
+			logger.finest("code for "+member);
 			outcSb.append(String.format("const %s_t\n  %s PROGMEM = {\n",
 					new Object[] {member.getMangledName(),member.getMangledName()}));
 			// Later on, the maxStack etc. must be inserted at this position, so remember it
@@ -321,6 +330,7 @@ public class COutputGenerator extends org.objectweb.asm.ClassVisitor {
 		}
 		@Override
 		public void visitEnd() {
+			super.visitEnd();
 			outcSb.append("\n}\n");
 
 			// Append the name of the struct definition to the .h file

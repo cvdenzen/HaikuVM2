@@ -141,28 +141,35 @@ public class ClassScanner extends ClassVisitor {
 		return new MethodVisitor(Opcodes.ASM5) {
 			public void visitCode() {
 				System.out.println("visitCode()");
+				super.visitCode();
 				logger.finer("visitCode "+owner+" "+name);
 			}
 			public void visitFrame(int type, int nLocal, Object[] local, int nStack,
 					Object[] stack) {
+				super.visitFrame(type, nLocal, local, nStack, stack);
 				logger.finer("visitFrame");
 			};
 			public void visitInsn(int opcode) {
+				super.visitInsn(opcode);
 				logger.finer("visitInsn("+opcode+" "+OPCODES[opcode]+")");
 			};
 			public void visitIntInsn(int opcode, int operand){
+				super.visitIntInsn(opcode, operand);
 				logger.finer("visitInsn("+opcode+" "+OPCODES[opcode]+","+operand+")");
 			};
 			public void visitVarInsn(int opcode, int var){
+				super.visitVarInsn(opcode,var);
 				logger.finer("visitVarInsn("+opcode+" "+OPCODES[opcode]+","+var+")");
 			};
 			public void visitTypeInsn(int opcode, String desc){
+				super.visitTypeInsn(opcode, desc);
 				logger.finer("visitTypeInsn("+opcode+" "+OPCODES[opcode]+","+desc+")");
 
 			};
 			public void visitFieldInsn(int opc, String owner, String name, String desc){
 				logger.finer("visitFieldInsn("+opc+" "+OPCODES[opc]+","+owner+","+name+","+desc+")");
 				// This field must be included in the result, the URL is the same as the caller?
+				super.visitFieldInsn(opc, owner, name, desc);
 				Member newFieldMember=new Member(owner,name,desc);
 				Member existingFieldMember=referencedMembers.get(newFieldMember);
 				if (existingFieldMember!=null) {
@@ -174,6 +181,7 @@ public class ClassScanner extends ClassVisitor {
 				}
 			};
 			public void visitMethodInsn(int opc, String owner, String name, String desc) {
+				super.visitMethodInsn(opc,owner,name,desc);
 				logger.finer("visitMethodInsn("+opc+" "+OPCODES[opc]+","+owner+","+name+", desc="+desc);
 				// This field must be included in the result, the URL is the same as the caller?
 				Member newMethodMember=new Member(owner,name,desc);
@@ -188,39 +196,19 @@ public class ClassScanner extends ClassVisitor {
 			};
 			public void visitInvokeDynamicInsn(String name, String desc, Handle bsm,
 					Object... bsmArgs) {
+				super.visitInvokeDynamicInsn(name,desc,bsm,bsmArgs);
 				logger.finer("visitInvokeDynamicInsn name="+name+", desc="+desc+", bsm="+bsm.toString());
 			};
 
 			@Override
-			public void visitJumpInsn(int opcode, Label label){};
-			@Override
-			public void visitLabel(Label label){};
-			@Override
-			public void visitLdcInsn(Object cst){};
-			@Override
-			public void visitIincInsn(int var, int increment){};
-			@Override
-			public void visitTableSwitchInsn(int min, int max, Label dflt, Label... labels){};
-			@Override
-			public void visitLookupSwitchInsn(Label dflt, int[] keys, Label[] labels){};
-			@Override
-			public void visitMultiANewArrayInsn(String desc, int dims){};
-			@Override
-			public void visitTryCatchBlock(Label start, Label end, Label handler,
-					String type){
-			};
-			@Override
 			public void visitLocalVariable(String name, String desc, String signature,
 					Label start, Label end, int index){
+				super.visitLocalVariable(name, desc, signature, start, end, index);
 				logger.finer("visitLocalVariable name="+name+", desc="+desc+", signa="+signature
 						+", startlabel="+start+", endlabel="+end+", index="+index);
 			};
-			@Override
-			public void visitLineNumber(int line, Label start){};
-			@Override
-			public void visitMaxs(int maxStack, int maxLocals){};
-			@Override
 			public void visitEnd(){
+				super.visitEnd();
 				System.out.println("visitEnd()");
 			};
 		};
