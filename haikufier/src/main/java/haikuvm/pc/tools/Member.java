@@ -16,7 +16,7 @@ public class Member implements Comparable {
 	private String owner;
 	private String name;
 	private String descriptor;
-	private URL url;
+	//private URL url;
 	private int access=-1;
 	private String signature;
 	private String[] exceptions;
@@ -46,7 +46,7 @@ public class Member implements Comparable {
 		this.descriptor = descriptor;
 		this.signature=signature;
 		this.exceptions=exceptions;
-		this.url=url;
+		//this.url=url;
 		if (owner.contains(".")) {
 			String message="owner class name should not contain . character:"+this;
 			logger.severe(message);
@@ -86,7 +86,7 @@ public class Member implements Comparable {
 		this(owner, name, descriptor, null);
 	}
 	public Member(Member m) {
-		this(m.access,m.owner,m.name,m.descriptor,m.signature,m.exceptions,m.url);
+		this(m.access,m.owner,m.name,m.descriptor,m.signature,m.exceptions);
 	}
 	/**
 	 * Create a new member with a null url
@@ -145,20 +145,6 @@ public class Member implements Comparable {
 	 */
 	public boolean isMethod() {
 		return descriptor.startsWith("(");
-	}
-
-	/**
-	 * @return the url
-	 */
-	public URL getUrl() {
-		return url;
-	}
-
-	/**
-	 * @param url the url to set
-	 */
-	public void setUrl(URL url) {
-		this.url = url;
 	}
 
 	@Override
@@ -241,8 +227,13 @@ public class Member implements Comparable {
 		.append(",descriptor=").append(descriptor);
 		// Print the url, but not including the fully qualified class name, because we already
 		// have that (owner).
+		/*
 		if (url!=null) {
 			sb.append(",url=").append(url.getPath().replaceAll(owner+"$",""));
+		}
+		*/
+		if (classNode!=null) {
+			sb.append(",url=").append(classNode.getUrl());
 		}
 		sb.append("]");
 		return sb.toString();
@@ -356,6 +347,19 @@ public class Member implements Comparable {
 	 */
 	public void setInvokeShortIndex(int invokeShortIndex) {
 		this.invokeShortIndex = invokeShortIndex;
+	}
+	HaikuClassNode classNode;
+	/**
+	 * @return the classNode
+	 */
+	public HaikuClassNode getClassNode() {
+		return classNode;
+	}
+	/**
+	 * @param classNode the classNode to set
+	 */
+	public void setClassNode(HaikuClassNode classNode) {
+		this.classNode = classNode;
 	}
 	
 } // end of Member inner class

@@ -75,7 +75,7 @@ import haikuvm.pc.tools.asmvisitors.*;
 
 import org.objectweb.asm.*;
 import org.objectweb.asm.commons.Method;
-import org.objectweb.asm.tree.ClassNode;
+//import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.util.Textifier;
 
 import static org.objectweb.asm.Opcodes.*;
@@ -269,6 +269,7 @@ public class TargetApplicationJavaClasses {
 			return;
 		}
 		ClassReader cr = null;
+		URL selectedURL = null;
 		try {
 			InputStream classInputStream;
 			// Class loading in Java is difficult, parent loader always has priority.
@@ -289,7 +290,7 @@ public class TargetApplicationJavaClasses {
 				e1.printStackTrace();
 			}
 
-			URL selectedURL=null;
+			selectedURL=null;
 			// Select the last URL in the list, that is the one this member was found
 			if (urls.size()>0) {
 				selectedURL=urls.get(urls.size()-1);
@@ -297,7 +298,7 @@ public class TargetApplicationJavaClasses {
 				logger.severe(e.toString());
 				throw new ClassNotFoundException("Resource not found: "+member);
 			}
-			member.setUrl(selectedURL);
+			//member.setUrl(selectedURL);
 			classInputStream=selectedURL.openStream();
 			cr = new ClassReader(classInputStream);
 		} catch (IOException e) {
@@ -305,16 +306,17 @@ public class TargetApplicationJavaClasses {
 			logger.severe(member+": "+e.getMessage());
 			e.printStackTrace();
 		}
-		// If this class has not yet been transformed into a tree (ClassNode object), do it now
-		//ClassNode classNode=null;
-		ClassNode classNode=new ClassNode();
-		cr.accept(classNode, 0);
-		ClassNode oldValue=classNodes.put(member.getOwner(),classNode);
-		if (oldValue!=null) {
-			// No problem.
-			//logger.severe("Error in HaikuVM2: classNodes already contains the classNode object.");
-			//System.exit(15);
+		HaikuClassNode classNode;
+		classNode=classNodes.get(member.getOwner());
+		if (classNode==null) {
+			// If this class has not yet been transformed into a tree (ClassNode object), do it now
+			//ClassNode classNode=null;
+			classNode=new HaikuClassNode();
+			cr.accept(classNode, 0);
+			classNode.setUrl(selectedURL);
+			classNodes.put(member.getOwner(),classNode);
 		};
+		member.setClassNode(classNode);
 		// Create a ClassVisitor (class that collects used methods and fields)
 		ClassScanner classScanner = new ClassScanner(member);
 		// start parsing, this will call the ASM Visitor
@@ -1252,7 +1254,7 @@ const jclass    classTable[] PROGMEM = {
 	}
 	private ReferencedMembers<Member> referencedMembers=new ReferencedMembers<>();
 
-	private Map<String,ClassNode> classNodes=new HashMap<String,ClassNode>();
+	private Map<String,HaikuClassNode> classNodes=new HashMap<String,HaikuClassNode>();
 
 	final static private Logger logger=Logger.getLogger("haikuvm.pc.tools");
 	// Not used, but could be useful:
